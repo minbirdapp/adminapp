@@ -7,10 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MagicLinkMail;
+use App\Models\Brand;
 use Carbon\Carbon;
-use App\Models\Industry;
-use App\Models\BrandRole;
-
 class AuthController extends Controller
 {
     // Show Create Account page
@@ -176,7 +174,17 @@ class AuthController extends Controller
             ['user_id' => $user->id],
             $request->only(['first_name', 'last_name', 'brand_name', 'industry_id', 'brand_role_id', 'about_brand'])
         );
-
+        $isBrandExists = Brand::where('name', $request->get('brand_name'))->first();
+        if (empty(($isBrandExists))) {
+            Brand::create([
+                'user_id' => $user->id,
+                'tenant_id' => $user->id,
+                'name' =>  $request->get('brand_name'),
+                'intro' => $request->get('about_brand'),
+                'industry_id' => $request->get('industry_id'),
+                'is_default' => 1
+            ]);
+        }
         return redirect()->route('setup.channels')->with('success', 'Account setup complete! Let’s connect your social channels.');
     }
 }
