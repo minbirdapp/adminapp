@@ -1,0 +1,796 @@
+@font-face {
+   font-family: 'avenirmedium';
+   src: url('../fonts/avenir_medium-webfont.eot');
+   src: url('../fonts/avenir_medium-webfont.eot?#iefix') format('embedded-opentype'),
+      url('../fonts/avenir_medium-webfont.woff2') format('woff2'),
+      url('../fonts/avenir_medium-webfont.woff') format('woff'),
+      url('../fonts/avenir_medium-webfont.ttf') format('truetype'),
+      url('../fonts/avenir_medium-webfont.svg#avenirmedium') format('svg');
+   font-weight: normal;
+   font-style: normal;
+
+}
+
+@font-face {
+   font-family: 'avenir_regularregular';
+   src: url('../fonts/avenir_regular-webfont.eot');
+   src: url('../fonts/avenir_regular-webfont.eot?#iefix') format('embedded-opentype'),
+      url('../fonts/avenir_regular-webfont.woff2') format('woff2'),
+      url('../fonts/avenir_regular-webfont.woff') format('woff'),
+      url('../fonts/avenir_regular-webfont.ttf') format('truetype'),
+      url('../fonts/avenir_regular-webfont.svg#avenir_regularregular') format('svg');
+   font-weight: normal;
+   font-style: normal;
+
+}
+
+/* Base css start */
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+:root {
+   /* colors */
+   --primary: #593CFB;
+   --black: #1a1a1a;
+   --gray: #555;
+   --border-color: #b0b0b0;
+   --blue: #0250d9;
+
+   /* fonts */
+   --avenirmedium: "avenirmedium";
+}
+
+p {
+   font-size: 14px;
+}
+
+ol,
+ul {
+   margin: 0;
+   padding: 0;
+}
+
+ul li {
+   list-style-type: none;
+}
+
+a,
+button {
+   transition: all 0.3s;
+}
+
+a {
+   text-decoration: none;
+}
+
+.container,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl,
+.container-fluid {
+   padding-inline: 20px;
+}
+
+body {
+   font-family: 'avenirmedium';
+   color: var(--gray);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+   color: var(--black);
+}
+
+label {
+   cursor: pointer;
+   display: block;
+}
+
+input:focus,
+select:focus {
+   outline: none;
+}
+
+/* custom utility class */
+
+.min-h-0 {
+   min-height: 0 !important;
+}
+
+/* custom utility class end */
+
+.section-title__icon {
+   width: 111px;
+}
+
+.section-title__title {
+   font-size: 32px;
+   line-height: 118.75%;
+}
+
+.section-title__desc--lg {
+   font-size: 18px;
+   line-height: normal;
+}
+
+.section-title {
+   margin-bottom: 30px;
+}
+
+.section {
+   padding-block: 64px;
+   min-height: calc(100vh - 124px);
+}
+
+.section-wrapper {
+   max-width: 655px !important;
+   width: 100%;
+}
+
+.theme-btn__wrap {
+   gap: 10px;
+   flex-wrap: wrap;
+}
+
+.btn.back-btn {
+    padding: 5px 7px;
+    height: 32px;
+}
+
+.theme-btn {
+   font-size: 16px;
+   line-height: 125%;
+   border: 1px solid var(--primary);
+   color: #fff;
+   background-color: var(--primary);
+   padding: 13px 24px;
+   font-weight: 600;
+   transition: all 0.3s;
+   font-family: 'avenir_regularregular';
+   font-weight: 400;
+}
+
+.theme-btn--regular {
+   background-color: #fff;
+   color: #000;
+}
+
+.theme-btn--danger {
+   border: 1px solid #fe3d4f;
+   background-color: #fa1228;
+}
+
+.theme-btn.theme-btn--sm {
+   padding: 9px 16px;
+}
+
+.theme-btn:hover {
+   background-color: var(--black);
+   border-color: var(--black);
+   color: #fff;
+}
+
+.theme-btn--danger:hover {
+   background-color: #fe3d4f;
+   border-color: #fe3d4f;
+}
+
+.theme-btn.back-btn {
+   padding: 4px 16px;
+   font-size: 14px;
+   line-height: normal;
+}
+
+.acc-type-tag {
+   border: 1px solid #5a2989;
+   background-color: rgba(84, 32, 135, 0.1);
+   padding: 4px 10px;
+   font-size: 12px;
+   line-height: normal;
+   color: #000;
+}
+
+/* Base css end */
+
+.navbar{border-bottom: 1px solid #E5E5E5;}
+
+.navbar .container-fluid {
+    margin: 0 20px;
+}
+
+footer {
+    border-top: 1px solid #E5E5E5;
+}
+
+footer span, footer a {
+    font-size: 16px;
+    font-family: 'avenir_regularregular';
+    font-weight: 400;
+    color: #000;
+}
+footer a {
+    margin: 0 0 0 15px;
+}
+
+.box {
+   border: none;
+}
+
+.btn-primary {
+   background-color: #5A36F2;
+   border: none;
+}
+
+.btn-primary:hover {
+   background-color: #4728c9;
+}
+
+.magic-box {
+   max-width: 420px;
+   width: 100%;
+   padding: 30px;
+   border: none;
+}
+.btn.compact-btn {
+height: auto;
+    padding: 5px 7px;
+    font-size: 14px;
+    line-height: normal;
+    justify-content: center;
+    align-items: center;
+}
+.btn.custom-blue-btn {
+    padding: 10px 14px;
+    font-size: 16px;
+    transition: all 0.3s;
+    font-family: 'avenir_regularregular';
+    font-weight: 400;
+    line-height: normal;
+    height: 46px;
+    border-radius: 6px;
+    gap: 10px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-primary {
+   background-color: #5b3df5;
+   border: none;
+   font-weight: 500;
+}
+
+.btn-primary:hover {
+   background-color: #472ed0;
+}
+
+.form-control {
+   border-radius: 8px;
+}
+
+.resend-link {
+   display: block;
+   margin-top: 15px;
+   font-size: 14px;
+   text-align: center;
+   text-decoration: none;
+   color: #333;
+}
+
+.resend-link:hover {
+   text-decoration: underline;
+}
+
+.success-message {
+   display: flex;
+   align-items: center;
+   gap: 6px;
+   font-size: 14px;
+   color: green;
+   margin-bottom: 10px;
+}
+
+.success-message span {
+   font-size: 10px;
+   width: 8px;
+   height: 8px;
+   background: green;
+   border-radius: 50%;
+   display: inline-block;
+}
+
+.welcome-btn {
+   display: flex;
+   align-items: center;
+   border: 1px solid #D0D0D0;
+   border-radius: 5px;
+   padding: 0 10px;
+}
+
+.welcome-btn button.btn.btn-light.dropdown-toggle {
+    background: transparent;
+    padding: 8px 4px;
+    outline: none !important;
+    box-shadow: none !important;
+    border: 0 none !important;
+    font-family: 'avenir_regularregular';
+    font-size: 14px;
+    font-weight: 400;
+    height: auto;
+}
+.welcome-btn .dropdown-toggle::after {
+    display: inline-block;
+    margin-left: .255em;
+    vertical-align: middle;
+    content: "\f107";
+    border: 0 none;
+    font-family: fontAwesome;
+}
+
+.dropdown-menu {
+   width: 100%;
+}
+
+.account-setup {
+   border: none;
+   padding: 40px;
+   margin: 60px 0;
+}
+
+.account-setup form {
+   width: 542px;
+}
+
+.form-label {
+   font-weight: 400;
+   color: #000;
+   font-family: 'avenir_regularregular';
+   font-size: 16px;
+}
+
+.account-setup .form-label span {
+   color: #ff0000;
+}
+
+.form-control {
+   border-radius: 8px;
+   height: 45px;
+}
+
+.form-control:disabled {
+   background-color: #E5E5E580;
+   opacity: 1;
+   border: 1px dashed #d0d0d0;
+}
+
+textarea.form-control {
+   height: 100px;
+}
+
+.btn-primary {
+   background-color: #5b3df5;
+   border: none;
+   font-weight: 500;
+   height: 45px;
+}
+
+.btn-primary:hover {
+   background-color: #4529cc;
+}
+
+.btn-outline-secondary {
+border-radius: 8px;
+    color: #3a3a3a;
+    font-family: 'avenir_regularregular';
+    font-size: 14px;
+    font-weight: 400;
+    border-color: #000;
+    padding: 10px 15px;
+}
+
+.text-muted {
+   font-size: 13px;
+}
+
+.alert-success {
+   border-radius: 8px;
+   top: 34px;
+   width: 542px;
+   font-family: 'avenir_regularregular';
+   font-size: 14px;
+   font-weight: 400;
+   padding: 9px 16px;
+   border-color: #00B42A;
+   background: #E8FFEA;
+   color: #000;
+}
+.alert-success i {
+    color: #00B42A;
+    font-size: 16px;
+    margin-right: 5px;
+}
+p.brand-name {
+    background: #624DD833;
+    padding: 10px 14px;
+    font-size: 14px;
+    display: flex;
+    gap: 10px;
+}
+.card {
+    border-color: #624DD880;
+}
+.card p.text-muted {
+    font-size: 14px;
+    font-weight: 400;
+    color: #868686;
+       font-family: 'avenir_regularregular';
+}
+a.skip-link {
+    color: #000000;
+    text-decoration: underline;
+    font-family: 'avenir_regularregular';
+     font-size: 14px;
+    font-weight: 400;
+}
+.note-txt{
+     font-size: 14px;
+    color #3a3a3a;
+}
+/* Modal Styling */
+    .modal-content {
+      border-radius: 10px;
+      border: none;
+    }
+
+.channel-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+.channel-card {
+  width: 150px;
+  height: 170px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  text-align: center;
+  padding: 15px;
+  position: relative;
+  background: #fff;
+  transition: all 0.3s ease;
+  flex: 0 0 auto;
+}
+
+.channel-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.channel-card img {
+  width: 65px;
+  height: 65px;
+  margin-bottom: 8px;
+}
+
+.coming-soon {
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fdd835;
+    color: #333;
+    font-size: 14px;
+    border-radius: 20px;
+    padding: 2px 10px;
+    width: 80%;
+}
+.channel-card p {
+    margin: 15px 0 0;
+        font-family: 'avenir_regularregular';
+    font-weight: 400;
+}
+#connectModal .modal-body {
+    padding: 32px 32px 40px;
+}
+#connectModal .modal-header {
+    padding: 20px 30px;
+    height: 72px;
+}
+.account-card {
+    border: 1px solid #E5E5E5;
+    padding: 20px;
+    margin-bottom: 60px;
+}
+.checklist li {
+    font-family: 'avenir_regularregular';
+    font-weight: 400;
+    font-size: 14px;
+    color: #1D2129;
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 25px;
+}
+.checklist li:before {
+    position: absolute;
+    content: "\f058";
+    font-family: 'FontAwesome';
+    left: 0;
+    color: #00B42A;
+}
+.account-card h5 {
+    font-weight: 700;
+    color: #000;
+    font-size: 14px;
+        font-family: 'avenir_regularregular';
+}
+.account-card p {
+    color: #000;
+    font-size: 14px;
+        font-family: 'avenir_regularregular';
+}
+
+  .btn-save {
+      background-color: #6c3cff;
+      border: none;
+    }
+
+    .btn-save:hover {
+      background-color: #5a2edf;
+    }
+
+    .btn-delete {
+      border: 1px solid #ccc;
+      color: #333;
+      background-color: #fff;
+    }
+
+    .btn-delete:hover {
+      background-color: #f8f8f8;
+    }
+
+    .text-danger {
+      color: red !important;
+    }
+    .btn {
+    border-radius: 6px;
+    padding: 13px 24px;
+    font-size: 16px;
+    transition: all 0.3s;
+    font-family: 'avenir_regularregular';
+    font-weight: 400;
+    line-height: 125%;
+    height: 46px;
+}
+.btn-delete:hover {
+    background: #ff0000;
+    color: #fff;
+}
+.selected-brand-list {
+    display: flex
+;
+    justify-content: center;
+    margin: 15px 0 25px;
+    flex-wrap: wrap;
+}
+.selected-brand-list li {
+    margin: 0 25px;
+    position: relative;
+}
+.selected-brand-list li i {
+    position: absolute;
+    left: -17px;
+    top: 0;
+}
+.choose-payment-plans{width:542px;}
+.plan-header h2 {
+      font-size: 24px;
+      margin-bottom: 5px;
+      color: #000;
+      font-weight: 500;
+    }
+
+    .plan-header p {
+      font-size: 14px;
+      color: #3A3A3A;
+              font-family: 'avenir_regularregular';
+    font-weight: 400;
+    }
+
+    /* Toggle Switch */
+    .toggle-switch {
+      position: relative;
+      width: 362px;
+      height: 35px;
+      background:#7676801F;
+      border-radius: 5px;
+      margin: 20px auto;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-switch .slider {
+      position: absolute;
+      height: 31px;
+      width: 200px;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+      top: 2px;
+      left: 1px;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-switch.active .slider {
+      left: 160.5px;
+      background: #fff;
+    }
+
+    .toggle-switch span {
+      z-index: 2;
+      flex: 1;
+      text-align: center;
+      transition: color 0.3s ease;
+      font-size: 14px;
+      font-weight: 500;
+      color: #3C3C43;
+    }
+
+    .toggle-switch.active .monthly {
+      color: #3C3C43;
+    }
+
+    .toggle-switch.active .yearly {
+      color: #3C3C43;
+    }
+
+    .plan-card {
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      border-radius: 8px;
+      margin-top: 25px;
+      text-align: left;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    }
+    .plan-details{
+        padding: 25px;
+    }
+
+    .plan-card h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      background: #E9E9E933;
+       padding: 12px 25px;
+    }
+
+    .plan-card .price {
+      font-size: 22px;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .plan-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 25px 0;
+    }
+
+    .trial-btn {
+     background: #016399;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+        font-family: 'avenir_regularregular';
+    font-weight: 400;
+    }
+
+    .trial-btn:hover {
+      background: #1e4fd1;
+    }
+
+    .note {
+      display: inline-block;
+      margin-left: 30px;
+      font-size: 14px;
+      color: #868686;
+          font-family: 'avenir_regularregular';
+    font-weight: 400;
+    }
+    .note img {
+    width: 15px;
+    position: relative;
+    top: -2px;
+    margin: 0 5px 0 0;
+}
+
+    .continue-btn {
+      display: inline-block;
+      margin: 30px auto;
+      background: #5c3df5;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 22px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .continue-btn:hover {
+      background: #4a2dcf;
+    }
+
+    @media (max-width: 600px) {
+      .plan-card {
+        padding: 18px;
+      }
+      .plan-card h3 {
+        font-size: 16px;
+      }
+      .price {
+        font-size: 20px;
+      }
+    }
+
+/* Responsive breakpoints */
+@media (max-width: 992px) {
+  .channel-card {
+    width: 120px;
+    height: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .channel-card {
+    width: 45%;
+  }
+}
+
+@media (max-width: 480px) {
+  .channel-card {
+    width: 90%;
+  }
+}
+@media (min-width: 992px) {
+    .modal-lg, .modal-xl {
+        --bs-modal-width: 919px !important;
+    }
+}
+
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+   .box {
+      padding: 20px !important;
+   }
+}
+
+@media (max-width: 576px) {
+   .navbar .btn {
+      font-size: 12px;
+      padding: 5px 10px;
+   }
+
+   .box h5 {
+      font-size: 18px;
+   }
+}

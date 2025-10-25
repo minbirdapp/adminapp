@@ -1,0 +1,264 @@
+@media (min-width: 1400px) {
+   .container,
+   .container-lg,
+   .container-md,
+   .container-sm,
+   .container-xl,
+   .container-xxl {
+      max-width: 1416px;
+   }
+}
+
+@media (max-width: 1599px) {
+   .survey-img {
+      width: 400px;
+   }
+}
+
+/* 
+  Extra large devices (less than 1400px)
+*/
+@media (max-width: 1399px) {
+   .survey-img {
+      width: 310px;
+   }
+   .dashboard__main {
+      padding: 52px 40px;
+   }
+   .dashboard__card {
+      padding: 16px 20px;
+   }
+   .personal-info__card {
+      width: 250px;
+   }
+   .blog-card__wrapper .row {
+      --bs-gutter-x: 24px;
+      --bs-gutter-y: 24px;
+   }
+   .loan__block .row {
+      --bs-gutter-x: 24px;
+   }
+   .blog-card__content {
+      padding: 17px 24px 20px;
+   }
+   .collaborator__empty-area {
+      padding: 48px 24px;
+   }
+   .collaborator__info-cards {
+      margin-top: 48px;
+   }
+   .collaborator__profiles .row {
+      --bs-gutter-x: 20px;
+      --bs-gutter-y: 20px;
+   }
+   .collaborator__profile {
+      padding: 16px 20px;
+   }
+   .dashboard__block .back-btn {
+      margin-right: -7px;
+   }
+}
+
+/* 
+  Large devices (less than 1200px)
+*/
+@media (max-width: 1199px) {
+   .signup__left {
+      padding: 40px;
+   }
+   .testimonial-slider__container {
+      padding: 40px;
+   }
+   .survey-img {
+      width: 200px;
+   }
+   .dashboard__main {
+      padding: 40px 32px;
+   }
+   .dashboard__card {
+      padding: 16px;
+   }
+   .dashboard__cards .row {
+      --bs-gutter-x: 16px;
+      --bs-gutter-y: 16px;
+   }
+   .personal-info__card-wrap {
+      gap: 20px;
+   }
+   .personal-info__card {
+      width: calc(33.33% - 14px);
+   }
+   .medication-item {
+      padding: 14px 16px;
+      gap: 32px;
+   }
+   .dashboard__block .back-btn {
+      margin-right: 0px;
+   }
+}
+
+/* 
+  Medium devices (less than 992px)
+*/
+@media (max-width: 991px) {
+   .header__btn {
+      font-size: 14px;
+   }
+   .signup__wrapper {
+      grid-template-columns: 1fr;
+   }
+   .signup__left-wrapper {
+      max-width: 100%;
+   }
+   .testimonial-slider {
+      max-width: 100%;
+   }
+   .sidebar {
+      position: fixed;
+      top: 0;
+      height: 100vh;
+      z-index: 1050;
+      margin-left: -300px;
+   }
+   .sidebar.show {
+      margin-left: 0;
+   }
+   .theme-modal:not(.confirmation-modal) .modal-dialog {
+      max-width: 670px;
+   }
+   .upload-box {
+      width: 290px;
+   }
+   .attachment {
+      width: 295px;
+   }
+}
+
+/* 
+  Small devices (less than 768px)
+*/
+@media (max-width: 767px) {
+   .header__logo-icon {
+      width: 20px;
+   }
+   .header__logo {
+      font-size: 16px;
+   }
+   .header__btn {
+      padding: 8px 12px;
+      font-size: 12px;
+   }
+   .signup__left {
+      padding: 40px 20px;
+   }
+   .testimonial-slider__container {
+      padding: 40px 20px;
+   }
+   .section-title__title {
+      font-size: 26px;
+   }
+   .theme-btn {
+      padding: 10px 20px;
+      font-size: 14px;
+   }
+   .section-title__desc--lg {
+      font-size: 16px;
+   }
+   .dashboard__main {
+      padding: 40px 20px;
+   }
+   .personal-info__card {
+      width: calc(50% - 10px);
+   }
+   .header .container-fluid,
+   .footer .container-fluid {
+      padding-inline: 20px;
+   }
+   .theme-modal .modal-dialog {
+      width: calc(100% - 40px);
+   }
+   .theme-modal .modal-header {
+      padding: 16px;
+   }
+   .theme-modal .modal-title {
+      font-size: 16px;
+   }
+   .theme-modal .modal-body {
+      padding: 16px;
+   }
+   .theme-modal__desc {
+      font-size: 16px;
+   }
+   .upload-box__list {
+      gap: 16px;
+   }
+   .upload-box {
+      width: calc(50% - 8px);
+   }
+   .upload-box__wrapper {
+      min-height: 140px;
+      font-size: 14px;
+      padding: 16px;
+   }
+   .upload-box__icon {
+      width: 40px;
+   }
+   .theme-modal .modal-footer {
+      padding: 16px;
+   }
+   .medication-item__name,
+   .medication-item__doctor {
+      font-size: 14px;
+   }
+   .medication-item {
+      gap: 24px;
+   }
+   .form__block ul li {
+      font-size: 16px;
+      line-height: 22px;
+   }
+   .property-detail__block {
+      padding: 14px;
+   }
+   .attachment {
+      width: calc(50% - 7px);
+   }
+   .property__card {
+      padding: 16px;
+      gap: 16px;
+   }
+   .safebox-attachments .attachment {
+      width: calc(33.33% - 9px);
+   }
+   .collaborator__empty-area {
+      padding: 40px 20px;
+   }
+   .blog-card--fluid .blog-card__thumb {
+      width: 100%;
+   }
+}
+
+/* 
+  Extra small devices (less than 576px)
+*/
+@media (max-width: 575px) {
+   .personal-info__card {
+      width: 100%;
+   }
+   .property-add__step h6 {
+      font-size: 12px;
+   }
+   .property-add__step span {
+      width: 24px;
+      height: 24px;
+   }
+   .step-divider {
+      margin-top: 12px;
+   }
+   .attachment {
+      width: 100%;
+   }
+   .safebox-attachments .attachment {
+      width: calc(50% - 7px);
+   }
+}
