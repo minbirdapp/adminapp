@@ -11,9 +11,11 @@ class Brand extends Model
 
     protected $fillable = [
         'user_id',
+        'tenant_id',
         'name',
         'intro',
         'industry_id',
         'competitor_info',
+        'is_default'
     ];
 }

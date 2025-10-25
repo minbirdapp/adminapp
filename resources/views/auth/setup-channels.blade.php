@@ -19,10 +19,11 @@
           data-bs-target="#connectModal">Connect a Channel</button>
       </div>
     </div>
+    <div class="new-cards"></div>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
       <a href="{{ route('dashboard') }}" class="btn theme-btn btn-primary custom-blue-btn">Continue</a>
-      <a href="{{ route('dashboard') }}" class="skip-link">Skip for Now</a>
+      <!-- <a href="{{ route('dashboard') }}" class="skip-link">Skip for Now</a> -->
     </div>
 
     <hr>
@@ -52,7 +53,7 @@
         <div class="modal-body">
           <div class="channel-grid">
 
-            <div class="channel-card">
+            <!-- <div class="channel-card">
               <img src="assets/img/icons/facebook.svg" alt="Facebook">
               <p class="mb-0 small">Page or Profile</p>
             </div>
@@ -66,14 +67,14 @@
             <div class="channel-card">
               <img src="assets/img/icons/linkedin.svg" alt="LinkedIn">
               <p class="mb-0 small">Page or Profile</p>
-            </div>
+            </div> -->
 
             <div class="channel-card" data-bs-toggle="modal" data-bs-target="#instagramModal">
-              <img src="assets/img/icons/instagram.svg" alt="Instagram">
+              <img src="{{asset('assets/img/icons/instagram.svg') }}" alt="Instagram">
               <p class="mb-0 small">Business, Creator, or Personal</p>
             </div>
 
-            <div class="channel-card">
+            <!-- <div class="channel-card">
               <img src="assets/img/icons/whatsapp.svg" alt="WhatsApp">
               <p class="mb-0 small">Business, Creator, or Personal</p>
               <span class="coming-soon">Coming Soon</span>
@@ -94,7 +95,7 @@
             <div class="channel-card">
               <img src="assets/img/icons/x.svg" alt="X (Twitter)">
               <p class="mb-0 small">Business, Creator, or Personal</p>
-            </div>
+            </div> -->
 
           </div>
         </div>
@@ -246,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
           </div>
         `;
-        document.querySelector('.channel-setup-box').insertAdjacentHTML('afterbegin', cardHTML);
+        document.querySelector('.new-cards').insertAdjacentHTML('afterend', cardHTML);
 
         // Reset form
         addBrandForm.reset();

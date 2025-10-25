@@ -158,7 +158,8 @@ class AuthController extends Controller
         $request->validate([
             'first_name'    => 'required|string|max:255',
             'last_name'     => 'nullable|string|max:255',
-            'password'      => 'required|string|min:8|confirmed',
+            'password'      => 'required|string|min:8',
+            // 'password'      => 'required|string|min:8|confirmed',
             'brand_name'    => 'required|string|max:255',
             'industry_id'   => 'required|integer|exists:industries,id',
             'brand_role_id' => 'required|integer|exists:brand_roles,id',

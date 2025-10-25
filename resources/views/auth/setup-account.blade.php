@@ -36,8 +36,8 @@
 
             <div class="mb-3">
                 <label class="form-label"><span>*</span>Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Enter password" required>
-                <input type="password" name="password_confirmation" class="form-control mt-2" placeholder="Confirm password" required>
+                <input autocomplete="off" ="password" name="password" class="form-control" placeholder="Enter password" required>
+                <!-- <input type="password" name="password_confirmation" class="form-control mt-2" placeholder="Confirm password" required> -->
             </div>
 
             <div class="mb-2">

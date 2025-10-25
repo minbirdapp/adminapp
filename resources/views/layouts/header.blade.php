@@ -23,7 +23,7 @@
             </form>
           </li>
         @else
-          <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
+          <li><a class="dropdown-item" href="{{ route('password.login') }}">Login</a></li>
         @endauth
       </ul>
     </div>
