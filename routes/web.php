@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChannelSetupController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     if (auth()->check()) {
@@ -25,9 +26,6 @@ Route::get('/activate/{token}', [AuthController::class, 'activateAccount'])->nam
 Route::get('/activation-code', function () {
     return view('auth.activation-code'); 
 })->name('activate.code.page');
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard')->middleware('auth');
 
 // Show password login form
 Route::get('/login', [AuthController::class, 'showPasswordLogin'])->name('password.login');
@@ -44,4 +42,5 @@ Route::post('/setup-account', [AuthController::class, 'storeSetupAccount'])->nam
 Route::middleware(['auth'])->group(function () {
     Route::get('/setup-channels', [ChannelSetupController::class, 'index'])->name('setup.channels');
     Route::post('/brands/store', [ChannelSetupController::class, 'storeBrand'])->name('brands.store');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
