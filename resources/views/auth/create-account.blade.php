@@ -17,11 +17,19 @@
         <h3 class="fw-bold mt-1">Create your Minbird account.</h3>
     </div>
 
-    <form method="POST" action="{{ route('register') }}">
+    <form id="createAccountForm" method="POST" action="{{ route('register') }}">
         @csrf
         <div class="mb-3">
             <label class="form-label">Your email address</label>
-            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="eg: your email address" required>
+   <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="form-control @error('email') is-invalid @enderror" 
+                placeholder="eg: your email address" 
+             
+            >            <small class="text-danger" id="emailError"></small>
+
                 <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
 
             @error('email')
@@ -47,6 +55,34 @@
         <a href="{{ route('magic.link') }}" class="btn btn-outline-secondary">Already have an account? Sign in</a>
     </div>
 </div>
+
+<script>
+document.getElementById('createAccountForm').addEventListener('submit', function(e) {
+    let valid = true;
+
+    // Reset any previous error messages
+    document.getElementById('emailError').textContent = '';
+
+    // Get the email value
+    const email = document.getElementById('email').value.trim();
+
+    // Check if empty
+    if (email === '') {
+        document.getElementById('emailError').textContent = 'Email address is required.';
+        valid = false;
+    } 
+    // Check for valid email format
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('emailError').textContent = 'Please enter a valid email address.';
+        valid = false;
+    }
+
+    // Stop form submission if invalid
+    if (!valid) {
+        e.preventDefault();
+    }
+});
+</script>
 @endsection
 
 
