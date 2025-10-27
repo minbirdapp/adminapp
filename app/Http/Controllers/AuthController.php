@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\MagicLinkMail;
 use App\Models\Brand;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+
 class AuthController extends Controller
 {
     // Show Create Account page
@@ -22,7 +26,20 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|email|unique:users,email',
+            'g-recaptcha-response' => 'required',
         ]);
+          // Verify reCAPTCHA
+    $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+        'secret' => env('RECAPTCHA_SECRET'),
+        'response' => $request->input('g-recaptcha-response'),
+        'remoteip' => $request->ip(),
+    ]);
+
+    $recaptcha = $response->json();
+
+    if (!($recaptcha['success'] ?? false)) {
+        return back()->withErrors(['captcha' => 'Captcha verification failed. Please try again.']);
+    }
 
         $user = User::create([
             'name' => 'Minbird User',
@@ -127,22 +144,26 @@ class AuthController extends Controller
     }
 
     // Handle login
-    public function passwordLogin(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|string',
-        ]);
+ public function passwordLogin(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|string|min:6',
+    ]);
 
-        if (auth()->attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Login successful
-            return redirect()->route('dashboard');
-        }
+    $user = User::where('email', $request->email)->first();
 
-        return back()->withErrors([
-            'email' => 'Invalid email or password.',
-        ])->withInput();
+    if (!$user) {
+        return back()->with('error', 'No account found with this email.');
     }
+
+    if (!Hash::check($request->password, $user->password)) {
+        return back()->with('error', 'Incorrect password.');
+    }
+
+    Auth::login($user);
+    return redirect()->route('dashboard')->with('success', 'Welcome back!');
+}
 
     public function showSetupAccount(Request $request)
     {

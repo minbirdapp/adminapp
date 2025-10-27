@@ -15,7 +15,7 @@
             A magic link has been sent to <strong>{{ $user->email }}</strong>, check your inbox.
         </p>
 
-        <form action="{{ route('setup.account.store') }}" method="POST">
+        <form id="setupAccountForm" action="{{ route('setup.account.store') }}" method="POST" novalidate>
             @csrf
 
             <div class="mb-3">
@@ -25,49 +25,63 @@
 
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label class="form-label"><span>*</span>First Name</label>
-                    <input type="text" name="first_name" class="form-control" placeholder="e.g. John" required>
+                    <label class="form-label"><span>*</span> First Name</label>
+                    <input type="text" id="first_name" name="first_name" class="form-control"
+                        value="{{ old('first_name', $user->profile->first_name ?? '') }}" placeholder="e.g. John">
+                    <small class="text-danger" id="firstNameError"></small>
                 </div>
+
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Last Name</label>
-                    <input type="text" name="last_name" class="form-control" placeholder="e.g. Doe">
+                    <input type="text" name="last_name" class="form-control"
+                        value="{{ old('last_name', $user->profile->last_name ?? '') }}" placeholder="e.g. Doe">
                 </div>
             </div>
 
             <div class="mb-3">
-                <label class="form-label"><span>*</span>Password</label>
-                <input autocomplete="off" ="password" name="password" class="form-control" placeholder="Enter password" required>
-                <!-- <input type="password" name="password_confirmation" class="form-control mt-2" placeholder="Confirm password" required> -->
+                <label class="form-label"><span>*</span> Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter password">
+                <small class="text-danger" id="passwordError"></small>
             </div>
 
             <div class="mb-2">
-                <label class="form-label"><span>*</span>Your Brand Name</label>
-                <input type="text" name="brand_name" class="form-control" placeholder="e.g. Minbird">
+                <label class="form-label"><span>*</span> Your Brand Name</label>
+                <input type="text" id="brand_name" name="brand_name" class="form-control"
+                    value="{{ old('brand_name', $user->profile->brand_name ?? '') }}" placeholder="e.g. Minbird">
+                <small class="text-danger" id="brandNameError"></small>
             </div>
 
             <div class="mb-2">
-                <label class="form-label"><span>*</span>Select your industry</label>
-                <select name="industry_id" class="form-select" required>
-                    <option selected disabled>Choose industry</option>
+                <label class="form-label"><span>*</span> Select your industry</label>
+                <select name="industry_id" id="industry_id" class="form-select">
+                    <option value="">Choose industry</option>
                     @foreach(\App\Models\Industry::where('status', '1')->get() as $industry)
-                        <option value="{{ $industry->id }}">{{ $industry->name }}</option>
+                        <option value="{{ $industry->id }}"
+                            {{ old('industry_id', $user->profile->industry_id ?? '') == $industry->id ? 'selected' : '' }}>
+                            {{ $industry->name }}
+                        </option>
                     @endforeach
                 </select>
+                <small class="text-danger" id="industryError"></small>
             </div>
 
             <div class="mb-2">
-                <label class="form-label"><span>*</span>Your role in brand</label>
-                <select name="brand_role_id" class="form-select" required>
-                    <option selected disabled>Choose role</option>
+                <label class="form-label"><span>*</span> Your role in brand</label>
+                <select name="brand_role_id" id="brand_role_id" class="form-select">
+                    <option value="">Choose role</option>
                     @foreach(\App\Models\BrandRole::where('status', '1')->get() as $role)
-                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                        <option value="{{ $role->id }}"
+                            {{ old('brand_role_id', $user->profile->brand_role_id ?? '') == $role->id ? 'selected' : '' }}>
+                            {{ $role->name }}
+                        </option>
                     @endforeach
                 </select>
+                <small class="text-danger" id="roleError"></small>
             </div>
 
             <div class="mb-4">
                 <label class="form-label">About your brand</label>
-                <textarea name="about_brand" class="form-control" placeholder="Describe your brand..."></textarea>
+                <textarea name="about_brand" class="form-control" placeholder="Describe your brand...">{{ old('about_brand', $user->profile->about_brand ?? '') }}</textarea>
             </div>
 
             <button type="submit" class="btn theme-btn btn-primary w-100 mb-3">Continue</button>
@@ -75,4 +89,7 @@
         </form>
     </div>
 </main>
+
+
+<?php include(resource_path('js/pages/validations.php')); ?>
 @endsection
