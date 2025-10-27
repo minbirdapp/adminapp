@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChannelSetupController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -33,12 +34,8 @@ Route::post('/magic-link', [AuthController::class, 'sendMagicLink'])->name('magi
 Route::post('/activate-code', [AuthController::class, 'activateByCode'])->name('activate.code');
 Route::get('/activate/{token}', [AuthController::class, 'activateAccount'])->name('activate');
 Route::get('/activation-code', function () {
-    return view('auth.activation-code'); 
+    return view('auth.activation-code');
 })->name('activate.code.page');
-Route::get('/dashboard', function () {
-    return view('dashboard'); // or any Blade you want to show after login
-})->middleware('auth')->name('dashboard');
-
 
 // Show password login form
 Route::get('/login', [AuthController::class, 'showPasswordLogin'])->name('password.login');
@@ -55,6 +52,6 @@ Route::post('/setup-account', [AuthController::class, 'storeSetupAccount'])->nam
 Route::middleware(['auth'])->group(function () {
     Route::get('/setup-channels', [ChannelSetupController::class, 'showChannels'])->name('setup.channels');
     Route::post('/brands/store', [ChannelSetupController::class, 'storeBrand'])->name('brands.store');
+    Route::get('/setup-payment', [App\Http\Controllers\PaymentController::class, 'setupPayment'])->name('setup.payment');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
-Route::get('/setup-payment', [App\Http\Controllers\PaymentController::class, 'setupPayment'])->name('setup.payment');
-

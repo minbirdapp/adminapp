@@ -30,7 +30,7 @@
         <input type="hidden" name="email" id="magicEmail">
 
         <div class="mb-3">
-            <div class="g-recaptcha" data-sitekey="6Lcv3vYrAAAAAOkiKR4v41594KEqzd-pXoXuIlRm"></div>
+            <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_SITE_KEY') }}"></div>
         </div>
 
         <div class="d-grid mb-3">
