@@ -94,15 +94,41 @@ if (document.getElementById("overlay")) {
     inviteTeamBtn.addEventListener("click", () => openPanel(invitePanel));
 
     closeCampaignBtn.addEventListener("click", () => closePanel(campaignPanel));
-    cancelCampaignBtn.addEventListener("click", () =>
-        closePanel(campaignPanel)
-    );
+    // cancelCampaignBtn.addEventListener("click", () => closePanel(campaignPanel));
     closeInviteBtn.addEventListener("click", () => closePanel(invitePanel));
 
     overlay.addEventListener("click", () => {
         closePanel(campaignPanel);
         closePanel(invitePanel);
     });
+}
+jQuery(document).on("click", "#addUrl", function () {
+    var trackerName = jQuery(this).parent().parent().find(".trackerName").val();
+    var trackerUrl = jQuery(this).parent().parent().find(".trackerUrl").val();
+    if (!isValidURL(trackerUrl)) {
+        jQuery(this).parent().parent().find(".trackerUrl").css("border", "red");
+    }
+    jQuery(".trackingUrls").append(
+        '<div class="input-group mb-3">                        <span class="input-group-text">' +
+            trackerName +
+            '</span>                        <input type="text" class="form-control trackerUrl" value="' +
+            trackerUrl +
+            '">                                        <button class="delete-btn deleteTrackingUrl"><i class="fa-solid fa-trash"></i></button>                    </div>'
+    );
+});
+jQuery(document).on("click", "#submitCampaign", function () {
+    jQuery("#submitCamp").click();
+});
+jQuery(document).on("click", ".deleteTrackingUrl", function () {
+    jQuery(this).parent().remove();
+});
+function isValidURL(str) {
+    try {
+        new URL(str);
+        return true;
+    } catch (_) {
+        return false;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -111,105 +137,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
         form.addEventListener("submit", function (e) {
             document.getElementById("validFieldsresponse").value = 1;
-
+            validateField("name", "nameError", "Please enter a Campaign Name.");
             validateField(
-                "full-name",
-                "fullNameError",
-                "Please enter a Full Name."
+                "brand_id",
+                "brand_idError",
+                "Please Select a brand."
             );
             validateField(
-                "dob",
-                "dobError",
-                "Please enter a valid Date of Birth."
+                "status",
+                "statusError",
+                "Please select Campaign Status."
             );
-            validateField("gender", "genderError", "Please select a Gender.");
             validateField(
-                "location",
-                "locationError",
-                "Please enter the location of the item."
+                "objective",
+                "objectiveError",
+                "Please enter a objective for Campaign."
             );
-
-            if (documentType.value === "3") {
-                validateField(
-                    "aadhar_card",
-                    "aadharCardError",
-                    "Please enter your Aadhaar Number."
-                );
-                validateField(
-                    "mobile",
-                    "mobileError",
-                    "Please enter Mobile Number linked with Aadhaar."
-                );
-                // Aadhaar email validation (empty and format)
-                const aadharEmail = document.getElementById("email");
-                const aadharEmailError = document.getElementById("emailError");
-                const emailValue = aadharEmail ? aadharEmail.value.trim() : "";
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailValue) {
-                    aadharEmailError.innerText =
-                        "Please enter Email Address linked with Aadhaar.";
-                    document.getElementById("validFieldsresponse").value = 0;
-                } else if (!emailPattern.test(emailValue)) {
-                    aadharEmailError.innerText = "Email format is incorrect.";
-                    document.getElementById("validFieldsresponse").value = 0;
-                } else {
-                    aadharEmailError.innerText = "";
-                }
-            }
-
-            if (documentType.value === "4") {
-                validateField(
-                    "license-num",
-                    "documentNumberError",
-                    "Please enter your PAN Number."
-                );
-                validateField(
-                    "relative_name",
-                    "relativeNameError",
-                    "Please enter Father/Husband Name with Aadhaar."
-                );
-                validateField(
-                    "location",
-                    "locationError",
-                    "Please enter the location of the item."
-                );
-            }
-
-            if (documentType.value === "2") {
-                validateField(
-                    "nationality",
-                    "nationalityError",
-                    "Please select your Nationality."
-                );
-                validateField(
-                    "passport_number",
-                    "passportNumberError",
-                    "Please enter your Passport Number."
-                );
-                validateField(
-                    "issue_date",
-                    "issueDateError",
-                    "Please enter the Date of Issue."
-                );
-                validateField(
-                    "expire-date",
-                    "expireDateError",
-                    "Please enter the Expiry Date."
-                );
-            }
-
-            if (documentType.value === "1") {
-                validateField(
-                    "driving-license",
-                    "driving-licenseError",
-                    "Please enter your Driving Licence Number."
-                );
-                validateField(
-                    "expire-date",
-                    "expireDateError",
-                    "Please enter the Expiry Date."
-                );
-            }
+            validateField(
+                "notes",
+                "notesError",
+                "Please enter a Campaign notes."
+            );
+            validateField(
+                "start_date",
+                "start_dateError",
+                "Please select start date."
+            );
             if (document.getElementById("validFieldsresponse").value == 0) {
                 // in case of false
                 e.preventDefault(); // Prevent API request
@@ -223,19 +176,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (field && field.value.trim() === "") {
                 errorField.innerText = errorMessage;
                 document.getElementById("validFieldsresponse").value = 0;
-            } else if (
-                fieldId == "dob" ||
-                fieldId == "issue_date" ||
-                fieldId == "expire-date"
-            ) {
+            } else if (fieldId == "start_date" || fieldId == "end_date") {
                 if (!isValidDate(field.value)) {
                     errorField.innerText = "Invalid date format or value.";
-                } else {
-                    errorField.innerText = "";
-                }
-            } else if (fieldId == "full-name" || fieldId == "relative_name") {
-                if (!isValidName(field.value)) {
-                    errorField.innerText = "Please enter valid name.";
                 } else {
                     errorField.innerText = "";
                 }

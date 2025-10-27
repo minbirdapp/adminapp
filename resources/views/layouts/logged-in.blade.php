@@ -36,6 +36,7 @@
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ornare, nisl nec laoreet lacinia,
                 velit lacus ultricies velit, vel iaculis eros tortor ac risus.
             </p>
+            <input type="hidden" name="validFieldsresponse" id="validFieldsresponse" value="" />
             <form action="javascript:void(0);" id="documentForm">
                 @csrf
                 <div class="form-section">
@@ -47,9 +48,10 @@
                     <div class="col-md-6">
                         <label class="form-label">Select the brand associated to this campaign</label>
                         <select id="brand_id" name="brand_id" class="form-select">
-                            <option>Select a brand</option>
-                            <option>Brand A</option>
-                            <option>Brand B</option>
+                            <option value="">Select a brand</option>
+                            @foreach($brands as $v)
+                            <option value="{{$v->id}}"> {{$v->name}}</option>
+                            @endforeach
                         </select>
                         <div id="brand_idError" class="text-danger"></div>
                     </div>
@@ -57,8 +59,8 @@
                         <label class="form-label">Status of your campaign</label>
                         <select id="status" name="status" class="form-select">
                             <option>Select Status</option>
-                            <option>Active</option>
-                            <option>Draft</option>
+                            <option value="1">Active</option>
+                            <option value="2">Draft</option>
                         </select>
                         <div id="statusError" class="text-danger"></div>
                     </div>
@@ -93,9 +95,9 @@
                 <div class="form-section">
                     <label class="form-label">Tracking URL</label>
                     <div class="row g-2 mb-2">
-                        <div class="col-md-5"><input type="text" class="form-control" placeholder="Tracker Name"></div>
-                        <div class="col-md-5"><input type="text" class="form-control" placeholder="URL of Tracker"></div>
-                        <div class="col-md-2"><button type="button" class="addurl-btn btn btn-outline-primary w-100">Add
+                        <div class="col-md-5"><input type="text" class="form-control trackerName" placeholder="Tracker Name"></div>
+                        <div class="col-md-5"><input type="text" class="form-control trackerUrl" placeholder="URL of Tracker"></div>
+                        <div class="col-md-2"><button type="button" id="addUrl" class="addurl-btn btn btn-outline-primary w-100">Add
                                 URL</button></div>
                     </div>
                     <div class="trackingUrls">
@@ -107,6 +109,8 @@
                         <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
                     </div> -->
                 </div>
+                <button type="submit" id="submitCamp" class="btn btn-primary" style="display:none;">Save</button>
+
             </form>
         </div>
         <div class="d-flex justify-content-between panel-footer">

@@ -794,3 +794,10 @@ a.skip-link {
       font-size: 18px;
    }
 }
+.form-section:has(.text-danger:not(:empty)) input,
+.form-section:has(.text-danger:not(:empty)) select,
+.form-section .col-md-6:has(.text-danger:not(:empty)) .choices .choices__inner,
+.form-section:has(.text-danger:not(:empty)) textarea
+ {
+  border-color: red;
+}
