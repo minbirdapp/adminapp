@@ -34,7 +34,7 @@ Route::post('/magic-link', [AuthController::class, 'sendMagicLink'])->name('magi
 Route::post('/activate-code', [AuthController::class, 'activateByCode'])->name('activate.code');
 Route::get('/activate/{token}', [AuthController::class, 'activateAccount'])->name('activate');
 Route::get('/activation-code', function () {
-    return view('auth.activation-code'); 
+    return view('auth.activation-code');
 })->name('activate.code.page');
 
 // Show password login form

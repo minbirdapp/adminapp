@@ -5,11 +5,11 @@
 @section('content')
 <div class="box p-4" style="max-width: 500px; width: 100%; margin: auto;">
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+    <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
     @if(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
+    <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
 
     <div class="mb-3">
@@ -21,24 +21,22 @@
         @csrf
         <div class="mb-3">
             <label class="form-label">Your email address</label>
-   <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                class="form-control @error('email') is-invalid @enderror" 
-                placeholder="eg: your email address" 
-             
-            >            <small class="text-danger" id="emailError"></small>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control @error('email') is-invalid @enderror"
+                placeholder="eg: your email address"> <small class="text-danger" id="emailError"></small>
 
-                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
 
             @error('email')
-                <div class="invalid-feedback">{{ $message }}</div>
+            <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
 
         <div class="mb-3">
-            <div class="g-recaptcha" data-sitekey="6Lcv3vYrAAAAAOkiKR4v41594KEqzd-pXoXuIlRm"></div>
+            <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_SITE_KEY') }}"></div>
         </div>
 
         <div class="d-grid mb-3">
@@ -47,7 +45,7 @@
     </form>
 
     <p class="text-muted text-center">
-        By creating an account, you agree to our 
+        By creating an account, you agree to our
         <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
     </p>
 
@@ -58,5 +56,3 @@
 
 <?php include(resource_path('js/pages/validations.php')); ?>
 @endsection
-
-
