@@ -17,11 +17,19 @@
         <h3 class="fw-bold mt-1">Create your Minbird account.</h3>
     </div>
 
-    <form method="POST" action="{{ route('register') }}">
+    <form id="createAccountForm" method="POST" action="{{ route('register') }}">
         @csrf
         <div class="mb-3">
             <label class="form-label">Your email address</label>
-            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="eg: your email address" required>
+   <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="form-control @error('email') is-invalid @enderror" 
+                placeholder="eg: your email address" 
+             
+            >            <small class="text-danger" id="emailError"></small>
+
                 <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
 
             @error('email')
@@ -30,7 +38,7 @@
         </div>
 
         <div class="mb-3">
-            <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
+            <div class="g-recaptcha" data-sitekey="6Lcv3vYrAAAAAOkiKR4v41594KEqzd-pXoXuIlRm"></div>
         </div>
 
         <div class="d-grid mb-3">
@@ -47,6 +55,8 @@
         <a href="{{ route('magic.link') }}" class="btn btn-outline-secondary">Already have an account? Sign in</a>
     </div>
 </div>
+
+<?php include(resource_path('js/pages/validations.php')); ?>
 @endsection
 
 
