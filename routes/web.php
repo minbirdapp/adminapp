@@ -52,5 +52,6 @@ Route::post('/setup-account', [AuthController::class, 'storeSetupAccount'])->nam
 Route::middleware(['auth'])->group(function () {
     Route::get('/setup-channels', [ChannelSetupController::class, 'showChannels'])->name('setup.channels');
     Route::post('/brands/store', [ChannelSetupController::class, 'storeBrand'])->name('brands.store');
+    Route::get('/setup-payment', [App\Http\Controllers\PaymentController::class, 'setupPayment'])->name('setup.payment');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
