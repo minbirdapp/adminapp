@@ -22,6 +22,8 @@
         <div class="mb-3">
             <label class="form-label">Your email address</label>
             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="eg: your email address" required>
+                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+
             @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror

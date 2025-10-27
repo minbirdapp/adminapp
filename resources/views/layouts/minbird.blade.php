@@ -19,11 +19,22 @@
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
+ <script src="https://www.google.com/recaptcha/enterprise.js?render=6Lcv3vYrAAAAAOkiKR4v41594KEqzd-pXoXuIlRm"></script>
+  <!-- Your code -->
    @stack('styles')
 </head>
 
 <body>
+   <script>
+document.getElementById('register-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  grecaptcha.enterprise.ready(async () => {
+    const token = await grecaptcha.enterprise.execute('6Lcv3vYrAAAAAOkiKR4v41594KEqzd-pXoXuIlRm', {action: 'register'});
+    document.getElementById('g-recaptcha-response').value = token;
+    document.getElementById('register-form').submit();
+  });
+});
+</script>
    <div class="wrapper d-flex flex-column min-vh-100">
       
       {{-- Header --}}
