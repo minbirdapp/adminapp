@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChannelSetupController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     if (auth()->check()) {
@@ -12,7 +14,15 @@ Route::get('/', function () {
     // User is not logged in → go to create account
     return redirect()->route('create.account');
 });
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::post('/logout', function (Request $request) {
+    Auth::logout(); // log out the user
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    // redirect to magic link page
+    return redirect()->route('magic.link')->with('success', 'You have been logged out successfully.');
+})->name('logout');
 
 Route::get('/create-account', [AuthController::class, 'showCreateAccount'])->name('create.account');
 Route::post('/create-account', [AuthController::class, 'register'])->name('register');
@@ -26,8 +36,9 @@ Route::get('/activation-code', function () {
     return view('auth.activation-code'); 
 })->name('activate.code.page');
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard')->middleware('auth');
+    return view('dashboard'); // or any Blade you want to show after login
+})->middleware('auth')->name('dashboard');
+
 
 // Show password login form
 Route::get('/login', [AuthController::class, 'showPasswordLogin'])->name('password.login');
@@ -42,6 +53,6 @@ Route::get('/setup-account', [AuthController::class, 'showSetupAccount'])->name(
 Route::post('/setup-account', [AuthController::class, 'storeSetupAccount'])->name('setup.account.store');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/setup-channels', [ChannelSetupController::class, 'index'])->name('setup.channels');
+    Route::get('/setup-channels', [ChannelSetupController::class, 'showChannels'])->name('setup.channels');
     Route::post('/brands/store', [ChannelSetupController::class, 'storeBrand'])->name('brands.store');
 });

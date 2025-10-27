@@ -38,7 +38,7 @@
         </div>
 
         <div class="mb-3">
-            <div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
+            <div class="g-recaptcha" data-sitekey="6Lcv3vYrAAAAAOkiKR4v41594KEqzd-pXoXuIlRm"></div>
         </div>
 
         <div class="d-grid mb-3">
@@ -56,33 +56,7 @@
     </div>
 </div>
 
-<script>
-document.getElementById('createAccountForm').addEventListener('submit', function(e) {
-    let valid = true;
-
-    // Reset any previous error messages
-    document.getElementById('emailError').textContent = '';
-
-    // Get the email value
-    const email = document.getElementById('email').value.trim();
-
-    // Check if empty
-    if (email === '') {
-        document.getElementById('emailError').textContent = 'Email address is required.';
-        valid = false;
-    } 
-    // Check for valid email format
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        document.getElementById('emailError').textContent = 'Please enter a valid email address.';
-        valid = false;
-    }
-
-    // Stop form submission if invalid
-    if (!valid) {
-        e.preventDefault();
-    }
-});
-</script>
+<?php include(resource_path('js/pages/validations.php')); ?>
 @endsection
 
 
