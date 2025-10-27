@@ -57,3 +57,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/brands/store', [ChannelSetupController::class, 'storeBrand'])->name('brands.store');
 });
 Route::get('/setup-payment', [App\Http\Controllers\PaymentController::class, 'setupPayment'])->name('setup.payment');
+
