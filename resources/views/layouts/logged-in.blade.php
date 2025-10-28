@@ -40,7 +40,7 @@
                 velit lacus ultricies velit, vel iaculis eros tortor ac risus.
             </p>
             <input type="hidden" name="validFieldsresponse" id="validFieldsresponse" value="" />
-            <form action="javascript:void(0);" id="documentForm" novalidate>
+            <form method="post" action="{{route('campaign.create')}}" id="documentForm" novalidate>
                 @csrf
                 <div class="form-section">
                     <label class="form-label">Name of your campaign</label>
@@ -98,8 +98,8 @@
                 <div class="form-section">
                     <label class="form-label">Tracking URL</label>
                     <div class="row g-2 mb-2">
-                        <div class="col-md-5"><input type="text" class="form-control trackerName" placeholder="Tracker Name"></div>
-                        <div class="col-md-5"><input type="text" class="form-control trackerUrl" placeholder="URL of Tracker"></div>
+                        <div class="col-md-5"><input type="text" class="form-control trackerName" name="tracker[name][]" placeholder="Tracker Name"></div>
+                        <div class="col-md-5"><input type="text" class="form-control trackerUrl" name="tracker[url][]" placeholder="URL of Tracker"></div>
                         <div class="col-md-2"><button type="button" id="addUrl" class="addurl-btn btn btn-outline-primary w-100">Add
                                 URL</button></div>
                     </div>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChannelSetupController;
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -52,6 +53,7 @@ Route::post('/setup-account', [AuthController::class, 'storeSetupAccount'])->nam
 Route::middleware(['auth'])->group(function () {
     Route::get('/setup-channels', [ChannelSetupController::class, 'showChannels'])->name('setup.channels');
     Route::post('/brands/store', [ChannelSetupController::class, 'storeBrand'])->name('brands.store');
+    Route::post('/campaign/create', [CampaignController::class, 'storeCampaign'])->name('campaign.create');
     Route::get('/setup-payment', [App\Http\Controllers\PaymentController::class, 'setupPayment'])->name('setup.payment');
     Route::get('/confirm-payment/{id}', [App\Http\Controllers\PaymentController::class, 'confirmPayment'])->name('setup.confirm');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

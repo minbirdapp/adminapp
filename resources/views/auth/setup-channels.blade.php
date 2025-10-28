@@ -59,8 +59,8 @@
 
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <a href="{{ route('dashboard') }}" class="btn theme-btn btn-primary px-4">Continue</a>
-      <a href="#" class="skip-link">Skip for Now</a>
+      <a href="{{ route('setup.payment') }}" class="btn theme-btn btn-primary px-4">Continue</a>
+      <a href="{{route('dashboard')}}" class="skip-link">Skip for Now</a>
     </div>
 
     <hr>
