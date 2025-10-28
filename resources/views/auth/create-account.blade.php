@@ -4,13 +4,10 @@
 
 @section('content')
 <div class="box p-4" style="max-width: 500px; width: 100%; margin: auto;">
-    @if(session('success'))
-    <div class="alert alert-success alert-auto-hide" role="alert">{{ session('success') }}</div>
-    @endif
 
-    @if(session('error'))
-    <div class="alert alert-danger alert-auto-hide" role="alert">{{ session('error') }}</div>
-    @endif
+
+@include('includes.success')
+@include('includes.error')
 
     <div class="mb-3">
         <small class="text-muted">Work in all dimensions</small>
@@ -28,7 +25,7 @@
                 class="form-control @error('email') is-invalid @enderror"
                 placeholder="eg: your email address"> <small class="text-danger" id="emailError"></small>
 
-            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+            <!-- <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response"> -->
 
             @error('email')
             <div class="invalid-feedback">{{ $message }}</div>
@@ -37,6 +34,7 @@
 
         <div class="mb-3">
             <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_SITE_KEY') }}"></div>
+            <small class="text-danger" id="captchaError"></small>
         </div>
 
         <div class="d-grid mb-3">

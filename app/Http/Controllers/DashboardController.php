@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
-use Illuminate\Container\Attributes\Auth;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class DashboardController extends Controller

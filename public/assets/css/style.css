@@ -794,6 +794,7 @@ a.skip-link {
       font-size: 18px;
    }
 }
+.mb-3:has(.text-danger:not(:empty)) input,
 .form-section:has(.text-danger:not(:empty)) input,
 .form-section:has(.text-danger:not(:empty)) select,
 .form-section .col-md-6:has(.text-danger:not(:empty)) .choices .choices__inner,

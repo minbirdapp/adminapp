@@ -17,7 +17,7 @@
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-   <script src="https://www.google.com/recaptcha/enterprise.js?render=<?php echo env('CAPTCHA_SITE_KEY');?>"></script>
+   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
    <!-- Your code -->
    @stack('styles')
 </head>
