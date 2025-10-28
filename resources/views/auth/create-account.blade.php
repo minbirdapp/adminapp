@@ -14,7 +14,7 @@
         <h3 class="fw-bold mt-1">Create your Minbird account.</h3>
     </div>
 
-    <form id="createAccountForm" method="POST" action="{{ route('register') }}">
+    <form id="createAccountForm" method="POST" action="{{ route('register') }}" novalidate>
         @csrf
         <div class="mb-3">
             <label class="form-label">Your email address</label>

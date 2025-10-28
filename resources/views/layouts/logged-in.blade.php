@@ -37,7 +37,7 @@
                 velit lacus ultricies velit, vel iaculis eros tortor ac risus.
             </p>
             <input type="hidden" name="validFieldsresponse" id="validFieldsresponse" value="" />
-            <form action="javascript:void(0);" id="documentForm">
+            <form action="javascript:void(0);" id="documentForm" novalidate>
                 @csrf
                 <div class="form-section">
                     <label class="form-label">Name of your campaign</label>
