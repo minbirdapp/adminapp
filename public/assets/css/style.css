@@ -802,3 +802,7 @@ a.skip-link {
  {
   border-color: red;
 }
+
+.alert-auto-hide {
+    transition: opacity 0.5s ease-in-out;
+}

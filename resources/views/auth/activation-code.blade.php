@@ -5,18 +5,18 @@
 @section('content')
 <div class="magic-box" style="max-width: 500px; margin: auto;">
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success alert-auto-hide" role="alert">{{ session('success') }}</div>
     @endif
 
     @if(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
+        <div class="alert alert-danger alert-auto-hide" role="alert">{{ session('error') }}</div>
     @endif
 
     <p class="mb-4">
         <strong>A magic link has been sent to your email, check your inbox.</strong>
     </p>
 
-    <form method="POST" action="{{ route('activate.code') }}">
+    <form method="POST" action="{{ route('activate.code') }}" novalidate>
         @csrf
         <div class="mb-3">
             <label for="activationCode" class="form-label">Activation Code</label>

@@ -7,7 +7,7 @@
 
   {{-- Success Alert --}}
   @if(session('success'))
-  <div class="alert alert-success position-absolute" role="alert">
+  <div class="alert alert-success position-absolute alert-auto-hide" role="alert">
     {{ session('success') }}
   </div>
   @endif
