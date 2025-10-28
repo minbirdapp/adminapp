@@ -28,28 +28,46 @@
         }
     });
 
-    // 🔄 Keep email synced between both forms
+    //  Keep email synced between both forms
     emailInput.addEventListener('input', function() {
         const value = emailInput.value.trim();
         magicEmail.value = value;
         passwordEmail.value = value;
     });
 
-    // 🛡️ Validate before submitting Magic Link Form
-    magicForm.addEventListener('submit', function(e) {
-        const email = emailInput.value.trim();
-        emailError.textContent = '';
+    //  Validate before submitting Magic Link Form
+ magicForm.addEventListener('submit', function(e) {
+    let valid = true;
+    const email = emailInput.value.trim();
+    const captcha = document.getElementById('g-recaptcha-response').value.trim();
 
-        if (email === '') {
-            e.preventDefault();
-            emailError.textContent = 'Email is required.';
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            e.preventDefault();
-            emailError.textContent = 'Please enter a valid email address.';
-        }
-    });
+    // Reset errors
+    emailError.textContent = '';
+    document.getElementById('captchaError').textContent = '';
 
-    // 🧠 Validate before submitting Password Login Form
+    //  Validate email
+    if (email === '') {
+        emailError.textContent = 'Email is required.';
+        valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailError.textContent = 'Please enter a valid email address.';
+        valid = false;
+    }
+
+    //  Validate captcha
+    if (captcha === '') {
+        document.getElementById('captchaError').textContent = 'Captcha field is required.';
+        valid = false;
+    }
+
+    // Stop form submission if invalid
+    if (!valid) {
+        e.preventDefault();
+    }
+});
+
+
+    //  Validate before submitting Password Login Form
     passwordForm.addEventListener('submit', function(e) {
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
@@ -77,7 +95,7 @@
         }
 
         if (!valid) {
-            e.preventDefault(); // 🚫 Stop form submit if invalid
+            e.preventDefault(); //  Stop form submit if invalid
         }
     });
 });
@@ -167,6 +185,7 @@ document.getElementById('createAccountForm').addEventListener('submit', function
     // Get the email value
     const email = document.getElementById('email').value.trim();
     const captcha = document.getElementById('g-recaptcha-response').value.trim();
+    document.getElementById('captchaError').textContent = '';
 
     // Check if empty
     if (email === '') {

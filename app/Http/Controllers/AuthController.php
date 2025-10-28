@@ -61,28 +61,47 @@ class AuthController extends Controller
     }
 
     // Resend magic link / code
-    public function sendMagicLink(Request $request)
-    {
+  public function sendMagicLink(Request $request)
+{
+    try {
+        //  Validate input
         $request->validate([
             'email' => 'required|email|exists:users,email',
+            'g-recaptcha-response' => 'required',
         ]);
 
-        $user = \App\Models\User::where('email', $request->email)->first();
+        // Verify Google reCAPTCHA
+        $secretKey = env('CAPTCHA_SECRET_KEY');
+        $response = $request->input('g-recaptcha-response');
+        $remoteIp = $request->ip();
 
-        // 1. Generate activation code
+        $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$response}&remoteip={$remoteIp}");
+        $responseKeys = json_decode($verify, true);
+
+        if (!($responseKeys['success'] ?? false)) {
+            return back()->with('error', 'Captcha verification failed. Please try again.');
+        }
+
+        //  Proceed if captcha is valid
+        $user = User::where('email', $request->email)->first();
+
+        // Generate new activation code
         $code = rand(100000, 999999);
         $user->activation_code = $code;
         $user->activation_code_expires_at = now()->addMinutes(10);
         $user->save();
 
-        // 2. Send mail with the code
+        // Send mail
         \Mail::to($user->email)->send(new \App\Mail\MagicLinkMail($user->activation_code));
 
-        // 3. Redirect to activation page with the email
         return redirect()
             ->route('activate.code.page', ['email' => $user->email])
             ->with('success', 'We’ve sent you an email with your activation code.');
+    } catch (\Exception $e) {
+        return back()->with('error', 'Something went wrong: ' . $e->getMessage());
     }
+}
+
 
 
 

@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="box p-4" style="max-width: 500px; width: 100%; margin: auto;">
-    {{-- ✅ Flash Messages --}}
+    {{--  Flash Messages --}}
     @if(session('success'))
         <div class="alert alert-success alert-auto-hide" role="alert">{{ session('success') }}</div>
     @endif
@@ -17,20 +17,21 @@
         <h3 class="fw-bold mt-1">Welcome back to Minbird.</h3>
     </div>
 
-    {{-- ✅ Shared Email Field --}}
+    {{--  Shared Email Field --}}
     <div class="mb-3">
         <label class="form-label">Your email address</label>
         <input type="email" id="emailInput" class="form-control" placeholder="e.g. your email address">
         <small class="text-danger" id="emailError"></small>
     </div>
 
-    {{-- ✅ Magic Link Form --}}
+    {{-- Magic Link Form --}}
     <form id="magicForm" method="POST" action="{{ route('magic.send') }}" novalidate>
         @csrf
         <input type="hidden" name="email" id="magicEmail">
 
         <div class="mb-3">
             <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_SITE_KEY') }}"></div>
+             <small class="text-danger" id="captchaError"></small>
         </div>
 
         <div class="d-grid mb-3">
@@ -38,7 +39,7 @@
         </div>
     </form>
 
-    {{-- ✅ Password Login Form (hidden by default) --}}
+    {{-- Password Login Form (hidden by default) --}}
     <form id="passwordForm" method="POST" action="{{ route('password.login') }}" style="display:none;" novalidate> 
         @csrf
         <input type="hidden" name="email" id="passwordEmail">
@@ -53,6 +54,7 @@
                 placeholder="Enter your password">
             <small class="text-danger" id="passwordError"></small>
         </div>
+          
 
         <div class="d-grid mb-3">
             <button class="btn btn-primary" type="submit">Login</button>
@@ -61,7 +63,7 @@
 
     <p class="text-muted text-center" id="orText">Or</p>
 
-    {{-- ✅ Toggle Button --}}
+    {{--  Toggle Button --}}
     <div class="d-grid">
         <a href="#" id="toggleLoginType" class="btn btn-outline-secondary">Use Password</a>
     </div>
