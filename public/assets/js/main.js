@@ -109,9 +109,9 @@ jQuery(document).on("click", "#addUrl", function () {
         jQuery(this).parent().parent().find(".trackerUrl").css("border", "red");
     }
     jQuery(".trackingUrls").append(
-        '<div class="input-group mb-3">                        <span class="input-group-text">' +
+        '<div class="input-group mb-3">          <input type="hidden" name="tracker[name][]" value="'+trackerName+'">              <span class="input-group-text">' +
             trackerName +
-            '</span>                        <input type="text" class="form-control trackerUrl" value="' +
+            '</span>                        <input type="text" name="tracker[url][]" class="form-control trackerUrl" value="' +
             trackerUrl +
             '">                                        <button class="delete-btn deleteTrackingUrl"><i class="fa-solid fa-trash"></i></button>                    </div>'
     );

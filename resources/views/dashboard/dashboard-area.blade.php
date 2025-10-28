@@ -21,6 +21,9 @@
 
     <!-- Quickstart Guide -->
     <div class="mb-5">
+        @if(session('success'))
+            <div class="alert alert-success mb-3 alert-auto-hide" role="alert">{{ session('success') }}</div>
+        @endif
         <h6 class="fw-semibold mb-3">Your Quickstart Guide</h6>
         <div class="row g-3">
             <div class="col-md-4">
