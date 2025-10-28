@@ -14,4 +14,12 @@ class PaymentController extends Controller
 
         return view('auth.setup-payment', compact('plans'));
     }
+
+
+    public function confirmPayment($planId = null)
+    {
+        // Fetch only active plans
+        $plan = PaymentPlan::where('id', $planId)->first();
+        return view('payments.confirm-payment', compact('plan'));
+    }
 }

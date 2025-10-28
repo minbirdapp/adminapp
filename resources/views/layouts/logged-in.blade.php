@@ -16,6 +16,9 @@
 </head>
 
 <body>
+     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
     <div class="container-fluid">
         <div class="row">
             @include('includes/sidebar')
