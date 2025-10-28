@@ -18,24 +18,26 @@
       <p>Try for free for 45 days — cancel anytime</p>
     </div>
 
+    <!-- <div class="row justify-content-center"> -->
+    @forelse($plans as $plan)
     <div class="row justify-content-center">
-      @forelse($plans as $plan)
+
       <div class="col-md-6">
         <div class="plan-card mb-4 p-4 border rounded shadow-sm text-center">
           <h3>{{ $plan->plan_name }}</h3>
           @if($plan->description)
-            <p class="text-muted">{{ $plan->description }}</p>
+          <p class="text-muted">{{ $plan->description }}</p>
           @endif
 
           <div class="plan-details mt-3">
             <div class="price mb-3">
               ${{ number_format($plan->cost, 2) }}
               @if($plan->plan_duration == 1)
-                /month
+              /month
               @elseif($plan->plan_duration == 12)
-                /year
+              /year
               @else
-                /{{ $plan->plan_duration }} days
+              /{{ $plan->plan_duration }} days
               @endif
             </div>
 
@@ -45,7 +47,7 @@
               <li>Grace period: {{ $plan->grace_duration }} days</li>
             </ul>
 
-            <button class="trial-btn btn btn-primary w-100 mt-3">Start 45 Days Trial</button>
+            <a href="{{route('setup.confirm', $plan->id)}}" class="trial-btn btn btn-primary w-100 mt-3">Start 45 Days Trial</a>
 
             <span class="note d-block text-muted mt-2">
               <img src="{{ asset('assets/img/icons/cancel.svg') }}" alt="cancel" width="16">
@@ -54,12 +56,14 @@
           </div>
         </div>
       </div>
-      @empty
-      <div class="col-12 text-center text-muted">
-        <p>No payment plans available yet.</p>
-      </div>
-      @endforelse
     </div>
+
+    @empty
+    <div class="col-12 text-center text-muted">
+      <p>No payment plans available yet.</p>
+    </div>
+    @endforelse
+    <!-- </div> -->
 
     <div class="text-center mt-4">
       <button class="continue-btn btn btn-outline-primary px-5">Continue</button>
