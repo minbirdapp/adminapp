@@ -40,8 +40,13 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'activation_code_expires_at' => 'datetime', // ✅ added cast
+            'activation_code_expires_at' => 'datetime', //
             'password' => 'hashed',
         ];
     }
+
+    public function profile()
+{
+    return $this->hasOne(\App\Models\UserProfile::class, 'user_id');
+}
 }
