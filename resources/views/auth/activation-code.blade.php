@@ -28,8 +28,12 @@
         <button type="submit" class="btn btn-primary w-100">Continue</button>
     </form>
 
-    <div class="mt-3 text-center">
-        <a href="{{ route('magic.link') }}" class="resend-link text-decoration-underline">Resend Activation Code</a>
-    </div>
+   <div class="mt-3 text-center">
+    <a href="{{ route('resend.code', ['email' => request()->get('email')]) }}" class="resend-link text-decoration-underline">
+        Resend Activation Code
+    </a>
 </div>
+
+</div>
+<?php include(resource_path('js/pages/validations.php')); ?>
 @endsection
