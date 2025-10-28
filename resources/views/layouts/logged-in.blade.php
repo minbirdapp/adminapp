@@ -121,7 +121,7 @@
                 <button type="button" id="submitCampaign" class="btn btn-primary">Save</button>
                 <button type="button" id="cancelBtn" class="btn btn-secondary ms-2">Cancel</button>
             </div>
-            <button type="button" class="btn btn-outline-danger">Delete</button>
+            <!-- <button type="button" class="btn btn-outline-danger">Delete</button> -->
         </div>
     </div>
     <!-- Invite team member Slide Panel -->
