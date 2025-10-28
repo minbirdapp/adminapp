@@ -6,10 +6,10 @@
 <div class="box p-4" style="max-width: 500px; width: 100%; margin: auto;">
     {{-- ✅ Flash Messages --}}
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success alert-auto-hide" role="alert">{{ session('success') }}</div>
     @endif
     @if(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
+        <div class="alert alert-danger alert-auto-hide" role="alert">{{ session('error') }}</div>
     @endif
 
     <div class="mb-3">
@@ -25,7 +25,7 @@
     </div>
 
     {{-- ✅ Magic Link Form --}}
-    <form id="magicForm" method="POST" action="{{ route('magic.send') }}">
+    <form id="magicForm" method="POST" action="{{ route('magic.send') }}" novalidate>
         @csrf
         <input type="hidden" name="email" id="magicEmail">
 
@@ -39,7 +39,7 @@
     </form>
 
     {{-- ✅ Password Login Form (hidden by default) --}}
-    <form id="passwordForm" method="POST" action="{{ route('password.login') }}" style="display:none;">
+    <form id="passwordForm" method="POST" action="{{ route('password.login') }}" style="display:none;" novalidate> 
         @csrf
         <input type="hidden" name="email" id="passwordEmail">
 

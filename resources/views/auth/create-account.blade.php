@@ -5,11 +5,11 @@
 @section('content')
 <div class="box p-4" style="max-width: 500px; width: 100%; margin: auto;">
     @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
+    <div class="alert alert-success alert-auto-hide" role="alert">{{ session('success') }}</div>
     @endif
 
     @if(session('error'))
-    <div class="alert alert-danger">{{ session('error') }}</div>
+    <div class="alert alert-danger alert-auto-hide" role="alert">{{ session('error') }}</div>
     @endif
 
     <div class="mb-3">
@@ -17,7 +17,7 @@
         <h3 class="fw-bold mt-1">Create your Minbird account.</h3>
     </div>
 
-    <form id="createAccountForm" method="POST" action="{{ route('register') }}">
+    <form id="createAccountForm" method="POST" action="{{ route('register') }}" novalidate>
         @csrf
         <div class="mb-3">
             <label class="form-label">Your email address</label>

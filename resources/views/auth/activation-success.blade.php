@@ -7,7 +7,7 @@
     <div class="magic-box text-center">
 
         @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success alert-auto-hide" role="alert">{{ session('success') }}</div>
         @endif
 
         <!-- Success Message -->

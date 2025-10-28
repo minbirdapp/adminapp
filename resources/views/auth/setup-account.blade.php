@@ -7,7 +7,7 @@
     <div class="account-setup" style="max-width: 600px;">
 
         @if(session('success'))
-            <div class="alert alert-success mb-3">{{ session('success') }}</div>
+            <div class="alert alert-success mb-3 alert-auto-hide" role="alert">{{ session('success') }}</div>
         @endif
 
         <h4 class="mb-1">Setup your account</h4>
