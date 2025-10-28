@@ -162,9 +162,11 @@ document.getElementById('createAccountForm').addEventListener('submit', function
 
     // Reset any previous error messages
     document.getElementById('emailError').textContent = '';
+    document.getElementById('captchaError').textContent = '';
 
     // Get the email value
     const email = document.getElementById('email').value.trim();
+    const captcha = document.getElementById('g-recaptcha-response').value.trim();
 
     // Check if empty
     if (email === '') {
@@ -176,6 +178,11 @@ document.getElementById('createAccountForm').addEventListener('submit', function
         document.getElementById('emailError').textContent = 'Please enter a valid email address.';
         valid = false;
     }
+
+    if (captcha === '') {
+        document.getElementById('captchaError').textContent = 'Captcha field is required.';
+        valid = false;
+    } 
 
     // Stop form submission if invalid
     if (!valid) {

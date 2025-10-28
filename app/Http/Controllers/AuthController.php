@@ -24,35 +24,34 @@ class AuthController extends Controller
     // Handle registration
     public function register(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email|unique:users,email',
-            'g-recaptcha-response' => 'required',
-        ]);
-          // Verify reCAPTCHA
-    $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-        'secret' => env('RECAPTCHA_SECRET'),
-        'response' => $request->input('g-recaptcha-response'),
-        'remoteip' => $request->ip(),
-    ]);
-
-    $recaptcha = $response->json();
-
-    if (!($recaptcha['success'] ?? false)) {
-        return back()->withErrors(['captcha' => 'Captcha verification failed. Please try again.']);
-    }
-
-        $user = User::create([
-            'name' => 'Minbird User',
-            'email' => $request->email,
-            'password' => bcrypt(Str::random(16)),
-            'activation_code' => mt_rand(100000, 999999), // 6-digit numeric code
-            'activation_code_expires_at' => Carbon::now()->addMinutes(15),
-        ]);
-
-        // Send activation email
-        Mail::to($user->email)->send(new MagicLinkMail($user->activation_code));
-
-        return redirect()->route('magic.link')->with('success', 'Activation code sent to your email!');
+        try {
+            $request->validate([
+                'email' => 'required|email|unique:users,email',
+                'g-recaptcha-response' => 'required',
+            ]);
+            $secretKey = env('CAPTCHA_SECRET_KEY');
+            $response = $request->input('g-recaptcha-response');
+            $remoteIp = $_SERVER['REMOTE_ADDR'];
+            $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$response}&remoteip={$remoteIp}");
+            $responseKeys = json_decode($verify, true);
+            if (!($responseKeys['success'] ?? false)) {
+                session()->flash('error', 'Captcha verification failed. Please try again.');
+                return redirect()->route('create.account');
+            }
+            $user = User::create([
+                'name' => 'Minbird User',
+                'email' => $request->email,
+                'password' => bcrypt(Str::random(16)),
+                'activation_code' => mt_rand(100000, 999999), // 6-digit numeric code
+                'activation_code_expires_at' => Carbon::now()->addMinutes(15),
+            ]);
+            // Send activation email
+            Mail::to($user->email)->send(new MagicLinkMail($user->activation_code));
+            return redirect()->route('magic.link')->with('success', 'Activation code sent to your email!');
+        } catch (\Exception $e) {
+            session()->flash('error', $e->getMessage());
+            return back();
+        }
     }
 
     // Show Magic Link page
@@ -144,26 +143,26 @@ class AuthController extends Controller
     }
 
     // Handle login
- public function passwordLogin(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required|string|min:6',
-    ]);
+    public function passwordLogin(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
 
-    $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
-    if (!$user) {
-        return back()->with('error', 'No account found with this email.');
+        if (!$user) {
+            return back()->with('error', 'No account found with this email.');
+        }
+
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->with('error', 'Incorrect password.');
+        }
+
+        Auth::login($user);
+        return redirect()->route('dashboard')->with('success', 'Welcome back!');
     }
-
-    if (!Hash::check($request->password, $user->password)) {
-        return back()->with('error', 'Incorrect password.');
-    }
-
-    Auth::login($user);
-    return redirect()->route('dashboard')->with('success', 'Welcome back!');
-}
 
     public function showSetupAccount(Request $request)
     {
