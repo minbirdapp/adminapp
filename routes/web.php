@@ -30,6 +30,7 @@ Route::get('/create-account', [AuthController::class, 'showCreateAccount'])->nam
 Route::post('/create-account', [AuthController::class, 'register'])->name('register');
 
 Route::get('/magic-link', [AuthController::class, 'showMagicLink'])->name('magic.link');
+Route::get('/magic-link', [AuthController::class, 'showMagicLink'])->name('login');
 Route::post('/magic-link', [AuthController::class, 'sendMagicLink'])->name('magic.send');
 
 Route::post('/activate-code', [AuthController::class, 'activateByCode'])->name('activate.code');
@@ -40,7 +41,6 @@ Route::get('/resend-activation-code', [AuthController::class, 'resendActivationC
 
 // Show password login form
 Route::get('/login', [AuthController::class, 'showPasswordLogin'])->name('password.login');
-Route::get('/login', [AuthController::class, 'showPasswordLogin'])->name('login');
 
 // Handle password login
 Route::post('/login', [AuthController::class, 'passwordLogin'])->name('password.login.submit');
@@ -48,10 +48,11 @@ Route::post('/login', [AuthController::class, 'passwordLogin'])->name('password.
 Route::get('/activation-success', function () {
     return view('auth.activation-success');
 })->name('activation.success');
-Route::get('/setup-account', [AuthController::class, 'showSetupAccount'])->name('setup.account');
-Route::post('/setup-account', [AuthController::class, 'storeSetupAccount'])->name('setup.account.store');
+
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/setup-account', [AuthController::class, 'showSetupAccount'])->name('setup.account');
+    Route::post('/setup-account', [AuthController::class, 'storeSetupAccount'])->name('setup.account.store');
     Route::get('/setup-channels', [ChannelSetupController::class, 'showChannels'])->name('setup.channels');
     Route::post('/add-media-accounts', [ChannelSetupController::class, 'addSocialMediaAccount'])->name('brand.addSocialMediaAccount');
     Route::post('/brands/store', [ChannelSetupController::class, 'storeBrand'])->name('brands.store');

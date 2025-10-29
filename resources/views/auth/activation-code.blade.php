@@ -5,20 +5,18 @@
 @section('content')
 <div class="magic-box" style="max-width: 500px; margin: auto;">
     @if(session('success'))
-        <div class="success-message alert-auto-hide" role="alert"><span></span>{{ session('success') }}</div>
+    <div class="success-message alert-auto-hide" role="alert"><span></span>{{ session('success') }}</div>
+    @if(isset($email))
+    <p id="magic-message" class="mb-4">
+        <strong>
+            A magic link has been sent to {{ $email }}. Please check your inbox.
+        </strong>
+    </p>
+    @endif
     @endif
 
     @if(session('error'))
-        <div class="alert-danger alert-auto-hide" role="alert">{{ session('error') }}</div>
-    @endif
-
-    {{-- ✅ Show this only if email exists --}}
-    @if(isset($email))
-        <p id="magic-message" class="mb-4">
-            <strong>
-                A magic link has been sent to {{ $email }}. Please check your inbox.
-            </strong>
-        </p>
+    <div class="error-message alert-auto-hide" role="alert"><span></span>{{ session('error') }}</div>
     @endif
 
     <form method="POST" action="{{ route('activate.code') }}" novalidate>
@@ -27,7 +25,7 @@
             <label for="activationCode" class="form-label">Activation Code</label>
             <input type="text" id="activationCode" name="activation_code" class="form-control @error('activation_code') is-invalid @enderror" placeholder="Enter your activation code" required>
             @error('activation_code')
-                <div class="invalid-feedback">{{ $message }}</div>
+            <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
         <button type="submit" class="btn btn-primary w-100">Continue</button>
