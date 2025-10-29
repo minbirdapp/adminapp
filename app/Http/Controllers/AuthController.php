@@ -68,7 +68,7 @@ class AuthController extends Controller
             // Redirect to activation code page
             return redirect()
                 ->route('activate.code.page', ['email' => $user->email])
-                ->with('success', 'We’ve sent you an email with your activation code.');
+                ->with('success', 'Success Message');
         } catch (\Exception $e) {
             return back()->with('error', 'Something went wrong: ' . $e->getMessage());
         }
@@ -118,7 +118,7 @@ class AuthController extends Controller
 
             return redirect()
                 ->route('activate.code.page', ['email' => $user->email])
-                ->with('success', 'We’ve sent you an email with your activation code.');
+                ->with('success', 'Success Message');
         } catch (\Exception $e) {
             return back()->with('error', 'Something went wrong: ' . $e->getMessage());
         }

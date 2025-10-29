@@ -5,7 +5,7 @@
 @section('content')
 <div class="magic-box" style="max-width: 500px; margin: auto;">
     @if(session('success'))
-        <div class="success-message alert-auto-hide" role="alert">{{ session('success') }}</div>
+        <div class="success-message alert-auto-hide" role="alert"><span></span>{{ session('success') }}</div>
     @endif
 
     @if(session('error'))
@@ -16,7 +16,7 @@
     @if(isset($email))
         <p id="magic-message" class="mb-4">
             <strong>
-                A magic link has been sent to <span style="color:#007bff;">{{ $email }}</span>. Please check your inbox.
+                A magic link has been sent to {{ $email }}. Please check your inbox.
             </strong>
         </p>
     @endif
