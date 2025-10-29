@@ -3,11 +3,12 @@
 @section('title', 'Setup Channels')
 
 @section('content')
-<main class="flex-grow-1 d-flex align-items-center justify-content-center">
+    <main class="flex-grow-1 d-flex align-items-center justify-content-center">
 
   {{-- Success Alert --}}
   @if(session('success'))
-  <div class="success-message position-absolute alert-auto-hide" role="alert">
+          <div class="alert alert-success position-absolute alert-auto-hide " role="alert">
+
     {{ session('success') }}
   </div>
   @endif
