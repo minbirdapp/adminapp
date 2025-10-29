@@ -68,7 +68,7 @@ class AuthController extends Controller
             // Redirect to activation code page
             return redirect()
                 ->route('activate.code.page', ['email' => $user->email])
-                ->with('success', 'We’ve sent you an email with your activation code.');
+                ->with('success', 'Success Message');
         } catch (\Exception $e) {
             return back()->with('error', 'Something went wrong: ' . $e->getMessage());
         }
@@ -118,7 +118,7 @@ class AuthController extends Controller
 
             return redirect()
                 ->route('activate.code.page', ['email' => $user->email])
-                ->with('success', 'We’ve sent you an email with your activation code.');
+                ->with('success', 'Success Message');
         } catch (\Exception $e) {
             return back()->with('error', 'Something went wrong: ' . $e->getMessage());
         }
@@ -279,6 +279,6 @@ class AuthController extends Controller
                 'is_default' => 1
             ]);
         }
-        return redirect()->route('setup.channels')->with('success', 'Account setup complete! Let’s connect your social channels.');
+        return redirect()->route('setup.channels')->with('success', '  ✅ Here is a success text');
     }
 }

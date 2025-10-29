@@ -14,7 +14,6 @@
           </div>
           <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Welcome {{ Auth::user()->name != 'Minbird User' ? Auth::user()->name : (Auth::user()->profile->first_name ?? 'User') }}
-
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item" href="#">Profile</a></li>
@@ -27,8 +26,6 @@
           </ul>
         </div>
       @endif
-    @else
-      <a href="{{ route('magic.link') }}" class="btn btn-light">Login</a>
     @endauth
   </div>
 </nav>
