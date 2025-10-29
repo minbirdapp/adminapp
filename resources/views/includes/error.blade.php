@@ -1,8 +1,8 @@
 @if(session('error'))
-<div class="error-message">
+<!-- <div class="error-message">
     <span></span> Error Message
-</div>
+</div> -->
 <div class="error-message">
-    <span>🎉</span> {{ session('error') }}
+    <span></span> {{ session('error') }}
 </div>
 @endif
