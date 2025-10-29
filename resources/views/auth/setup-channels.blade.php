@@ -7,7 +7,7 @@
 
   {{-- Success Alert --}}
   @if(session('success'))
-  <div class="alert alert-success position-absolute alert-auto-hide" role="alert">
+  <div class="success-message position-absolute alert-auto-hide" role="alert">
     {{ session('success') }}
   </div>
   @endif
@@ -25,7 +25,8 @@
       <div class="border-secondary-subtle rounded-bottom p-3 bg-white text-center">
 
         {{-- Example social icons (for now, static placeholders) --}}
-        <ul class="selected-brand-list">
+        <p class="mb-3 text-muted">Currently you don't have any social media account configured to your brand</p>
+        <!-- <ul class="selected-brand-list">
           <li>
             <i><img src="{{ asset('assets/img/icons/fb-small.svg') }}" alt="Facebook"></i>
             <span><img src="{{ asset('assets/img/icons/user-img.png') }}" alt="user"></span>
@@ -42,7 +43,7 @@
             <i><img src="{{ asset('assets/img/icons/tiktok-small.svg') }}" alt="tiktok"></i>
             <span><img src="{{ asset('assets/img/icons/user-img.png') }}" alt="user"></span>
           </li>
-        </ul>
+        </ul> -->
 
         <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#connectModal">
           Connect a Channel
@@ -60,7 +61,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
       <a href="{{ route('setup.payment') }}" class="btn theme-btn btn-primary px-4">Continue</a>
-      <a href="{{route('dashboard')}}" class="skip-link">Skip for Now</a>
+      <!-- <a href="{{route('dashboard')}}" class="skip-link">Skip for Now</a> -->
     </div>
 
     <hr>

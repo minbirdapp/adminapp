@@ -7,7 +7,7 @@
     <div class="account-setup" style="max-width: 600px;">
 
         @if(session('success'))
-            <div class="alert alert-success mb-3 alert-auto-hide" role="alert">{{ session('success') }}</div>
+            <div class="success-message mb-3 alert-auto-hide" role="alert">{{ session('success') }}</div>
         @endif
 
         <h4 class="mb-1">Setup your account</h4>
@@ -20,7 +20,7 @@
 
             <div class="mb-3">
                 <label class="form-label">Your email address</label>
-                <input type="email" class="form-control" value="{{ $user->email }}" readonly>
+                <input type="email" class="form-control" style="background: #bbbbbb;" value="{{ $user->email }}" readonly>
             </div>
 
             <div class="row">
@@ -42,6 +42,13 @@
                 <label class="form-label"><span>*</span> Password</label>
                 <input type="password" id="password" name="password" class="form-control" placeholder="Enter password">
                 <small class="text-danger" id="passwordError"></small>
+                                <!-- Password Requirement List -->
+<ul id="passwordRules" class="list-unstyled mt-2">
+   <li id="rule-length" class="rule-item">Minimum 8 characters</li>
+   <li id="rule-letter" class="rule-item">At least one letter</li>
+   <li id="rule-number" class="rule-item">At least one number</li>
+   <li id="rule-special" class="rule-item">At least one special character</li>
+</ul>
             </div>
 
             <div class="mb-2">

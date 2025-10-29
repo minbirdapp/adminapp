@@ -4,7 +4,7 @@
 @section('content')
 <main class="flex-grow-1 d-flex align-items-center justify-content-center">
   @if(session('success'))
-  <div class="alert alert-success position-absolute" role="alert">
+  <div class="success-message position-absolute" role="alert">
     <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
   </div>
   @endif
