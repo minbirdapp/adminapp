@@ -6,7 +6,7 @@
 <div class="box p-4" style="max-width: 500px; width: 100%; margin: auto;">
     {{--  Flash Messages --}}
     @if(session('success'))
-        <div class="alert alert-success alert-auto-hide" role="alert">{{ session('success') }}</div>
+        <div class="success-message alert-auto-hide" role="alert">{{ session('success') }}</div>
     @endif
     @if(session('error'))
         <div class="alert alert-danger alert-auto-hide" role="alert">{{ session('error') }}</div>

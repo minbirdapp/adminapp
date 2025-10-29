@@ -6,26 +6,29 @@
       </a>
     </div>
 
-    <div class="dropdown welcome-btn">
-      <div class="user-icon">
-        <img src="{{ asset('assets/img/icons/user-icon.svg') }}" alt="user" class="me-2">
-      </div>
-      <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Welcome {{ Auth::user()->name ?? 'Guest' }}
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li><a class="dropdown-item" href="#">Profile</a></li>
-        @auth
-          <li>
-            <form action="{{ route('logout') }}" method="POST">
-              @csrf
-              <button type="submit" class="dropdown-item">Logout</button>
-            </form>
-          </li>
-        @else
-          <li><a class="dropdown-item" href="{{ route('magic.link') }}">Login</a></li>
-        @endauth
-      </ul>
-    </div>
+    @auth
+      @if(Auth::user()->isProfileCompleted())
+        <div class="dropdown welcome-btn">
+          <div class="user-icon">
+            <img src="{{ asset('assets/img/icons/user-icon.svg') }}" alt="user" class="me-2">
+          </div>
+          <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Welcome {{ Auth::user()->name != 'Minbird User' ? Auth::user()->name : (Auth::user()->profile->first_name ?? 'User') }}
+
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li>
+              <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="dropdown-item">Logout</button>
+              </form>
+            </li>
+          </ul>
+        </div>
+      @endif
+    @else
+      <a href="{{ route('magic.link') }}" class="btn btn-light">Login</a>
+    @endauth
   </div>
 </nav>

@@ -7,7 +7,7 @@
 
   {{-- Success Message --}}
   @if(session('success'))
-  <div class="alert alert-success position-absolute alert-auto-hide" role="alert">
+  <div class="success-message position-absolute alert-auto-hide" role="alert">
     <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
   </div>
   @endif

@@ -49,4 +49,14 @@ class User extends Authenticatable
 {
     return $this->hasOne(\App\Models\UserProfile::class, 'user_id');
 }
+
+public function isProfileCompleted()
+{
+    return $this->profile
+        && !empty($this->profile->first_name)
+        && !empty($this->profile->brand_name)
+        && !empty($this->profile->industry_id)
+        && !empty($this->profile->brand_role_id);
+}
+
 }

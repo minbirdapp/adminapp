@@ -176,7 +176,7 @@ class AuthController extends Controller
         auth()->login($user);
 
         //  Redirect to success page
-        return redirect()->route('activation.success')->with('success', 'Your account is activated!');
+        return redirect()->route('activation.success')->with('success', 'You’re all set');
     }
 
     public function resendActivationCode(Request $request)
@@ -259,10 +259,10 @@ class AuthController extends Controller
         ]);
 
 
-        $user->update([
-            'password' => bcrypt($request->password),
-        ]);
-
+      $user->update([
+    'name'     => trim($request->first_name . ' ' . $request->last_name),
+    'password' => bcrypt($request->password),
+]);
         // optional: store profile details in a user_profiles table
         \App\Models\UserProfile::updateOrCreate(
             ['user_id' => $user->id],

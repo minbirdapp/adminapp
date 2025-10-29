@@ -7,13 +7,9 @@
     <div class="magic-box text-center">
 
         @if(session('success'))
-            <div class="alert alert-success alert-auto-hide" role="alert">{{ session('success') }}</div>
+            <div class="success-message alert-auto-hide" role="alert"><span></span>{{ session('success') }}</div>
         @endif
 
-        <!-- Success Message -->
-        <div class="success-message">
-            <span>🎉</span> You’re all set
-        </div>
 
         <!-- Main Text -->
         <p class="mb-4">

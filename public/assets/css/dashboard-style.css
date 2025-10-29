@@ -635,12 +635,19 @@ table td {
       border-color: #593CFB;
       border-radius: 6px;
       font-size: 14px;
-      padding: 6px 18px;
+      /* padding: 6px 18px; */
     }
     .btn-outline-secondary {
       border-radius: 6px;
       font-size: 14px;
     }
+    .rule-item {
+    color: #dc3545; /* red by default */
+    font-size: 14px;
+}
+.text-success {
+    color: #28a745 !important; /* green for valid */
+}
     .tracker-item {
       border: 1px solid #e5e5e5;
       border-radius: 6px;
