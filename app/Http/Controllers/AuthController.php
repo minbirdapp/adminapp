@@ -279,6 +279,6 @@ class AuthController extends Controller
                 'is_default' => 1
             ]);
         }
-        return redirect()->route('setup.channels')->with('success', 'Account setup complete! Let’s connect your social channels.');
+        return redirect()->route('setup.channels')->with('success', '  ✅ Here is a success text');
     }
 }
