@@ -5,3 +5,6 @@
     <a href="#" class="text-decoration-none text-muted">Cookie preferences</a> |
     <a href="#" class="text-decoration-none text-muted">Do not sell or share my personal information</a>
 </footer>
+<script>
+    var addSocialMediaAccount = '<?php echo route('brand.addSocialMediaAccount');?>';
+</script>

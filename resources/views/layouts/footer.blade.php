@@ -11,3 +11,6 @@
     <a href="#" class="text-decoration-none text-muted">Do not sell or share my personal information</a>
   </div>
 </footer>
+<script>
+    var addSocialMediaAccount = '<?php echo route('brand.addSocialMediaAccount');?>';
+</script>

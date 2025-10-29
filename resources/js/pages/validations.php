@@ -10,7 +10,7 @@
         const emailError = document.getElementById('emailError');
         const passwordError = document.getElementById('passwordError');
         const passwordInput = document.getElementById('passwordInput');
-
+if(document.getElementById('toggleLoginType')){
         //  Toggle between Magic Link and Password Login
         toggleLink.addEventListener('click', function(e) {
             e.preventDefault();
@@ -27,15 +27,17 @@
                 toggleLink.textContent = 'Use Password';
             }
         });
+    }
 
-        //  Keep email synced between both forms
+     if(document.getElementById('emailInput')) {   //  Keep email synced between both forms
         emailInput.addEventListener('input', function() {
             const value = emailInput.value.trim();
             magicEmail.value = value;
             passwordEmail.value = value;
         });
-
+    }
         //  Validate before submitting Magic Link Form
+     if(magicForm) {
         magicForm.addEventListener('submit', function(e) {
             let valid = true;
             const email = emailInput.value.trim();
@@ -65,8 +67,8 @@
                 e.preventDefault();
             }
         });
-
-
+    }
+  if(passwordForm) {
         //  Validate before submitting Password Login Form
         passwordForm.addEventListener('submit', function(e) {
             const email = emailInput.value.trim();
@@ -98,6 +100,7 @@
                 e.preventDefault(); //  Stop form submit if invalid
             }
         });
+    }
     });
 </script>
 
@@ -109,6 +112,7 @@
     });
 </script>
 <script>
+
     document.getElementById('addBrandForm').addEventListener('submit', function(e) {
         let valid = true;
         document.getElementById('brandError').textContent = '';
@@ -151,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
             element.classList.remove("text-success");
         }
     }
-
+if(passwordInput){
     // 🟢 Real-time password validation
     passwordInput.addEventListener("input", function() {
         const value = passwordInput.value;
@@ -166,8 +170,9 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleRule(rules.number, hasNumber);
         toggleRule(rules.special, hasSpecial);
     });
+}
 
-    // 🚫 Prevent submission if password invalid
+ if(form) {   // 🚫 Prevent submission if password invalid
     form.addEventListener('submit', function(e) {
         let valid = true;
 
@@ -225,11 +230,13 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
         }
     });
+}
 });
 </script>
 
 
 <script>
+    if(document.getElementById('createAccountForm')){
     document.getElementById('createAccountForm').addEventListener('submit', function(e) {
         let valid = true;
 
@@ -263,6 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
         }
     });
+}
 </script>
 
 <script>

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title -->
     <title>Minbird | Dashboard</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- vendor css -->
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/fontawesome/fontawesome.min.css')}}">

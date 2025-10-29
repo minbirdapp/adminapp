@@ -21,6 +21,6 @@ class Brand extends Model
 
     public function social_medias()
     {
-        return $this->hasMany(\App\Models\BrandSocialMediaAccount::class, 'brand_id');
+        return $this->hasMany(BrandSocialMediaAccount::class,'brand_id');
     }
 }

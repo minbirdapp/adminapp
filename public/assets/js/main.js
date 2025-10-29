@@ -102,6 +102,38 @@ if (document.getElementById("overlay")) {
         closePanel(invitePanel);
     });
 }
+jQuery(document).on("click", ".openConnectModal", function () {
+    jQuery("#data_brand_id").val(jQuery(this).attr("data-attr-id"));
+    jQuery("#connectModal").modal("show");
+});
+jQuery(document).on("click", ".openSocialMedia", function () {
+    jQuery("#data_account_type").val(jQuery(this).attr("data-account-type"));
+    jQuery("#instagramModal").modal("show");
+});
+jQuery(document).on("click", ".connectPersonalAccount", function () {
+    var accountType = jQuery("#data_account_type").val();
+    var brandId = jQuery("#data_brand_id").val();
+    $.ajax({
+        url: addSocialMediaAccount,
+        type: "POST",
+        dataType: "json",
+        data: {
+            account_type: accountType,
+            brand_id: brandId,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (response) {
+            window.location.reload();
+        },
+        error: function (xhr) {
+            alert("Error: " + xhr.status);
+        },
+    });
+    jQuery("#instagramModal").modal("hide");
+});
+
 jQuery(document).on("click", "#addUrl", function () {
     var trackerName = jQuery(this).parent().parent().find(".trackerName").val();
     var trackerUrl = jQuery(this).parent().parent().find(".trackerUrl").val();
@@ -109,7 +141,9 @@ jQuery(document).on("click", "#addUrl", function () {
         jQuery(this).parent().parent().find(".trackerUrl").css("border", "red");
     }
     jQuery(".trackingUrls").append(
-        '<div class="input-group mb-3">          <input type="hidden" name="tracker[name][]" value="'+trackerName+'">              <span class="input-group-text">' +
+        '<div class="input-group mb-3">          <input type="hidden" name="tracker[name][]" value="' +
+            trackerName +
+            '">              <span class="input-group-text">' +
             trackerName +
             '</span>                        <input type="text" name="tracker[url][]" class="form-control trackerUrl" value="' +
             trackerUrl +

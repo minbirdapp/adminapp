@@ -57,14 +57,16 @@ class ChannelSetupController extends Controller
                 'brand_id' => $request->get('brand_id'),
                 'account_type' => $request->get('account_type'),
             ]);
+            session()->flash('success', 'Social media account added successfully.');
             echo json_encode([
                 'status' => true,
                 'message' => 'Social media account added successfully.'
             ]);
         } else {
+            session()->flash('error', 'Social media account already exists for the selected brand.');
             echo json_encode([
                 'status' => false,
-                'message' => 'Social media account already exists.'
+                'message' => 'Social media account already exists for the selected brand.'
             ]);
         }
         return false;

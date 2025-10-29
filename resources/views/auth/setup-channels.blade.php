@@ -3,17 +3,23 @@
 @section('title', 'Setup Channels')
 
 @section('content')
-    <main class="flex-grow-1 d-flex align-items-center justify-content-center">
+<main class="flex-grow-1 d-flex align-items-center justify-content-center">
 
-  {{-- Success Alert --}}
+
+
+  <div class="channel-setup-box">
+      {{-- Success Alert --}}
   @if(session('success'))
-          <div class="alert alert-success position-absolute alert-auto-hide " role="alert">
+  <div class="alert alert-success position-absolute alert-auto-hide " role="alert">
 
     {{ session('success') }}
   </div>
   @endif
-
-  <div class="channel-setup-box">
+  @if(session('error'))
+  <div class="alert alert-danger position-absolute alert-auto-hide " role="alert">
+    {{ session('error') }}
+  </div>
+  @endif
     <h4>Setup your social media accounts for your brand</h4>
     <p class="text-muted mb-4">Connect a channel to start scheduling posts</p>
 
@@ -26,13 +32,21 @@
       <div class="border-secondary-subtle rounded-bottom p-3 bg-white text-center">
 
         {{-- Example social icons (for now, static placeholders) --}}
-        <p class="mb-3 text-muted">Currently you don't have any social media account configured to your brand</p>
-        <!-- <ul class="selected-brand-list">
+
+        @if($brand->social_medias->count())
+        <ul class="selected-brand-list">
+          @foreach($brand->social_medias as $vv)
           <li>
-            <i><img src="{{ asset('assets/img/icons/fb-small.svg') }}" alt="Facebook"></i>
+            <i><img src="{{ asset('assets/img/icons/instagram-small.svg') }}" alt="{{$vv->account_type}}"></i>
             <span><img src="{{ asset('assets/img/icons/user-img.png') }}" alt="user"></span>
           </li>
-          <li>
+          @endforeach
+        </ul>
+        @else
+        <p class="mb-3 text-muted">Currently you don't have any social media account configured to your brand</p>
+
+        @endif
+        <!-- <li>
             <i><img src="{{ asset('assets/img/icons/linkedin-small.svg') }}" alt="linkedin"></i>
             <span><img src="{{ asset('assets/img/icons/user-img.png') }}" alt="user"></span>
           </li>
@@ -43,10 +57,10 @@
           <li>
             <i><img src="{{ asset('assets/img/icons/tiktok-small.svg') }}" alt="tiktok"></i>
             <span><img src="{{ asset('assets/img/icons/user-img.png') }}" alt="user"></span>
-          </li>
-        </ul> -->
+          </li> -->
 
-        <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#connectModal">
+
+        <button data-attr-id="{{$brand->id}}" class="btn btn-outline-secondary btn-sm openConnectModal">
           Connect a Channel
         </button>
       </div>
@@ -59,6 +73,8 @@
     </div>
     @endif
 
+    <input type="hidden" name="data_brand_id" id="data_brand_id" />
+    <input type="hidden" name="data_account_type" id="data_account_type" />
 
     <div class="d-flex justify-content-between align-items-center mb-4">
       <a href="{{ route('setup.payment') }}" class="btn theme-btn btn-primary px-4">Continue</a>
@@ -152,19 +168,19 @@
       </div>
       <div class="modal-body">
         <div class="channel-grid">
-          <div class="channel-card"><img src="{{ asset('assets/img/icons/facebook.svg') }}" alt="Facebook">
+          <!-- <div class="channel-card"><img src="{{ asset('assets/img/icons/facebook.svg') }}" alt="Facebook">
             <p class="mb-0 small">Page or Profile</p>
           </div>
           <div class="channel-card"><img src="{{ asset('assets/img/icons/linkedin.svg') }}" alt="LinkedIn">
             <p class="mb-0 small">Page or Profile</p>
-          </div>
-          <div class="channel-card" data-bs-toggle="modal" data-bs-target="#instagramModal">
+          </div> -->
+          <div class="channel-card openSocialMedia" data-account-type="instagram" data-bs-toggle="modal" data-bs-target="#instagramModal">
             <img src="{{ asset('assets/img/icons/instagram.svg') }}" alt="Instagram">
             <p class="mb-0 small">Business, Creator, or Personal</p>
           </div>
-          <div class="channel-card"><img src="{{ asset('assets/img/icons/x.svg') }}" alt="X (Twitter)">
+          <!-- <div class="channel-card"><img src="{{ asset('assets/img/icons/x.svg') }}" alt="X (Twitter)">
             <p class="mb-0 small">Business, Creator, or Personal</p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -194,7 +210,7 @@
                 <li>Notification-based publishing: Receive a mobile notification to post yourself</li>
                 <li>Manual post publishing only</li>
               </ul>
-              <button class="btn btn-primary theme-btn mt-3">Connect to Personal Account</button>
+              <button class="btn btn-primary theme-btn mt-3 connectPersonalAccount">Connect to Personal Account</button>
             </div>
           </div>
 
@@ -206,7 +222,7 @@
                 <li>Automatic publishing</li>
                 <li>Analytics & engagement (paid plans)</li>
               </ul>
-              <button class="btn btn-primary theme-btn mt-3">Connect to Professional Account</button>
+              <button class="btn btn-primary theme-btn mt-3 connectPersonalAccount">Connect to Professional Account</button>
               <p class="mt-2" style="font-size: 0.9em;">
                 If your account type isn't Professional yet, Instagram will prompt you to change it with a few simple steps.
               </p>
