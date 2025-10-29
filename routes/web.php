@@ -52,6 +52,7 @@ Route::post('/setup-account', [AuthController::class, 'storeSetupAccount'])->nam
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/setup-channels', [ChannelSetupController::class, 'showChannels'])->name('setup.channels');
+    Route::post('/add-media-accounts', [ChannelSetupController::class, 'addSocialMediaAccount'])->name('brand.addSocialMediaAccount');
     Route::post('/brands/store', [ChannelSetupController::class, 'storeBrand'])->name('brands.store');
     Route::post('/campaign/create', [CampaignController::class, 'storeCampaign'])->name('campaign.create');
     Route::get('/setup-payment', [App\Http\Controllers\PaymentController::class, 'setupPayment'])->name('setup.payment');

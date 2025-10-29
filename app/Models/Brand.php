@@ -18,4 +18,9 @@ class Brand extends Model
         'competitor_info',
         'is_default'
     ];
+
+    public function social_medias()
+    {
+        return $this->hasMany(\App\Models\BrandSocialMediaAccount::class, 'brand_id');
+    }
 }
