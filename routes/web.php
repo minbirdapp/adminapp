@@ -40,6 +40,7 @@ Route::get('/resend-activation-code', [AuthController::class, 'resendActivationC
 
 // Show password login form
 Route::get('/login', [AuthController::class, 'showPasswordLogin'])->name('password.login');
+Route::get('/login', [AuthController::class, 'showPasswordLogin'])->name('login');
 
 // Handle password login
 Route::post('/login', [AuthController::class, 'passwordLogin'])->name('password.login.submit');
