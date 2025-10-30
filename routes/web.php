@@ -30,7 +30,7 @@ Route::get('/create-account', [AuthController::class, 'showCreateAccount'])->nam
 Route::post('/create-account', [AuthController::class, 'register'])->name('register');
 
 Route::get('/magic-link', [AuthController::class, 'showMagicLink'])->name('magic.link');
-Route::get('/magic-link', [AuthController::class, 'showMagicLink'])->name('login');
+// Route::get('/magic-link', [AuthController::class, 'showMagicLink'])->name('login');
 Route::post('/magic-link', [AuthController::class, 'sendMagicLink'])->name('magic.send');
 
 Route::post('/activate-code', [AuthController::class, 'activateByCode'])->name('activate.code');
