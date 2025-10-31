@@ -6,7 +6,8 @@ use App\Http\Controllers\ChannelSetupController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request;                    
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     if (auth()->check()) {
@@ -60,4 +61,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/setup-payment', [App\Http\Controllers\PaymentController::class, 'setupPayment'])->name('setup.payment');
     Route::get('/confirm-payment/{id}', [App\Http\Controllers\PaymentController::class, 'confirmPayment'])->name('setup.confirm');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+      Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    
 });
