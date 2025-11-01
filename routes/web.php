@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;                    
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PasswordController;
 
 Route::get('/', function () {
     if (auth()->check()) {
@@ -60,8 +61,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/setup-payment', [App\Http\Controllers\PaymentController::class, 'setupPayment'])->name('setup.payment');
     Route::get('/confirm-payment/{id}', [App\Http\Controllers\PaymentController::class, 'confirmPayment'])->name('setup.confirm');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-      Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
-    
+    Route::get('/change-password', [PasswordController::class, 'index'])->name('password.change');
+    Route::post('/change-password', [PasswordController::class, 'update'])->name('password.update');
 });

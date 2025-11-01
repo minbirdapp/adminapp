@@ -16,7 +16,7 @@
             Welcome {{ Auth::user()->name != 'Minbird User' ? Auth::user()->name : (Auth::user()->profile->first_name ?? 'User') }}
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
             <li>
               <form action="{{ route('logout') }}" method="POST">
                 @csrf

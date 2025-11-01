@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 if(passwordInput){
-    // 🟢 Real-time password validation
+    //  Real-time password validation
     passwordInput.addEventListener("input", function() {
         const value = passwordInput.value;
 
@@ -172,7 +172,7 @@ if(passwordInput){
     });
 }
 
- if(form) {   // 🚫 Prevent submission if password invalid
+ if(form) {   // Prevent submission if password invalid
     form.addEventListener('submit', function(e) {
         let valid = true;
 
@@ -187,13 +187,13 @@ if(passwordInput){
         const role = document.getElementById('brand_role_id').value;
         const password = passwordInput.value.trim();
 
-        // ✅ First name
+        //  First name
         if (firstName === '') {
             document.getElementById('firstNameError').textContent = 'First name is required.';
             valid = false;
         }
 
-        // ✅ Password
+        //  Password
         const hasLength = password.length >= 8;
         const hasLetter = /[a-zA-Z]/.test(password);
         const hasNumber = /\d/.test(password);
@@ -207,25 +207,25 @@ if(passwordInput){
             valid = false;
         }
 
-        // ✅ Brand Name
+        //  Brand Name
         if (brandName === '') {
             document.getElementById('brandNameError').textContent = 'Brand name is required.';
             valid = false;
         }
 
-        // ✅ Industry
+        //  Industry
         if (industry === '') {
             document.getElementById('industryError').textContent = 'Please select an industry.';
             valid = false;
         }
 
-        // ✅ Role
+        //  Role
         if (role === '') {
             document.getElementById('roleError').textContent = 'Please select a role.';
             valid = false;
         }
 
-        // ❌ Stop submission
+        //  Stop submission
         if (!valid) {
             e.preventDefault();
         }
@@ -295,4 +295,76 @@ if(passwordInput){
             }, 4000); // Hide after 2 seconds
         }
     });
+</script>
+
+
+<script>
+    //change password validation
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("changePasswordForm");
+    const currentPassword = document.getElementById("current_password");
+    const newPassword = document.getElementById("new_password");
+    const confirmPassword = document.getElementById("new_password_confirmation");
+
+    const currentPasswordError = document.getElementById("currentPasswordError");
+    const newPasswordError = document.getElementById("newPasswordError");
+    const confirmPasswordError = document.getElementById("confirmPasswordError");
+
+    const rules = {
+        length: document.getElementById("rule-length"),
+        letter: document.getElementById("rule-letter"),
+        number: document.getElementById("rule-number"),
+        special: document.getElementById("rule-special"),
+    };
+
+    function toggleRule(rule, valid) {
+        rule.classList.toggle("text-success", valid);
+        rule.classList.toggle("text-danger", !valid);
+    }
+
+    // Real-time validation
+    newPassword.addEventListener("input", function () {
+        const val = newPassword.value;
+        const hasLength = val.length >= 8;
+        const hasLetter = /[a-zA-Z]/.test(val);
+        const hasNumber = /\d/.test(val);
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(val);
+
+        toggleRule(rules.length, hasLength);
+        toggleRule(rules.letter, hasLetter);
+        toggleRule(rules.number, hasNumber);
+        toggleRule(rules.special, hasSpecial);
+
+        newPasswordError.textContent = "";
+    });
+
+    form.addEventListener("submit", function (e) {
+        let isValid = true;
+        currentPasswordError.textContent = "";
+        newPasswordError.textContent = "";
+        confirmPasswordError.textContent = "";
+
+        // Current password validation
+        if (!currentPassword.value.trim()) {
+            currentPasswordError.textContent = "Current password is required.";
+            isValid = false;
+        }
+
+        const val = newPassword.value;
+        if (!val) {
+            newPasswordError.textContent = "New password is required.";
+            isValid = false;
+        } else if (val.length < 8 || !/[a-zA-Z]/.test(val) || !/\d/.test(val) || !/[!@#$%^&*(),.?\":{}|<>]/.test(val)) {
+            newPasswordError.textContent = "Password must meet all requirements.";
+            isValid = false;
+        }
+
+        if (confirmPassword.value !== newPassword.value) {
+            confirmPasswordError.textContent = "Passwords do not match.";
+            isValid = false;
+        }
+
+        if (!isValid) e.preventDefault();
+    });
+});
 </script>
