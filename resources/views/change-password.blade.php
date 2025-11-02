@@ -11,10 +11,7 @@
         <!-- Main Content -->
         <div class="col main-content">
             <!-- Header -->
-            <div class="header text-center mb-4">
-                <p class="text-secondary mb-1">🌤️ {{ now()->format('l, M j H:i') }}</p>
-                <h4>Good morning, {{ auth()->user()->name }}</h4>
-            </div>
+                @include('layouts.logged-in-header')
 
             <div class="box-637 position-relative">
                 <h6 class="mb-3">Change Password</h6>

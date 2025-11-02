@@ -3,10 +3,7 @@
 @section('content')
 <div class="col main-content">
     <!-- Header -->
-    <div class="header text-center">
-        <p class="text-secondary mb-1">🌤️ {{ now()->format('l, M j H:i') }}</p>
-        <h4>Good morning, {{ auth()->user()->name ?? 'User' }}</h4>
-    </div>
+       @include('layouts.logged-in-header')
 
     <!-- Idea Box -->
     <div class="mb-4">
