@@ -71,4 +71,17 @@ class ChannelSetupController extends Controller
         }
         return false;
     }
+public function appSettings()
+{
+    $user = Auth::user();
+    $brands = Brand::with('social_medias')
+                   ->where('user_id', $user->id)
+                   ->get();
+
+    return view('app-settings-channel', compact('user', 'brands'));
 }
+
+
+}
+
+

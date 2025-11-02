@@ -59,4 +59,8 @@ public function isProfileCompleted()
         && !empty($this->profile->brand_role_id);
 }
 
+public function socialAccounts()
+{
+    return $this->hasMany(\App\Models\BrandSocialMediaAccount::class, 'user_id');
+}
 }

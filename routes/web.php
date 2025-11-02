@@ -65,4 +65,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/change-password', [PasswordController::class, 'index'])->name('password.change');
     Route::post('/change-password', [PasswordController::class, 'update'])->name('password.update');
+    Route::get('/app-settings-channels', [ChannelSetupController::class, 'appSettings'])->name('app.settings');
+    Route::post('/add-social-account', [ChannelSetupController::class, 'addSocialMediaAccount'])
+    ->name('add.social.account');
+
 });
+
+Route::get('/app-settings', function () {
+    return view('app-settings');
+})->middleware('auth')->name('app.settings');
+

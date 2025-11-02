@@ -5,80 +5,67 @@
 @section('content')
 <main class="flex-grow-1 d-flex align-items-center justify-content-center">
 
-
-
   <div class="channel-setup-box">
-      {{-- Success Alert --}}
-  @if(session('success'))
-  <div class="alert alert-success position-absolute alert-auto-hide " role="alert">
+    {{-- Success Alert --}}
+    @if(session('success'))
+    <div class="alert alert-success position-absolute alert-auto-hide" role="alert">
+      {{ session('success') }}
+    </div>
+    @endif
+    @if(session('error'))
+    <div class="alert alert-danger position-absolute alert-auto-hide" role="alert">
+      {{ session('error') }}
+    </div>
+    @endif
 
-    {{ session('success') }}
-  </div>
-  @endif
-  @if(session('error'))
-  <div class="alert alert-danger position-absolute alert-auto-hide " role="alert">
-    {{ session('error') }}
-  </div>
-  @endif
     <h4>Setup your social media accounts for your brand</h4>
     <p class="text-muted mb-4">Connect a channel to start scheduling posts</p>
 
     {{-- Brand Card --}}
-    {{-- Show all brands dynamically --}}
     @if($brands->count() > 0)
     @foreach($brands as $brand)
     <div class="card mb-4">
       <p class="brand-name mb-0">{{ $brand->name }}</p>
       <div class="border-secondary-subtle rounded-bottom p-3 bg-white text-center">
 
-        {{-- Example social icons (for now, static placeholders) --}}
-
         @if($brand->social_medias->count())
         <ul class="selected-brand-list">
           @foreach($brand->social_medias as $vv)
           <li>
-            <i><img src="{{ asset('assets/img/icons/instagram-small.svg') }}" alt="{{$vv->account_type}}"></i>
+            @php
+            $icon = match($vv->account_type) {
+              'facebook' => 'fb-small.svg',
+              'linkedin' => 'linkedin-small.svg',
+              'instagram' => 'instagram-small.svg',
+              'tiktok' => 'tiktok-small.svg',
+              default => 'x.svg'
+            };
+            @endphp
+            <i><img src="{{ asset('assets/img/icons/' . $icon) }}" alt="{{ $vv->account_type }}"></i>
             <span><img src="{{ asset('assets/img/icons/user-img.png') }}" alt="user"></span>
           </li>
           @endforeach
         </ul>
         @else
-        <p class="mb-3 text-muted">Currently you don't have any social media account configured to your brand</p>
-
+        <p class="mb-3 text-muted">
+          Currently you don't have any social media account configured to your brand
+        </p>
         @endif
-        <!-- <li>
-            <i><img src="{{ asset('assets/img/icons/linkedin-small.svg') }}" alt="linkedin"></i>
-            <span><img src="{{ asset('assets/img/icons/user-img.png') }}" alt="user"></span>
-          </li>
-          <li>
-            <i><img src="{{ asset('assets/img/icons/instagram-small.svg') }}" alt="instagram"></i>
-            <span><img src="{{ asset('assets/img/icons/user-img.png') }}" alt="user"></span>
-          </li>
-          <li>
-            <i><img src="{{ asset('assets/img/icons/tiktok-small.svg') }}" alt="tiktok"></i>
-            <span><img src="{{ asset('assets/img/icons/user-img.png') }}" alt="user"></span>
-          </li> -->
 
-
-        <button data-attr-id="{{$brand->id}}" class="btn btn-outline-secondary btn-sm openConnectModal">
+        <button data-brand-id="{{ $brand->id }}" class="btn btn-outline-secondary btn-sm openChannelList">
           Connect a Channel
         </button>
       </div>
     </div>
     @endforeach
     @else
-    {{-- No brands yet --}}
     <div class="text-center text-muted mb-4">
       <p>You haven’t added any brand yet. Click “Add New Brand” below to get started.</p>
     </div>
     @endif
 
-    <input type="hidden" name="data_brand_id" id="data_brand_id" />
-    <input type="hidden" name="data_account_type" id="data_account_type" />
-
     <div class="d-flex justify-content-between align-items-center mb-4">
       <a href="{{ route('setup.payment') }}" class="btn theme-btn btn-primary px-4">Continue</a>
-      <!-- <a href="{{route('dashboard')}}" class="skip-link">Skip for Now</a> -->
     </div>
 
     <hr>
@@ -96,7 +83,6 @@
     </p>
   </div>
 </main>
-
 
 {{-- ✅ Add Brand Modal --}}
 <div class="modal fade" id="addBrandModal" tabindex="-1" aria-labelledby="addBrandLabel" aria-hidden="true">
@@ -157,82 +143,138 @@
   </div>
 </div>
 
-
-{{-- ✅ Connect Channel Modal (unchanged, just Laravel assets) --}}
-<div class="modal fade" id="connectModal" tabindex="-1" aria-labelledby="connectModalLabel" aria-hidden="true">
+{{-- 🔹 Step 1: Channel Selection Modal --}}
+<div class="modal fade" id="channelListModal" tabindex="-1" aria-labelledby="channelListModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="connectModalLabel">Connect a New Channel</h5>
+        <h5 class="modal-title">Connect a New Channel</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
       <div class="modal-body">
-        <div class="channel-grid">
-          <!-- <div class="channel-card"><img src="{{ asset('assets/img/icons/facebook.svg') }}" alt="Facebook">
-            <p class="mb-0 small">Page or Profile</p>
+        <div class="channel-grid text-center">
+          @foreach(['facebook', 'linkedin', 'instagram', 'tiktok', 'x'] as $channel)
+          <div class="channel-card selectChannel" data-channel="{{ $channel }}" data-name="{{ ucfirst($channel) }}">
+            <img src="{{ asset('assets/img/icons/' . $channel . '.svg') }}" alt="{{ ucfirst($channel) }}">
+            <p class="mb-0 small">{{ ucfirst($channel) }}</p>
           </div>
-          <div class="channel-card"><img src="{{ asset('assets/img/icons/linkedin.svg') }}" alt="LinkedIn">
-            <p class="mb-0 small">Page or Profile</p>
-          </div> -->
-          <div class="channel-card openSocialMedia" data-account-type="instagram" data-bs-toggle="modal" data-bs-target="#instagramModal">
-            <img src="{{ asset('assets/img/icons/instagram.svg') }}" alt="Instagram">
-            <p class="mb-0 small">Business, Creator, or Personal</p>
-          </div>
-          <!-- <div class="channel-card"><img src="{{ asset('assets/img/icons/x.svg') }}" alt="X (Twitter)">
-            <p class="mb-0 small">Business, Creator, or Personal</p>
-          </div> -->
+          @endforeach
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Instagram Modal (Fixed) -->
-<div class="modal fade" id="instagramModal" tabindex="-1" aria-labelledby="instagramModalLabel" aria-hidden="true">
+{{-- 🔹 Step 2: Dynamic Connect Channel Modal --}}
+<div class="modal fade" id="connectChannelModal" tabindex="-1" aria-labelledby="connectChannelModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="instagramModalLabel">
-          Which type of Instagram account would you like to connect?
-        </h4>
+        <h4 class="modal-title"><span id="modalTitle">Connect Channel</span></h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-
-      <div class="modal-body">
-        <p>The account type you choose will determine the features available to you.</p>
-
-        <div class="row g-3">
-          <div class="col-md-6">
-            <div class="account-card">
-              <h5>Personal Profile</h5>
-              <p>Most used to share to family and friends</p>
-              <ul class="checklist">
-                <li>Notification-based publishing: Receive a mobile notification to post yourself</li>
-                <li>Manual post publishing only</li>
-              </ul>
-              <button class="btn btn-primary theme-btn mt-3 connectPersonalAccount">Connect to Personal Account</button>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="account-card">
-              <h5>Professional</h5>
-              <p>Business or Creator Accounts</p>
-              <ul class="checklist">
-                <li>Automatic publishing</li>
-                <li>Analytics & engagement (paid plans)</li>
-              </ul>
-              <button class="btn btn-primary theme-btn mt-3 connectPersonalAccount">Connect to Professional Account</button>
-              <p class="mt-2" style="font-size: 0.9em;">
-                If your account type isn't Professional yet, Instagram will prompt you to change it with a few simple steps.
-              </p>
-            </div>
-          </div>
-        </div>
+      <div class="modal-body" id="modalBodyContent">
+        {{-- Loaded dynamically --}}
       </div>
     </div>
   </div>
 </div>
 
-<?php include(resource_path('js/pages/validations.php')); ?>
 @endsection
+
+@push('scripts')
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    let selectedBrandId = null;
+    const channelListModal = new bootstrap.Modal(document.getElementById("channelListModal"));
+    const connectChannelModal = new bootstrap.Modal(document.getElementById("connectChannelModal"));
+    const modalTitle = document.getElementById("modalTitle");
+    const modalBody = document.getElementById("modalBodyContent");
+
+    // When user clicks "Connect a Channel" on brand card
+    document.querySelectorAll(".openChannelList").forEach(button => {
+      button.addEventListener("click", function() {
+        selectedBrandId = this.getAttribute("data-brand-id");
+        channelListModal.show();
+      });
+    });
+
+    // When a channel is selected from the grid
+    document.querySelectorAll(".selectChannel").forEach(card => {
+      card.addEventListener("click", function() {
+        const channel = this.dataset.channel;
+        const name = this.dataset.name;
+        channelListModal.hide();
+
+        modalTitle.textContent = `Connect your ${name} account`;
+        let html = "";
+
+        if (channel === "instagram") {
+          html = `
+            <p>The account type you choose will determine the features available to you.</p>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="account-card">
+                  <h5>Personal Profile</h5>
+                  <p>Most used to share to family and friends</p>
+                  <ul class="checklist">
+                    <li>Notification-based publishing</li>
+                    <li>Manual post publishing only</li>
+                  </ul>
+                  <button class="btn btn-primary theme-btn mt-3 connectAccount" data-type="instagram_personal">Connect to Personal Account</button>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="account-card">
+                  <h5>Professional</h5>
+                  <p>Business or Creator Accounts</p>
+                  <ul class="checklist">
+                    <li>Automatic publishing</li>
+                    <li>Analytics & engagement (paid plans)</li>
+                  </ul>
+                  <button class="btn btn-primary theme-btn mt-3 connectAccount" data-type="instagram_professional">Connect to Professional Account</button>
+                </div>
+              </div>
+            </div>`;
+        } else {
+          html = `
+            <div class="text-center">
+              <img src="/assets/img/icons/${channel}.svg" width="60" class="mb-3" alt="${name}">
+              <p>Connect your ${name} account to manage posts and analytics.</p>
+              <button class="btn btn-primary theme-btn connectAccount" data-type="${channel}">Connect ${name}</button>
+            </div>`;
+        }
+
+        modalBody.innerHTML = html;
+        connectChannelModal.show();
+
+        // Handle connect button clicks
+        modalBody.querySelectorAll(".connectAccount").forEach(btn => {
+          btn.addEventListener("click", function() {
+            const accountType = this.dataset.type;
+            if (!selectedBrandId) return alert("No brand selected!");
+
+            fetch("{{ route('add.social.account') }}", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                  brand_id: selectedBrandId,
+                  account_type: accountType
+                })
+              })
+              .then(res => {
+                connectChannelModal.hide();
+                window.location.reload();
+              })
+              .catch(err => console.error(err));
+          });
+        });
+      });
+    });
+  });
+</script>
+@endpush
