@@ -42,7 +42,7 @@ class ProfileController extends Controller
         $request->validate([
             'first_name'    => 'required|string|max:100',
             'last_name'     => 'required|string|max:100',
-            'role'          => 'nullable|string|max:255',
+            // 'role'          => 'nullable|string|max:255',
             'bio'           => 'nullable|string|max:1000',
             'timezone_id'   => 'nullable|integer|exists:timezones,id',
             'profile_image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
@@ -67,7 +67,7 @@ class ProfileController extends Controller
         $profile->update([
             'first_name'  => $request->first_name,
             'last_name'   => $request->last_name,
-            'role'        => $request->role,
+            // 'role'        => $request->role,
             'bio'         => $request->bio,
             'timezone_id' => $request->timezone_id,
         ]);
