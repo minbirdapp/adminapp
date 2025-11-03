@@ -1,89 +1,85 @@
-@extends('layouts.minbird')
+@extends('layouts.logged-in')
 
 @section('title', 'App Settings')
 
 @section('content')
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    @include('includes.sidebar')
 
-    <!-- Main Content -->
-    <div class="col main-content">
 
-      <!-- Logged-in Header -->
-      @include('layouts.logged-in-header')
 
-      {{-- Success Alert --}}
-      @if(session('success'))
-      <div class="alert alert-success position-absolute alert-auto-hide " role="alert">
+<!-- Main Content -->
+<div class="col main-content">
 
-        {{ session('success') }}
-      </div>
-      @endif
-      @if(session('error'))
-      <div class="alert alert-danger position-absolute alert-auto-hide " role="alert">
-        {{ session('error') }}
-      </div>
-      @endif
+  <!-- Logged-in Header -->
+  @include('layouts.logged-in-header')
 
-      <div class="w-75 position-relative m-auto">
-        <h6 class="mb-3">My Profile</h6>
-        <a href="{{ route('app.settings') }}" class="btn btn-outline-secondary btn-sm top-right-btn">
-          Back to App Settings
-        </a>
+  {{-- Success Alert --}}
+  @if(session('success'))
+  <div class="alert alert-success position-absolute alert-auto-hide " role="alert">
 
-        {{-- Brand Cards --}}
-        @if($brands->count() > 0)
-        @foreach($brands as $brand)
-        <div class="card mb-4">
-          <p class="brand-name mb-0">{{ $brand->name }}</p>
-          <div class="border-secondary-subtle rounded-bottom p-3 bg-white text-center">
-
-            {{-- Connected Social Media --}}
-            @if($brand->social_medias->count())
-            <ul class="selected-brand-list">
-              @foreach($brand->social_medias as $account)
-              <li>
-                @php
-                $icon = match($account->account_type) {
-                'facebook' => 'fb-small.svg',
-                'linkedin' => 'linkedin-small.svg',
-                'instagram',
-                'instagram_personal',
-                'instagram_professional' => 'instagram-small.svg',
-                'tiktok' => 'tik_tok.svg',
-                default => 'x.svg',
-                };
-
-                @endphp
-                <i><img src="{{ asset('assets/img/icons/' . $icon) }}" alt="{{ $account->account_type }}"></i>
-                <span><img src="{{ asset('assets/img/icons/user-img.png') }}" alt="user"></span>
-              </li>
-              @endforeach
-            </ul>
-            @else
-            <p class="mb-3 text-muted">
-              Currently you don't have any social media account configured to your brand
-            </p>
-            @endif
-
-            <button data-brand-id="{{ $brand->id }}"
-              class="btn btn-outline-secondary btn-sm openChannelList">
-              Connect a Channel
-            </button>
-          </div>
-        </div>
-        @endforeach
-        @else
-        <div class="text-center text-muted mb-4">
-          <p>You haven’t added any brand yet. Click “Add New Brand” below to get started.</p>
-        </div>
-        @endif
-      </div>
-
-    </div>
+    {{ session('success') }}
   </div>
+  @endif
+  @if(session('error'))
+  <div class="alert alert-danger position-absolute alert-auto-hide " role="alert">
+    {{ session('error') }}
+  </div>
+  @endif
+
+  <div class="w-75 position-relative m-auto">
+    <h6 class="mb-3">My Profile</h6>
+    <a href="{{ route('app.settings') }}" class="btn btn-outline-secondary btn-sm top-right-btn">
+      Back to App Settings
+    </a>
+
+    {{-- Brand Cards --}}
+    @if($brands->count() > 0)
+    @foreach($brands as $brand)
+    <div class="card mb-4">
+      <p class="brand-name mb-0">{{ $brand->name }}</p>
+      <div class="border-secondary-subtle rounded-bottom p-3 bg-white text-center">
+
+        {{-- Connected Social Media --}}
+        @if($brand->social_medias->count())
+        <ul class="selected-brand-list">
+          @foreach($brand->social_medias as $account)
+          <li>
+            @php
+            $icon = match($account->account_type) {
+            'facebook' => 'fb-small.svg',
+            'linkedin' => 'linkedin-small.svg',
+            'instagram',
+            'instagram_personal',
+            'instagram_professional' => 'instagram-small.svg',
+            'tiktok' => 'tik_tok.svg',
+            default => 'x-small.svg',
+            };
+
+            @endphp
+            <i><img src="{{ asset('assets/img/icons/' . $icon) }}" alt="{{ $account->account_type }}"></i>
+            <span><img src="{{ asset('assets/img/icons/user-img.png') }}" alt="user"></span>
+          </li>
+          @endforeach
+        </ul>
+        @else
+        <p class="mb-3 text-muted">
+          Currently you don't have any social media account configured to your brand
+        </p>
+        @endif
+
+        <button data-brand-id="{{ $brand->id }}"
+          class="btn btn-outline-secondary btn-sm openChannelList">
+          Connect a Channel
+        </button>
+      </div>
+    </div>
+    @endforeach
+    @else
+    <div class="text-center text-muted mb-4">
+      <p>You haven’t added any brand yet. Click “Add New Brand” below to get started.</p>
+    </div>
+    @endif
+  </div>
+
 </div>
 
 {{-- 🔹 Step 1: Channel Selection Modal --}}
@@ -156,8 +152,8 @@
         modalTitle.textContent = `Connect your ${name} account`;
         let html = "";
 
-        if (channel === "instagram") {
-          html = `
+        // if (channel === "instagram") {
+        html = `
           <p>The account type you choose will determine the features available to you.</p>
           <div class="row g-3">
             <div class="col-md-6">
@@ -184,16 +180,16 @@
               </div>
             </div>
           </div>`;
-        } else {
-          html = `
-          <div class="text-center">
-            <img src="/assets/img/icons/${channel}.svg" width="60" class="mb-3" alt="${name}">
-            <p>Connect your ${name} account to manage posts and analytics.</p>
-            <button class="btn btn-primary theme-btn connectAccount" data-type="${channel}">
-              Connect ${name}
-            </button>
-          </div>`;
-        }
+        // } else {
+        //   html = `
+        //   <div class="text-center">
+        //     <img src="/assets/img/icons/${channel}.svg" width="60" class="mb-3" alt="${name}">
+        //     <p>Connect your ${name} account to manage posts and analytics.</p>
+        //     <button class="btn btn-primary theme-btn connectAccount" data-type="${channel}">
+        //       Connect ${name}
+        //     </button>
+        //   </div>`;
+        // }
 
         modalBody.innerHTML = html;
         connectChannelModal.show();

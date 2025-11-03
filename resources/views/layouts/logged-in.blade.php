@@ -16,9 +16,8 @@
     <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/choices.min.css')}}">
 </head>
-
 <body>
-     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
         @csrf
     </form>
     <div class="container-fluid">
@@ -30,7 +29,21 @@
             @include('includes/footer')
         </div>
     </div>
-    <!-- Campaign Slide Panel -->
+    
+
+    <!-- footer section end -->
+    <!-- vendor js -->
+    <script src="{{ asset('assets/js/jquery-3.7.1.min.js')}}"></script>
+    <script src="{{ asset('assets/js/popper.min.js')}}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('assets/js/choices.min.js') }}"></script>
+    <!-- main js -->
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    @stack('scripts')
+</body>
+<!-- Campaign Slide Panel -->
     <div id="campaignPanel" class="slide-panel">
         <div class="panel-header d-flex justify-content-between align-items-center">
             <h4 class="fw-semibold mb-0">Create a New Campaign</h4>
@@ -54,9 +67,11 @@
                         <label class="form-label">Select the brand associated to this campaign</label>
                         <select id="brand_id" name="brand_id" class="form-select">
                             <option value="">Select a brand</option>
+                            @if(isset($brands))
                             @foreach($brands as $v)
                             <option value="{{$v->id}}"> {{$v->name}}</option>
                             @endforeach
+                            @endif
                         </select>
                         <div id="brand_idError" class="text-danger"></div>
                     </div>
@@ -168,16 +183,4 @@
     </div>
     <!-- Overlay -->
     <div id="overlay" class="fade-overlay"></div>
-    <!-- footer section end -->
-    <!-- vendor js -->
-    <script src="{{ asset('assets/js/jquery-3.7.1.min.js')}}"></script>
-    <script src="{{ asset('assets/js/popper.min.js')}}"></script>
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js')}}"></script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{{ asset('assets/js/choices.min.js') }}"></script>
-    <!-- main js -->
-    <script src="{{ asset('assets/js/main.js') }}"></script>
-</body>
-
 </html>
