@@ -10,11 +10,11 @@
 
         <!-- Main Content -->
         <div class="col main-content">
-              @include('layouts.logged-in-header')
+            @include('layouts.logged-in-header')
 
             <div class="box-637 position-relative">
                 <h6 class="mb-3">My Profile</h6>
-                <a href="#" class="btn btn-outline-secondary btn-sm top-right-btn">Back to App Settings</a>
+                @include('includes/app_settings')
 
                 <div class="card shadow-sm">
                     <div class="card-header">
@@ -34,11 +34,11 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label"><span class="text-danger">*</span>First Name</label>
-                                    <input type="text" name="first_name" class="form-control" value="{{ old('first_name', $profile->first_name) }}" required>
+                                    <input type="text" name="first_name" class="form-control" value="{{ old('first_name', $profile->first_name) }}">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label"><span class="text-danger">*</span>Last Name</label>
-                                    <input type="text" name="last_name" class="form-control" value="{{ old('last_name', $profile->last_name) }}" required>
+                                    <input type="text" name="last_name" class="form-control" value="{{ old('last_name', $profile->last_name) }}">
                                 </div>
                             </div>
 
@@ -59,13 +59,13 @@
 
                             <div class="mb-4">
                                 <label class="form-label">Select Your Timezone</label>
-                              <select name="timezone_id" class="form-select">
-  @foreach($timezones as $tz)
-    <option value="{{ $tz->id }}" {{ $profile->timezone_id == $tz->id ? 'selected' : '' }}>
-      {{ $tz->label }}
-    </option>
-  @endforeach
-</select>
+                                <select name="timezone_id" class="form-select">
+                                    @foreach($timezones as $tz)
+                                    <option value="{{ $tz->id }}" {{ $profile->timezone_id == $tz->id ? 'selected' : '' }}>
+                                        {{ $tz->label }}
+                                    </option>
+                                    @endforeach
+                                </select>
                             </div>
 
 

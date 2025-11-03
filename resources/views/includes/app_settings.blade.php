@@ -1,0 +1,1 @@
+<a href="{{route('app.settings')}}" class="btn btn-outline-secondary btn-sm top-right-btn">Back to App Settings</a>

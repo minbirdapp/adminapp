@@ -15,7 +15,7 @@
 
             <div class="box-637 position-relative">
                 <h6 class="mb-3">Change Password</h6>
-                <a href="#" class="btn btn-outline-secondary btn-sm top-right-btn">Back to App Settings</a>
+                @include('includes/app_settings')
 
                 <div class="card shadow-sm">
                     <div class="card-header">
