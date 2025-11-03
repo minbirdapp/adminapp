@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\UserProfile;
 use App\Models\Timezone;
+use App\Models\UserRole;
 
 class ProfileController extends Controller
 {
@@ -26,11 +27,11 @@ class ProfileController extends Controller
                 'timezone_id' => null
             ]
         );
-
+        $roles = UserRole::where('status', 1)->get();
         // Fetch all timezones from DB
         $timezones = Timezone::orderBy('label')->get();
 
-        return view('profile', compact('profile', 'timezones'));
+        return view('profile', compact('profile', 'timezones', 'roles'));
     }
 
     /**

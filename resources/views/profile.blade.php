@@ -26,7 +26,7 @@
                             @method('PUT')
 
                             <div class="profile-container text-center mb-4">
-                                <img src="{{ $profile->profile_image ? asset('storage/profile/' . $profile->profile_image) : asset('assets/img/dummy-upload-img.png') }}" id="profileImage" class="profile-pic" alt="Profile Photo">
+                                <img src="{{ $profile->profile_image ? asset('storage/profile/' . $profile->profile_image) : asset('assets/img/dummy.png') }}" id="profileImage" class="profile-pic" alt="Profile Photo">
                                 <label for="fileInput" class="upload-btn">Upload Profile Photo</label>
                                 <input type="file" id="fileInput" name="profile_image" accept="image/*" class="d-none">
                             </div>
@@ -49,7 +49,13 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Current Role</label>
-                                <input type="text" name="role" class="form-control" value="{{ old('role', $profile->role) }}">
+                                <select name="role" disabled  class="form-select">
+                                    @foreach($roles as $tz)
+                                    <option value="{{ $tz->id }}" {{ auth()->user()->user_role_id == $tz->id ? 'selected' : '' }}>
+                                        {{ $tz->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="mb-3">

@@ -195,6 +195,7 @@ class AuthController extends Controller
             // Generate new activation code
             $code = rand(100000, 999999);
             $user->activation_code = $code;
+            $user->user_role_id = 3;
             $user->activation_code_expires_at = now()->addMinutes(10);
             $user->save();
 
