@@ -213,7 +213,6 @@
         modalTitle.textContent = `Connect your ${name} account`;
         let html = "";
 
-        if (channel === "instagram") {
           html = `
             <p>The account type you choose will determine the features available to you.</p>
             <div class="row g-3">
@@ -225,7 +224,7 @@
                     <li>Notification-based publishing</li>
                     <li>Manual post publishing only</li>
                   </ul>
-                  <button class="btn btn-primary theme-btn mt-3 connectAccount" data-type="instagram_personal">Connect to Personal Account</button>
+                  <button class="btn btn-primary theme-btn mt-3 connectAccount" data-type="${channel}">Connect to Personal Account</button>
                 </div>
               </div>
               <div class="col-md-6">
@@ -236,18 +235,11 @@
                     <li>Automatic publishing</li>
                     <li>Analytics & engagement (paid plans)</li>
                   </ul>
-                  <button class="btn btn-primary theme-btn mt-3 connectAccount" data-type="instagram_professional">Connect to Professional Account</button>
+                  <button class="btn btn-primary theme-btn mt-3 connectAccount" data-type="${channel}">Connect to Professional Account</button>
                 </div>
               </div>
             </div>`;
-        } else {
-          html = `
-            <div class="text-center">
-              <img src="/assets/img/icons/${channel}.svg" width="60" class="mb-3" alt="${name}">
-              <p>Connect your ${name} account to manage posts and analytics.</p>
-              <button class="btn btn-primary theme-btn connectAccount" data-type="${channel}">Connect ${name}</button>
-            </div>`;
-        }
+        
 
         modalBody.innerHTML = html;
         connectChannelModal.show();
