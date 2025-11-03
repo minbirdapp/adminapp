@@ -34,12 +34,15 @@
           <li>
             @php
             $icon = match($vv->account_type) {
-              'facebook' => 'fb-small.svg',
-              'linkedin' => 'linkedin-small.svg',
-              'instagram' => 'instagram-small.svg',
-              'tiktok' => 'tiktok-small.svg',
-              default => 'x.svg'
+            'facebook' => 'fb-small.svg',
+            'linkedin' => 'linkedin-small.svg',
+            'instagram',
+            'instagram_personal',
+            'instagram_professional' => 'instagram-small.svg',
+            'tiktok' => 'tik_tok.svg',
+            default => 'x.svg',
             };
+
             @endphp
             <i><img src="{{ asset('assets/img/icons/' . $icon) }}" alt="{{ $vv->account_type }}"></i>
             <span><img src="{{ asset('assets/img/icons/user-img.png') }}" alt="user"></span>
