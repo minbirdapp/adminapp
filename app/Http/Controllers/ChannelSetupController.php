@@ -30,16 +30,30 @@ class ChannelSetupController extends Controller
             'competitor_info' => 'nullable|string',
             'intro' => 'nullable|string',
         ]);
-
-        $brand = Brand::create([
-            'user_id' => Auth::id(),
-            'name' => $request->name,
-            'industry_id' => $request->industry_id,
-            'competitor_info' => $request->competitor_info,
-            'intro' => $request->intro,
-        ]);
-
-        return redirect()->route('setup.channels')->with('success', 'Brand added successfully!');
+        if ($request->get('record_id')) {
+            $brand = Brand::where('id', $request->get('record_id'))->update([
+                'name' => $request->name,
+                'industry_id' => $request->industry_id,
+                'competitor_info' => $request->competitor_info,
+                'intro' => $request->intro,
+            ]);
+            if ($request->get('app-settings-brands') == 1) {
+                return redirect()->route('app.settings.edit.brands', $request->get('record_id'))->with('success', 'Brand updated successfully!');
+            }
+            return redirect()->route('setup.channels')->with('success', 'Brand Updated successfully!');
+        } else {
+            $brand = Brand::create([
+                'user_id' => Auth::id(),
+                'name' => $request->name,
+                'industry_id' => $request->industry_id,
+                'competitor_info' => $request->competitor_info,
+                'intro' => $request->intro,
+            ]);
+            if ($request->get('app-settings-brands') == 1) {
+                return redirect()->route('app.settingsbrands')->with('success', 'Brand added successfully!');
+            }
+            return redirect()->route('setup.channels')->with('success', 'Brand added successfully!');
+        }
     }
 
 
@@ -71,17 +85,52 @@ class ChannelSetupController extends Controller
         }
         return false;
     }
-public function appSettings()
-{
-    $user = Auth::user();
-    $brands = Brand::with('social_medias')
-                   ->where('user_id', $user->id)
-                   ->get();
+    public function appSettings()
+    {
+        $user = Auth::user();
+        $brands = Brand::with('social_medias')
+            ->where('user_id', $user->id)
+            ->get();
 
-    return view('app-settings-channel', compact('user', 'brands'));
+        return view('app-settings-channel', compact('user', 'brands'));
+    }
+
+    public function searchBrand(Request $request)
+    {
+        $user = Auth::user();
+        $brands = Brand::with('social_medias')
+            ->where('user_id', $user->id)
+            ->where('name', 'Like', '%' . $request->get('search') . '%')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+            $brands->withPath('/app-settings-brands');
+
+        return view('app-settings-brands-search', compact('user',  'brands'));
+    }
+
+    public function appBrands($id = null)
+    {
+        $user = Auth::user();
+        $selectedBrand = Brand::with('social_medias')
+            ->where('id', $id)
+            ->first();
+        $industries = Industry::where('status', '1')->get();
+        $brands = Brand::with('social_medias')
+            ->where('user_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+        return view('app-settings-brands', compact('user', 'industries', 'brands', 'selectedBrand'));
+    }
+
+    public function deleteBrand($id = null)
+    {
+        $selectedBrand = Brand::with('social_medias')
+            ->where('id', $id)
+            ->first();
+        if ($selectedBrand) {
+            $selectedBrand->delete();
+            return redirect()->route('app.settingsbrands')->with('success', 'Brand deleted successfully!');
+        }
+        return redirect()->route('app.settingsbrands')->with('error', 'Deleting Failed !');
+    }
 }
-
-
-}
-
-

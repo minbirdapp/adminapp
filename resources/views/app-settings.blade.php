@@ -36,7 +36,7 @@
                     <span class="setting-icon"><img src="assets/img/icons/brand.svg" alt="brand"></span>
                     <h6 class="text-primary">Brands</h6>
                     <p>Most things start with a Campaign board in Min Bird.</p>
-                    <button class="btn btn-outline-dark btn-sm">View Brand</button>
+                    <a href="{{route('app.settingsbrands')}}" class="btn btn-outline-dark btn-sm">View Brand</a>
                 </div>
             </div>
             <!-- My Profile -->

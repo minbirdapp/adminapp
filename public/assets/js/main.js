@@ -134,6 +134,27 @@ jQuery(document).on("click", ".connectPersonalAccount", function () {
     jQuery("#instagramModal").modal("hide");
 });
 
+jQuery(document).on("keyup", ".searchBrandData", function () {
+    var search = jQuery(this).val();
+    $.ajax({
+        url: searchBrandUrl,
+        type: "get",
+        data: {
+            search: search
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (response) {
+            jQuery('#searchBrandData').html(response);
+        },
+        error: function (xhr) {
+            alert("Error: " + xhr.status);
+        },
+    });
+    jQuery("#instagramModal").modal("hide");
+});
+
 jQuery(document).on("click", "#addUrl", function () {
     var trackerName = jQuery(this).parent().parent().find(".trackerName").val();
     var trackerUrl = jQuery(this).parent().parent().find(".trackerUrl").val();

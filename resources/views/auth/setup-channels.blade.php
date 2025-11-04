@@ -93,6 +93,8 @@
     <div class="modal-content">
       <form id="addBrandForm" method="POST" action="{{ route('brands.store') }}" novalidate>
         @csrf
+                            <input type="hidden" name="app-settings-brands" value="0" />
+
         <div class="modal-header">
           <h4 class="modal-title" id="addBrandLabel">Add New Brand</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

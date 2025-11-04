@@ -66,6 +66,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/change-password', [PasswordController::class, 'index'])->name('password.change');
     Route::post('/change-password', [PasswordController::class, 'update'])->name('password.update');
     Route::get('/app-settings-channels', [ChannelSetupController::class, 'appSettings'])->name('app.settingschannel');
+    Route::get('/app-settings-brands', [ChannelSetupController::class, 'appBrands'])->name('app.settingsbrands');
+    Route::get('/search-brands', [ChannelSetupController::class, 'searchBrand'])->name('search.brand');
+    Route::get('/app-settings-brands/{id}', [ChannelSetupController::class, 'appBrands'])->name('app.settings.edit.brands');
+    Route::get('/app-settings-brand-delete/{id}', [ChannelSetupController::class, 'deleteBrand'])->name('app.settings.delete.brands');
     Route::post('/add-social-account', [ChannelSetupController::class, 'addSocialMediaAccount'])->name('add.social.account');
 });
 

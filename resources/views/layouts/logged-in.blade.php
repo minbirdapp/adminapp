@@ -40,6 +40,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ asset('assets/js/choices.min.js') }}"></script>
     <!-- main js -->
+     <script>
+        var  searchBrandUrl = "{{route('search.brand')}}";
+     </script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     @stack('scripts')
 </body>

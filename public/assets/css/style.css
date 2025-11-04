@@ -147,8 +147,6 @@ select:focus {
     height: 32px;
 }
 
-
-
 .theme-btn {
    font-size: 16px;
    line-height: 125%;
@@ -795,17 +793,4 @@ a.skip-link {
    .box h5 {
       font-size: 18px;
    }
-}
-.form-section:has(.text-danger:not(:empty)) input,
-.form-section:has(.text-danger:not(:empty)) select,
-.form-section .col-md-6:has(.text-danger:not(:empty)) .choices .choices__inner,
-.form-section:has(.text-danger:not(:empty)) textarea
- {
-  border-color: red;
-}
-.error-message {
-   color:red;
-}
-.alert-auto-hide {
-    transition: opacity 0.5s ease-in-out;
 }
