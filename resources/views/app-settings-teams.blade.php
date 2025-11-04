@@ -110,20 +110,20 @@
 
     <div class="team-list">
         @forelse($teamMembers as $member)
-            <div class="team-item d-flex justify-content-between align-items-center border-bottom py-2">
-                <div>
-                    <p class="mb-0 fw-semibold">{{ $member->user->name }}
-                        <small class="text-muted">
+            <div class="team-item">
+                <div class="team-info">
+                    <p>{{ $member->user->name }}
+                        <small>
                             ({{ $member->user->role->name ?? 'No Role' }})
                         </small>
                     </p>
                     @if($member->status == 1)
-                        <span class="badge bg-success">Active</span>
+                        <span class="badge badge-active">Active Member</span>
                     @else
-                        <span class="badge bg-secondary">Inactive</span>
+                        <span class="badge badge-inactive">Inactive Member</span>
                     @endif
-                    <br>
-                    <small class="text-muted">{{ $member->user->email }}</small>
+                  
+                    {{ $member->user->email }}
                 </div>
 
                 {{-- 3-dot menu --}}

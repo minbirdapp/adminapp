@@ -71,6 +71,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-social-account', [ChannelSetupController::class, 'addSocialMediaAccount'])->name('add.social.account');
     Route::get('/app-settings-teams', [TeamMemberController::class, 'index'])->name('team-members.index');
 Route::post('/app-settings-teams', [TeamMemberController::class, 'store'])->name('team-members.store');
+Route::get('/app-settings-teams', [App\Http\Controllers\TeamMemberController::class, 'index'])
+    ->name('app.settings.teams');
 Route::get('/team-members/{id}/view', [App\Http\Controllers\TeamMemberController::class, 'view'])->name('team-members.view');
 
 Route::resource('team-members', TeamMemberController::class);
