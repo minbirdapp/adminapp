@@ -46,6 +46,24 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
     @stack('scripts')
 </body>
+<!-- View Team Member Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalLabel">View Team Member</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="viewMemberContent" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Campaign Slide Panel -->
     <div id="campaignPanel" class="slide-panel">
         <div class="panel-header d-flex justify-content-between align-items-center">
