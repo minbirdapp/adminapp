@@ -342,28 +342,28 @@
       .then(res => res.json())
       .then(data => {
         modalBody.innerHTML = `
-          <div class="text-center">
+    
             <img src="${data.profile_image ?? 'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.name)}"
                  alt="Profile" class="profile-img mb-3 rounded-circle" width="100" height="100">
-          </div>
+   
 
           <div class="container text-start">
             <div class="row g-3 mb-3">
               <div class="col-md-12">
                 <div class="info-box d-flex">
-                  <label class="form-label w-50 fw-bold">Full Name</label>
+                  <label class="form-label">Full Name</label>
                   <p>${data.name}</p>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="info-box d-flex">
-                  <label class="form-label w-50 fw-bold">Email Address</label>
+                  <label class="form-label">Email Address</label>
                   <p>${data.email}</p>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="info-box d-flex">
-                  <label class="form-label w-50 fw-bold">Status</label>
+                  <label class="form-label">Status</label>
                   <p>
                     ${data.status === 'Active' 
                       ? '<span class="badge bg-success">Active Member</span>' 
@@ -373,19 +373,19 @@
               </div>
               <div class="col-md-12">
                 <div class="info-box d-flex">
-                  <label class="form-label w-50 fw-bold">Role</label>
+                  <label class="form-label">Role</label>
                   <p>${data.role}</p>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="info-box d-flex">
-                  <label class="form-label w-50 fw-bold">Phone Number</label>
+                  <label class="form-label">Phone Number</label>
                   <p>${data.phone ?? 'N/A'}</p>
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="info-box d-flex">
-                  <label class="form-label w-50 fw-bold">Register Date</label>
+                  <label class="form-label">Register Date</label>
                   <p>${data.created_at}</p>
                 </div>
               </div>
@@ -393,7 +393,7 @@
 
             <div class="mb-3">
               <div class="info-box d-flex">
-                <label class="form-label w-50 fw-bold">About User</label>
+                <label class="form-label">About User</label>
                 <p>${data.about ?? 'No details provided.'}</p>
               </div>
             </div>
