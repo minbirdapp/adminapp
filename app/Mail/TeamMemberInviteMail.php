@@ -12,16 +12,24 @@ class TeamMemberInviteMail extends Mailable
 
     public $user;
     public $inviteLink;
+    public $plainPassword;
 
-    public function __construct($user, $inviteLink)
+    public function __construct($user, $inviteLink, $plainPassword)
     {
         $this->user = $user;
         $this->inviteLink = $inviteLink;
+        $this->plainPassword = $plainPassword;
     }
 
-    public function build()
-    {
-        return $this->subject('You’ve been invited to join Minbird')
-                    ->view('emails.team-member-invite');
-    }
+ public function build()
+{
+    return $this->subject('You’re Invited to Join Minbird Team')
+                ->view('emails.team-member-invite')
+                ->with([
+                    'user' => $this->user,
+                    'inviteLink' => $this->inviteLink,
+                    'plainPassword' => $this->plainPassword, // if you’re sending password
+                ]);
+}
+
 }

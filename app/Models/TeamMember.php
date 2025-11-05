@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,13 +9,13 @@ class TeamMember extends Model
 {
     use HasFactory;
 
-  protected $fillable = [
-    'tenant_id',
-    'user_id',
-    'status',
-];
+    protected $fillable = [
+        'tenant_id',
+        'user_id',
+        'team_member_id', // ✅ make sure this column exists in DB
+        'status',
+    ];
 
-    // Cast boolean automatically
     protected $casts = [
         'status' => 'boolean',
     ];
@@ -26,7 +27,14 @@ class TeamMember extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        // The one who invited (the logged-in user / tenant)
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function invitedUser()
+    {
+        // ✅ The invited team member (record in users table)
+        return $this->belongsTo(User::class, 'team_member_id');
     }
 
     public function role()
