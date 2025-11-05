@@ -6,7 +6,7 @@ use App\Http\Controllers\ChannelSetupController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;                    
+use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\TeamMemberController;
@@ -74,17 +74,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/app-settings-brand-delete/{id}', [ChannelSetupController::class, 'deleteBrand'])->name('app.settings.delete.brands');
     Route::post('/add-social-account', [ChannelSetupController::class, 'addSocialMediaAccount'])->name('add.social.account');
     Route::get('/app-settings-teams', [TeamMemberController::class, 'index'])->name('team-members.index');
-Route::post('/app-settings-teams', [TeamMemberController::class, 'store'])->name('team-members.store');
-Route::get('/app-settings-teams', [App\Http\Controllers\TeamMemberController::class, 'index'])
-    ->name('app.settings.teams');
-Route::get('/team-members/{id}/view', [App\Http\Controllers\TeamMemberController::class, 'view'])->name('team-members.view');
+    Route::get('/app-settings-teams/{id}', [TeamMemberController::class, 'index'])->name('team-members.edit');
+    Route::post('/app-settings-teams', [TeamMemberController::class, 'store'])->name('team-members.store');
+    Route::post('/app-settings-teams-update/{id}', [TeamMemberController::class, 'update'])->name('team-members.update');
+    Route::get('/app-settings-teams-delete/{id}', [TeamMemberController::class, 'destroy'])->name('team-members.delete');
+    Route::get('/app-settings-teams', [App\Http\Controllers\TeamMemberController::class, 'index'])
+        ->name('app.settings.teams');
+    Route::get('/team-members/{id}/view', [App\Http\Controllers\TeamMemberController::class, 'view'])->name('team-members.view');
 
-Route::resource('team-members', TeamMemberController::class);
-
-
+    Route::resource('team-members', TeamMemberController::class);
 });
 
 Route::get('/app-settings', function () {
     return view('app-settings');
 })->middleware('auth')->name('app.settings');
-

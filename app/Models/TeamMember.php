@@ -30,6 +30,7 @@ class TeamMember extends Model
         // The one who invited (the logged-in user / tenant)
         return $this->belongsTo(User::class, 'user_id');
     }
+    
 
     public function invitedUser()
     {

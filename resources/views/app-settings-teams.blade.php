@@ -19,7 +19,7 @@
                 <h4>Invite Team Member</h4>
             </div>
             <div class="card-body">
-                <form id="inviteTeamForm" method="POST" action="{{ route('team-members.store') }}" novalidate>
+                <form id="inviteTeamForm" method="POST" action="{{ $selectedMember ?  route('team-members.update', $selectedMember->id) : route('team-members.store') }}" novalidate>
                     @csrf
                     <div class="row g-3 mb-3">
 
@@ -27,7 +27,7 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label"><span class="text-danger">*</span> First Name</label>
                             <input type="text" name="first_name" class="form-control"
-                                value="{{ old('first_name') }}">
+                                value="{{ $selectedMember ? $selectedMember->user->profile->first_name : old('first_name') }}">
                             @error('first_name')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -38,7 +38,7 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label"><span class="text-danger">*</span> Last Name</label>
                             <input type="text" name="last_name" class="form-control"
-                                value="{{ old('last_name') }}">
+                                value="{{ $selectedMember ? $selectedMember->user->profile->last_name :old('last_name') }}">
                             @error('last_name')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -51,7 +51,8 @@
                             <select name="role_id" class="form-select">
                                 <option value="">Select Role</option>
                                 @foreach($roles as $role)
-                                <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
+                                <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}
+                                    {{ $selectedMember && $selectedMember->user->user_role_id == $role->id ? 'selected' : '' }}>
                                     {{ $role->name }}
                                 </option>
                                 @endforeach
@@ -65,7 +66,7 @@
                         {{-- Email --}}
                         <div class="col-md-6 mb-3">
                             <label class="form-label"><span class="text-danger">*</span> Email</label>
-                            <input type="email" name="email" class="form-control" value="{{ old('email') }}">
+                            <input type="email" name="email" class="form-control" value="{{ $selectedMember ? $selectedMember->user->email : old('email') }}">
                             @error('email')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -77,8 +78,8 @@
                             <label class="form-label"><span class="text-danger">*</span> Status</label>
                             <select name="status" class="form-select">
                                 <option value="">Select Status</option>
-                                <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Active</option>
-                                <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Inactive</option>
+                                <option value="1" {{ $selectedMember && $selectedMember->status == 1 ? 'selected' : '' }} {{ old('status') == '1' ? 'selected' : '' }}>Active</option>
+                                <option value="0" {{ $selectedMember && $selectedMember->status == 0 ? 'selected' : '' }} {{ old('status') == '0' ? 'selected' : '' }}>Inactive</option>
                             </select>
                             @error('status')
                             <small class="text-danger">{{ $message }}</small>
@@ -87,7 +88,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Send Invite</button>
+                    <button type="submit" class="btn btn-primary">{{ $selectedMember ? 'Update' : 'Send Invite' }}</button>
                 </form>
             </div>
         </div>
@@ -137,8 +138,11 @@
                                 data-id="{{ $member->id }}"
                                 data-bs-toggle="modal"
                                 data-bs-target="#viewModal">View</a>
-                            <a class="editMember" href="{{ route('team-members.edit', $member->id) }}">
+                            <a class="" href="{{ route('team-members.edit', $member->id) }}">
                                 Edit
+                            </a>
+                            <a onclick="return confirm('Are you sure you want to delete this item?');" href="{{ route('team-members.delete', $member->id) }}">
+                                Delete
                             </a>
                         </div>
                     </div>
