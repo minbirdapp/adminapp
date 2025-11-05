@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;                    
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\TeamMemberController;
+
 
 Route::get('/', function () {
     if (auth()->check()) {
@@ -71,6 +73,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/app-settings-brands/{id}', [ChannelSetupController::class, 'appBrands'])->name('app.settings.edit.brands');
     Route::get('/app-settings-brand-delete/{id}', [ChannelSetupController::class, 'deleteBrand'])->name('app.settings.delete.brands');
     Route::post('/add-social-account', [ChannelSetupController::class, 'addSocialMediaAccount'])->name('add.social.account');
+    Route::get('/app-settings-teams', [TeamMemberController::class, 'index'])->name('team-members.index');
+Route::post('/app-settings-teams', [TeamMemberController::class, 'store'])->name('team-members.store');
+Route::get('/app-settings-teams', [App\Http\Controllers\TeamMemberController::class, 'index'])
+    ->name('app.settings.teams');
+Route::get('/team-members/{id}/view', [App\Http\Controllers\TeamMemberController::class, 'view'])->name('team-members.view');
+
+Route::resource('team-members', TeamMemberController::class);
+
+
 });
 
 Route::get('/app-settings', function () {

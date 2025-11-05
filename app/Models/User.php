@@ -64,4 +64,8 @@ public function socialAccounts()
 {
     return $this->hasMany(\App\Models\BrandSocialMediaAccount::class, 'user_id');
 }
+public function role()
+{
+    return $this->belongsTo(UserRole::class, 'user_role_id');
+}
 }

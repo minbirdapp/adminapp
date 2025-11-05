@@ -27,7 +27,7 @@
                     <span class="setting-icon"><img src="assets/img/icons/team.svg" alt="team"></span>
                     <h6 class="text-primary">Invite your team</h6>
                     <p>Build, ship, and manage with coworkers.</p>
-                    <button class="btn btn-outline-dark btn-sm">Invite Team Member</button>
+                    <a  href="{{ route('app.settings.teams') }}" class="btn btn-outline-dark btn-sm">Invite Team Member</a>
                 </div>
             </div>
 
@@ -112,7 +112,6 @@
             </div>
 
         </div>
-
 
     </div>
 </div>
