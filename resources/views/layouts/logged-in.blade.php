@@ -62,9 +62,9 @@
               
             </div>
             <div class="modal-footer">
-          <button type="button" class="btn btn-edit">Edit</button>
+          <!-- <button type="button" class="btn btn-edit">Edit</button> -->
           <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-delete">Delete</button>
+          <!-- <button type="button" class="btn btn-delete">Delete</button> -->
         </div>
         </div>
     </div>
