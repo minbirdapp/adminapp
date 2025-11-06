@@ -326,22 +326,24 @@
         });
 
         // View Modal (AJAX load)
-    document.querySelectorAll('.viewMember').forEach(btn => {
-  btn.addEventListener('click', e => {
-    e.preventDefault();
-    const id = btn.dataset.id;
-    const modalBody = document.getElementById('viewMemberContent');
-    modalBody.innerHTML = `
+        document.querySelectorAll('.viewMember').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+                const id = btn.dataset.id;
+                jQuery('.editTMember').attr('href', baseUrl + 'app-settings-teams/' + '' + id);
+                jQuery('.deleteTMember').attr('href', baseUrl + 'app-settings-teams-delete/' + '' + id);
+                const modalBody = document.getElementById('viewMemberContent');
+                modalBody.innerHTML = `
       <div class="text-center py-4">
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>`;
 
-    fetch(`/team-members/${id}/view`)
-      .then(res => res.json())
-      .then(data => {
-        modalBody.innerHTML = `
+                fetch(`/team-members/${id}/view`)
+                    .then(res => res.json())
+                    .then(data => {
+                        modalBody.innerHTML = `
     
             <img src="${data.profile_image ?? 'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.name)}"
                  alt="Profile" class="profile-img mb-3 rounded-circle" width="100" height="100">
@@ -399,10 +401,10 @@
             </div>
           </div>
         `;
-      })
-      .catch(() => modalBody.innerHTML = '<p class="text-danger">Failed to load member info.</p>');
-  });
-});
+                    })
+                    .catch(() => modalBody.innerHTML = '<p class="text-danger">Failed to load member info.</p>');
+            });
+        });
 
 
         // Confirm delete

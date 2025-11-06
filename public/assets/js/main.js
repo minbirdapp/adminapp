@@ -134,6 +134,10 @@ jQuery(document).on("click", ".connectPersonalAccount", function () {
     jQuery("#instagramModal").modal("hide");
 });
 
+ 
+jQuery(document).on("click", ".editTMember", function () {
+    jQuery("#viewModal").modal("hide");
+});
 jQuery(document).on("keyup", ".searchBrandData", function () {
     var search = jQuery(this).val();
     $.ajax({

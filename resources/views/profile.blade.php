@@ -3,16 +3,12 @@
 @section('title', 'My Profile')
 
 @section('content')
-
-
 <!-- Main Content -->
 <div class="col main-content">
     @include('layouts.logged-in-header')
-
     <div class="box-637 position-relative">
         <h6 class="mb-3">My Profile</h6>
         @include('includes/app_settings')
-
         <div class="card shadow-sm">
             <div class="card-header">
                 <h4>Update your profile</h4>
@@ -21,9 +17,8 @@
                 <form id="profileForm" method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" novalidate>
                     @csrf
                     @method('PUT')
-
                     <div class="profile-container text-center mb-4">
-                        <img src="{{ $profile->profile_image ? asset('storage/profile/' . $profile->profile_image) : asset('assets/img/dummy.png') }}" id="profileImage" class="profile-pic" alt="Profile Photo">
+                        <img src="{{ $profile->profile_image ? env('ABS_PATH_URL').'storage/app/private/public/profile/' . $profile->profile_image : asset('assets/img/dummy.png') }}" id="profileImage" class="profile-pic" alt="Profile Photo">
                         <label for="fileInput" class="upload-btn">Upload Profile Photo</label>
                         <input type="file" id="fileInput" name="profile_image" accept="image/*" class="d-none">
                         <small class="text-danger d-block mt-1" id="imageError"></small>
@@ -93,6 +88,5 @@
         </div>
     </div>
 </div>
-
 <?php include(resource_path('js/pages/validations.php')); ?>
 @endsection

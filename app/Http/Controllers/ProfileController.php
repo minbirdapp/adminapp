@@ -25,12 +25,10 @@ class ProfileController extends Controller
                 'role' => '',
                 'bio' => '',
                 'timezone_id' => null
-            ]
-        );
+        ]);
         $roles = UserRole::where('status', 1)->get();
         // Fetch all timezones from DB
         $timezones = Timezone::orderBy('label')->get();
-
         return view('profile', compact('profile', 'timezones', 'roles'));
     }
 

@@ -1,9 +1,11 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="profile">
-        <img src="assets/img/user.png" alt="User Profile" />
+        <?php
+        $profile = getProfileData();
+        ?>
+        <img src="{{ $profile->profile_image ? env('ABS_PATH_URL').'storage/app/private/public/profile/' . $profile->profile_image : asset('assets/img/dummy.png') }}" alt="User Profile" />
     </div>
-
     <nav class="nav flex-column w-100">
         <a class="nav-link active" href="#">
             <i class="sidebar-icon">
@@ -249,7 +251,7 @@
 
             </i> Settings</a>
         <a class="nav-link" href="{{ route('logout') }}"
-       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="sidebar-icon">
                 <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <foreignObject x="0" y="0" width="0" height="0">
