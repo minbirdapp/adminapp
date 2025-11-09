@@ -440,3 +440,59 @@
         }
     });
 </script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const step1Form = document.getElementById('step1Form');
+    if (!step1Form) return;
+
+    step1Form.addEventListener('submit', function (e) {
+        let valid = true;
+
+        // Fields
+        const title = document.getElementById('title')?.value.trim() || '';
+        const campaign = document.getElementById('campaignSelect')?.value || '';
+        const contentType = document.getElementById('contentType')?.value || '';
+        const profile = step1Form.querySelector("[name='profile_id']:checked");
+
+        // Error placeholders
+        const titleError = document.getElementById('titleError');
+        const campaignError = document.getElementById('campaignError');
+        const contentTypeError = document.getElementById('contentTypeError');
+        const profileError = document.getElementById('profileError');
+
+        // Reset old errors
+        if (titleError) titleError.textContent = '';
+        if (campaignError) campaignError.textContent = '';
+        if (contentTypeError) contentTypeError.textContent = '';
+        if (profileError) profileError.textContent = '';
+
+        // Validation checks
+        if (title === '') {
+            if (titleError) titleError.textContent = 'Post title is required.';
+            valid = false;
+        }
+
+        if (campaign === '') {
+            if (campaignError) campaignError.textContent = 'Please select a campaign.';
+            valid = false;
+        }
+
+        if (contentType === '') {
+            if (contentTypeError) contentTypeError.textContent = 'Please select a post type.';
+            valid = false;
+        }
+
+        if (!profile) {
+            if (profileError) profileError.textContent = 'Please select a social media channel.';
+            valid = false;
+        }
+
+        // Stop form submit if invalid
+        if (!valid) e.preventDefault();
+    });
+});
+</script>
+
+

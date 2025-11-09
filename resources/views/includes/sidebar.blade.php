@@ -86,7 +86,7 @@
 
             </i>
             Ideas</a>
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('posts.index') }}">
             <i class="sidebar-icon">
                 <svg width="43" height="43" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <foreignObject x="0" y="0" width="0" height="0">

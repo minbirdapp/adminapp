@@ -16,4 +16,8 @@ class BrandSocialMediaAccount extends Model
         'brand_id',
         'account_type'
     ];
+    public function brand()
+{
+    return $this->belongsTo(Brand::class, 'brand_id');
+}
 }
