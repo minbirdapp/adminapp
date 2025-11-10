@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\TeamMemberController;
+use App\Http\Controllers\PostController;
 
 
 Route::get('/', function () {
@@ -88,3 +89,13 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/app-settings', function () {
     return view('app-settings');
 })->middleware('auth')->name('app.settings');
+
+Route::prefix('posts')->group(function () {
+    Route::get('/', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+    Route::get('/create-step1', [PostController::class, 'createStep1'])->name('posts.create.step1');
+    Route::post('/store-step1', [PostController::class, 'storeStep1'])->name('posts.store.step1');
+    Route::get('/create-step2/{id}', [PostController::class, 'createStep2'])->name('posts.create.step2');
+    Route::post('/store-step2/{id}', [PostController::class, 'storeStep2'])->name('posts.store.step2');
+});
