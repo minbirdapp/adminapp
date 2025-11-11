@@ -103,7 +103,7 @@
 
                             <!-- Tracker List -->
                             <div id="trackerList">
-                                @if($campaign->trackingUrls->count())
+                                @if($campaign && $campaign->trackingUrls->count())
                                 @foreach($campaign->trackingUrls as $val)
                                 <div class="tracker-item">
                                     <div class="d-flex justify-content-between align-items-center">
