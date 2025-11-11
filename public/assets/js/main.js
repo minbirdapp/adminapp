@@ -242,7 +242,7 @@ function isValidURL(str) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    if (document.getElementById("submitCampaign")) {
+    if (document.getElementById("documentForm")) {
         const form = document.getElementById("documentForm");
 
         form.addEventListener("submit", function (e) {
