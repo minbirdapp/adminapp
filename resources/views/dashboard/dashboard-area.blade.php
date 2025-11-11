@@ -1,5 +1,5 @@
 @extends('layouts.logged-in')
-@section('title', 'Dashboard sadsa')
+@section('title', 'Dashboard')
 @section('content')
 <div class="col main-content">
     <!-- Header -->
@@ -27,7 +27,7 @@
                 <div class="quickstart-card">
                     <h6>Create a Campaign</h6>
                     <p class="text-muted small">Most things start with a Campaign board in Min Bird.</p>
-                    <button id="startCampaignBtn" class="btn btn-outline-primary btn-sm">Start Campaign</button>
+                    <a id="startCampaignBtn" href="{{route('campaign.create')}}" class="btn btn-outline-primary btn-sm">Start Campaign</a>
                 </div>
             </div>
             <div class="col-md-4">

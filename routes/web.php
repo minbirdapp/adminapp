@@ -12,7 +12,9 @@ use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\PostController;
 
-
+Route::get('/login', function () {
+    return redirect()->route('magic.link')->with('success', 'You have been logged out successfully.');
+})->name('login');
 Route::get('/', function () {
     if (auth()->check()) {
         // User is logged in → go to dashboard
@@ -46,6 +48,7 @@ Route::get('/resend-activation-code', [AuthController::class, 'resendActivationC
 // Show password login form
 Route::get('/login', [AuthController::class, 'showPasswordLogin'])->name('password.login');
 
+
 // Handle password login
 Route::post('/login', [AuthController::class, 'passwordLogin'])->name('password.login.submit');
 
@@ -60,7 +63,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/setup-channels', [ChannelSetupController::class, 'showChannels'])->name('setup.channels');
     Route::post('/add-media-accounts', [ChannelSetupController::class, 'addSocialMediaAccount'])->name('brand.addSocialMediaAccount');
     Route::post('/brands/store', [ChannelSetupController::class, 'storeBrand'])->name('brands.store');
-    Route::post('/campaign/create', [CampaignController::class, 'storeCampaign'])->name('campaign.create');
+    Route::get('/campaign/create', [CampaignController::class, 'create'])->name('campaign.create');
+    Route::get('/campaign/edit/{id}', [CampaignController::class, 'create'])->name('campaign.edit');
+    Route::get('/campaign/delete/{id}', [CampaignController::class, 'delete'])->name('campaign.delete');
+    Route::get('/campaign/view', [CampaignController::class, 'view'])->name('campaign.view');
+    Route::get('/campaign/list', [CampaignController::class, 'list'])->name('campaign.list');
+    Route::post('/campaign/create', [CampaignController::class, 'storeCampaign'])->name('campaign.store');
     Route::get('/setup-payment', [App\Http\Controllers\PaymentController::class, 'setupPayment'])->name('setup.payment');
     Route::get('/confirm-payment/{id}', [App\Http\Controllers\PaymentController::class, 'confirmPayment'])->name('setup.confirm');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

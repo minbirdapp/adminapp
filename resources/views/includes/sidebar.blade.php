@@ -7,7 +7,7 @@
         <img src="{{ $profile->profile_image ? env('ABS_PATH_URL').'storage/app/private/public/profile/' . $profile->profile_image : asset('assets/img/dummy.png') }}" alt="User Profile" />
     </div>
     <nav class="nav flex-column w-100">
-        <a class="nav-link active" href="#">
+        <a class="nav-link active" href="{{route('dashboard')}}">
             <i class="sidebar-icon">
                 <svg width="44" height="43" viewBox="0 0 44 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <foreignObject x="0" y="0" width="0" height="0">
@@ -30,7 +30,7 @@
                 </svg>
             </i>
             Dashboard</a>
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{route('campaign.list')}}">
             <i class="sidebar-icon">
                 <svg width="44" height="43" viewBox="0 0 44 43" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <foreignObject x="0" y="0" width="0" height="0">

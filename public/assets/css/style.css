@@ -794,3 +794,6 @@ a.skip-link {
       font-size: 18px;
    }
 }
+a.btn-primary {
+   padding: 13px 24px !important;
+}

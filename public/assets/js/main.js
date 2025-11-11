@@ -134,7 +134,6 @@ jQuery(document).on("click", ".connectPersonalAccount", function () {
     jQuery("#instagramModal").modal("hide");
 });
 
- 
 jQuery(document).on("click", ".editTMember", function () {
     jQuery("#viewModal").modal("hide");
 });
@@ -144,13 +143,13 @@ jQuery(document).on("keyup", ".searchBrandData", function () {
         url: searchBrandUrl,
         type: "get",
         data: {
-            search: search
+            search: search,
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
         success: function (response) {
-            jQuery('#searchBrandData').html(response);
+            jQuery("#searchBrandData").html(response);
         },
         error: function (xhr) {
             alert("Error: " + xhr.status);
@@ -158,28 +157,80 @@ jQuery(document).on("keyup", ".searchBrandData", function () {
     });
     jQuery("#instagramModal").modal("hide");
 });
+jQuery(document).on("click", "#cancelBtn , #closeCampaignPanel", function () {
+    const campaignPanel = document.getElementById("campaignPanel");
+    const overlay = document.getElementById("overlay");
+    campaignPanel.classList.remove("active");
+    overlay.classList.remove("active");
+    document.body.style.overflow = "hidden";
+});
+jQuery(document).on("click", ".view-campaign", function () {
+    var search = jQuery(this).attr("data-attr-id");
+    const campaignPanel = document.getElementById("campaignPanel");
+    const overlay = document.getElementById("overlay");
 
+    $.ajax({
+        url: viewCampaign,
+        type: "get",
+        data: {
+            id: search,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (response) {
+            jQuery("#campaignPanel").html(response);
+            campaignPanel.classList.add("active");
+            overlay.classList.add("active");
+            document.body.style.overflow = "hidden";
+        },
+        error: function (xhr) {
+            alert("Error: " + xhr.status);
+        },
+    });
+    jQuery("#instagramModal").modal("hide");
+});
 jQuery(document).on("click", "#addUrl", function () {
     var trackerName = jQuery(this).parent().parent().find(".trackerName").val();
     var trackerUrl = jQuery(this).parent().parent().find(".trackerUrl").val();
-    if (!isValidURL(trackerUrl)) {
-        jQuery(this).parent().parent().find(".trackerUrl").css("border", "red");
+    var tracker = jQuery(this).parent().parent().find(".trackerName");
+    var url = jQuery(this).parent().parent().find(".trackerUrl");
+    if (trackerName == "") {
+        tracker.css("border", "1px solid red");
+        return false;
+    } else {
+        tracker.css("border", "1px solid #dee2e6");
     }
-    jQuery(".trackingUrls").append(
-        '<div class="input-group mb-3">          <input type="hidden" name="tracker[name][]" value="' +
+    if (trackerUrl == "") {
+        url.css("border", "1px solid red");
+        return false;
+    } else {
+        url.css("border", "1px solid #dee2e6");
+    }
+    if (!isValidURL(trackerUrl)) {
+        url.css("border", "1px solid red");
+        return false;
+    } else {
+        url.css("border", "1px solid #dee2e6");
+    }
+    jQuery("#trackerList").append(
+        '<div class="tracker-item"><div class="d-flex justify-content-between align-items-center"><span><strong>' +
             trackerName +
-            '">              <span class="input-group-text">' +
-            trackerName +
-            '</span>                        <input type="text" name="tracker[url][]" class="form-control trackerUrl" value="' +
+            "</strong> —" +
             trackerUrl +
-            '">                                        <button class="delete-btn deleteTrackingUrl"><i class="fa-solid fa-trash"></i></button>                    </div>'
+            '</span><div class="tracker-buttons"><button type="button" class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>   <button type="button" class="deleteTrackingUrl delete-btn"><i class="fa-solid fa-trash"></i></button> </div> </div><div class="edit-form"><input type="text" class="form-control form-control-sm mb-2 currentInput" value="' +
+            trackerUrl +
+            '">          <input type="hidden" class="trackerName" name="tracker[name][]" value="' +
+            trackerName +
+            '">   <input type="hidden" name="tracker[url][]" class="form-control trackerUrl" value="' +
+            trackerUrl +
+            '">     <div class="text-end">  <button type="button" class="btn btn-sm btn-primary save-btn">Save</button> <button type="button" class="btn btn-sm btn-outline-secondary cancel-btn">Cancel</button>   </div>     </div> </div><div class="input-group mb-3">                                   </div>'
     );
+    tracker.val("");
+    url.val("");
 });
 jQuery(document).on("click", "#submitCampaign", function () {
     jQuery("#submitCamp").click();
-});
-jQuery(document).on("click", ".deleteTrackingUrl", function () {
-    jQuery(this).parent().remove();
 });
 function isValidURL(str) {
     try {

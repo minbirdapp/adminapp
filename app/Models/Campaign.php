@@ -23,4 +23,15 @@ class Campaign extends Model
         'end_date',
         'status',
     ];
+
+     public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function trackingUrls()
+    {
+        return $this->hasMany(Trackers::class);
+    }
+
 }
