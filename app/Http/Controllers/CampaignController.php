@@ -24,7 +24,7 @@ class CampaignController extends Controller
     public function list()
     {
         $user = Auth::user();
-        $list = Campaign::where('user_id', $user->id)
+        $list = Campaign::with('brand')->where('user_id', $user->id)
             ->paginate(10);
         return view('campaign.list', compact('user', 'list'));
     }
