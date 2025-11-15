@@ -18,10 +18,27 @@
                 </ul>
             </div>
             @endif
+
+
             <div class="box-637 position-relative">
                 <h5>Create a New Post</h5>
-                <a href="{{ route('posts.create.step1') }}" class="btn btn-outline-secondary btn-sm top-right-btn">Back to Step 1</a>
 
+                <a href="{{ isset($post->id) ? route('posts.edit.step1', $post->id) : route('posts.create.step1') }}"
+                    class="btn btn-outline-secondary btn-sm top-right-btn">
+                    Back to Step 1
+                </a>
+                {{-- Success Alert --}}
+                @if(session('success'))
+                <div class="alert alert-success position-absolute alert-auto-hide " role="alert">
+
+                    {{ session('success') }}
+                </div>
+                @endif
+                @if(session('error'))
+                <div class="alert alert-danger position-absolute alert-auto-hide " role="alert">
+                    {{ session('error') }}
+                </div>
+                @endif
                 <div class="card mt-3">
                     <div class="card-header position-relative">
                         <div class="d-flex justify-content-between align-items-center">
@@ -34,9 +51,20 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('posts.store.step2', $post->id) }}" enctype="multipart/form-data" id="step2Form">
+                        <form method="POST"
+                            action="{{ request()->routeIs('posts.edit.step2') 
+                 ? route('posts.update.step2', $post->id)
+                 : route('posts.store.step2', $post->id) }}"
+                            enctype="multipart/form-data"
+                            id="step2Form">
+
                             @csrf
                             <input type="hidden" name="post_type_id" id="post_type_id" value="{{ $post->post_type_id ?? $postTypes->first()->id }}">
+                            <input type="hidden" name="title" value="{{ $post->title }}">
+                            <input type="hidden" name="campaign_id" value="{{ $post->campaign_id }}">
+                            <input type="hidden" name="profile_id" value="{{ $post->profile_id }}">
+                            <input type="hidden" name="content_type" value="{{ $post->content_type }}">
+                            <input type="hidden" id="selectedPlatform" value="{{ $selectedPlatform }}">
 
                             <!-- Post Type Tabs -->
                             <label class="form-section-title mb-2">Select Post Type</label>
@@ -66,28 +94,26 @@
                                     aria-labelledby="{{ strtolower($type->name) }}-tab">
 
                                     @if(strtolower($type->name) === 'feed')
-                                    <div class="mb-3">
-                                        <label class="form-section-title"><span class="text-danger">*</span> Post Content for Twitter</label>
-                                        <textarea name="twitter_content" class="form-control" rows="2" placeholder="Enter text for Twitter">{{ old('twitter_content') }}</textarea>
-                                         <small class="text-danger" id="twitterError"></small>
+                                    <div class="platform-field twitter-field mb-3">
+                                        <label class="form-section-title">Post Content for Twitter</label>
+                                        <textarea name="twitter_content" class="form-control">{{ old('twitter_content', $contentData['twitter'] ?? '') }}</textarea>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-section-title"><span class="text-danger">*</span> Post Content for Instagram</label>
-                                        <textarea name="instagram_content" class="form-control" rows="2" placeholder="Enter text for Instagram">{{ old('instagram_content') }}</textarea>
-                                                        <small class="text-danger" id="instagramError"></small>
 
+                                    <div class="platform-field instagram-field mb-3">
+                                        <label class="form-section-title">Post Content for Instagram</label>
+                                        <textarea name="instagram_content" class="form-control">{{ old('instagram_content', $contentData['instagram'] ?? '') }}</textarea>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-section-title"><span class="text-danger">*</span> Post Content for Facebook</label>
-                                        <textarea name="facebook_content" class="form-control" rows="2" placeholder="Enter text for Facebook">{{ old('facebook_content') }}</textarea>
-                                                        <small class="text-danger" id="facebookError"></small>
 
+                                    <div class="platform-field facebook-field mb-3">
+                                        <label class="form-section-title">Post Content for Facebook</label>
+                                        <textarea name="facebook_content" class="form-control">{{ old('facebook_content', $contentData['facebook'] ?? '') }}</textarea>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-section-title"><span class="text-danger">*</span> Post Content for LinkedIn</label>
-                                        <textarea name="linkedin_content" class="form-control" rows="2" placeholder="Enter text for LinkedIn">{{ old('linkedin_content') }}</textarea>
-                                        <small class="text-danger" id="linkedinError"></small>
+
+                                    <div class="platform-field linkedin-field mb-3">
+                                        <label class="form-section-title">Post Content for LinkedIn</label>
+                                        <textarea name="linkedin_content" class="form-control">{{ old('linkedin_content', $contentData['linkedin'] ?? '') }}</textarea>
                                     </div>
+
 
                                     @elseif(strtolower($type->name) === 'reel')
                                     <div class="mb-3">
@@ -120,12 +146,12 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label class="form-section-title"><span class="text-danger">*</span> Schedule your post</label>
-                                    <input type="date" name="schedule_date" class="form-control" value="{{ old('schedule_date') }}">
+                                    <input type="date" name="schedule_date" class="form-control" value="{{ old('schedule_date', $post->schedule_date ?? '') }}">
                                     <small class="text-danger" id="scheduleDateError"></small>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-section-title"><span class="text-danger">*</span> Schedule your time</label>
-                                    <input type="time" name="schedule_time" class="form-control" value="{{ old('schedule_time') }}">
+                                    <input type="time" name="schedule_time" class="form-control" value="{{ old('schedule_time', $post->schedule_time ?? '') }}">
                                     <small class="text-danger" id="scheduleTimeError"></small>
                                 </div>
                             </div>
@@ -161,12 +187,12 @@
                                 <select name="approver_id" class="form-select">
                                     <option value="">Select Approver</option>
                                     @foreach($approvers ?? [] as $user)
-                                    <option value="{{ $user->id }}" {{ old('approver_id') == $user->id ? 'selected' : '' }}>
+                                    <option value="{{ $user->id }}" {{ old('approver_id', $post->approver_id ?? '') == $user->id ? 'selected' : '' }}>
                                         {{ $user->name }}
                                     </option>
                                     @endforeach
                                 </select>
-                                 <small class="text-danger" id="approverError"></small>
+                                <small class="text-danger" id="approverError"></small>
                             </div>
 
                             <!-- Buttons -->
@@ -175,7 +201,10 @@
                                     <button type="submit" class="btn theme-btn">Publish Post</button>
                                     <button type="submit" name="status" value="draft" class="btn theme-btn">Save as Draft</button>
                                 </div>
-                                <a href="{{ route('posts.create.step1') }}" class="btn btn-light border">Back to Step 1</a>
+                                <a href="{{ isset($post->id) ? route('posts.edit.step1', $post->id) : route('posts.create.step1') }}"
+                                    class="btn btn-light border">
+                                    Back to Step 1
+                                </a>
                             </div>
 
                         </form>
@@ -192,107 +221,135 @@
 
 @push('scripts')
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const postTypeInput = document.getElementById("post_type_id");
-    const postTypes = @json($postTypes);
+    document.addEventListener("DOMContentLoaded", function() {
+        const postTypeInput = document.getElementById("post_type_id");
+        const postTypes = @json($postTypes);
 
-    //  update hidden post type id on tab switch
-    document.querySelectorAll('#postTypeTabs button[data-bs-toggle="tab"]').forEach(button => {
-        button.addEventListener('shown.bs.tab', function(event) {
-            const tabId = event.target.id.replace('-tab', '');
-            postTypes.forEach(type => {
-                if (type.name.toLowerCase() === tabId.toLowerCase()) {
-                    postTypeInput.value = type.id;
-                }
+        //  update hidden post type id on tab switch
+        document.querySelectorAll('#postTypeTabs button[data-bs-toggle="tab"]').forEach(button => {
+            button.addEventListener('shown.bs.tab', function(event) {
+                const tabId = event.target.id.replace('-tab', '');
+                postTypes.forEach(type => {
+                    if (type.name.toLowerCase() === tabId.toLowerCase()) {
+                        postTypeInput.value = type.id;
+                    }
+                });
             });
         });
-    });
 
-    //  VALIDATION
-    const step2Form = document.getElementById('step2Form');
-    if (!step2Form) return;
+        //  VALIDATION
+        const step2Form = document.getElementById('step2Form');
+        if (!step2Form) return;
 
-    step2Form.addEventListener('submit', function(e) {
-        let valid = true;
+        step2Form.addEventListener('submit', function(e) {
+            let valid = true;
 
-        // Clear previous errors
-        step2Form.querySelectorAll('small.text-danger').forEach(el => el.textContent = '');
+            // Clear previous errors
+            step2Form.querySelectorAll('small.text-danger').forEach(el => el.textContent = '');
 
-        const activeTab = document.querySelector('#postTypeTabs .nav-link.active');
-        const activeType = activeTab ? activeTab.textContent.trim().toLowerCase() : '';
-        const scheduleDate = document.querySelector("[name='schedule_date']");
-        const scheduleTime = document.querySelector("[name='schedule_time']");
-        const statusSelect = document.querySelector("[name='status']");
-        const approverSelect = document.querySelector("[name='approver_id']");
+            const activeTab = document.querySelector('#postTypeTabs .nav-link.active');
+            const activeType = activeTab ? activeTab.textContent.trim().toLowerCase() : '';
+            const scheduleDate = document.querySelector("[name='schedule_date']");
+            const scheduleTime = document.querySelector("[name='schedule_time']");
+            const statusSelect = document.querySelector("[name='status']");
+            const approverSelect = document.querySelector("[name='approver_id']");
 
-        //  validate active tab content
-        if (activeType === 'feed') {
-            ['twitter','instagram','facebook','linkedin'].forEach(platform => {
-                const field = document.querySelector(`[name='${platform}_content']`);
-                const err = document.getElementById(`${platform}Error`);
-                if (field && !field.value.trim()) {
-                    err.textContent = `Please enter ${platform} content.`;
+            //  validate active tab content
+            if (activeType === 'feed') {
+                ['twitter', 'instagram', 'facebook', 'linkedin'].forEach(platform => {
+                    const field = document.querySelector(`[name='${platform}_content']`);
+                    const err = document.getElementById(`${platform}Error`);
+                    if (field && !field.value.trim()) {
+                        err.textContent = `Please enter ${platform} content.`;
+                        valid = false;
+                    }
+                });
+            }
+
+            if (activeType === 'reel') {
+                const reel = document.querySelector("[name='reel_caption']");
+                const err = document.getElementById('reelError');
+                if (reel && !reel.value.trim()) {
+                    err.textContent = 'Reel caption is required.';
                     valid = false;
                 }
-            });
-        }
+            }
 
-        if (activeType === 'reel') {
-            const reel = document.querySelector("[name='reel_caption']");
-            const err = document.getElementById('reelError');
-            if (reel && !reel.value.trim()) {
-                err.textContent = 'Reel caption is required.';
+            if (activeType === 'story') {
+                const story = document.querySelector("[name='story_description']");
+                const err = document.getElementById('storyError');
+                if (story && !story.value.trim()) {
+                    err.textContent = 'Story description is required.';
+                    valid = false;
+                }
+            }
+
+            if (activeType === 'shorts') {
+                const shorts = document.querySelector("[name='shorts_title']");
+                const err = document.getElementById('shortsError');
+                if (shorts && !shorts.value.trim()) {
+                    err.textContent = 'Shorts title is required.';
+                    valid = false;
+                }
+            }
+
+            // other required fields
+            if (!scheduleDate.value.trim()) {
+                document.getElementById('scheduleDateError').textContent = 'Please select a schedule date.';
                 valid = false;
             }
-        }
 
-        if (activeType === 'story') {
-            const story = document.querySelector("[name='story_description']");
-            const err = document.getElementById('storyError');
-            if (story && !story.value.trim()) {
-                err.textContent = 'Story description is required.';
+            if (!scheduleTime.value.trim()) {
+                document.getElementById('scheduleTimeError').textContent = 'Please select a schedule time.';
                 valid = false;
             }
-        }
 
-        if (activeType === 'shorts') {
-            const shorts = document.querySelector("[name='shorts_title']");
-            const err = document.getElementById('shortsError');
-            if (shorts && !shorts.value.trim()) {
-                err.textContent = 'Shorts title is required.';
+            if (!statusSelect.value) {
+                document.getElementById('statusError').textContent = 'Please select a status.';
                 valid = false;
             }
+
+            // if (!approverSelect.value) {
+            //     document.getElementById('approverError').textContent = 'Please select an approver.';
+            //     valid = false;
+            // }
+
+            // stop form submission if invalid
+            if (!valid) {
+                e.preventDefault();
+                e.stopImmediatePropagation(); // ensures Laravel doesn’t catch submit
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        let platform = document.getElementById('selectedPlatform').value;
+        // example: instagram, facebook, twitter, linkedin
+
+        console.log("Selected Platform:", platform);
+
+        // Hide All platform content fields
+        document.querySelectorAll('.platform-field').forEach(div => {
+            div.style.display = "none";
+        });
+
+        // Show only the required field
+        if (platform === "instagram") {
+            document.querySelector('.instagram-field').style.display = "block";
         }
-
-        // other required fields
-        if (!scheduleDate.value.trim()) {
-            document.getElementById('scheduleDateError').textContent = 'Please select a schedule date.';
-            valid = false;
+        if (platform === "facebook") {
+            document.querySelector('.facebook-field').style.display = "block";
         }
-
-        if (!scheduleTime.value.trim()) {
-            document.getElementById('scheduleTimeError').textContent = 'Please select a schedule time.';
-            valid = false;
+        if (platform === "twitter") {
+            document.querySelector('.twitter-field').style.display = "block";
         }
-
-        if (!statusSelect.value) {
-            document.getElementById('statusError').textContent = 'Please select a status.';
-            valid = false;
-        }
-
-        // if (!approverSelect.value) {
-        //     document.getElementById('approverError').textContent = 'Please select an approver.';
-        //     valid = false;
-        // }
-
-        // stop form submission if invalid
-        if (!valid) {
-            e.preventDefault();
-            e.stopImmediatePropagation(); // ensures Laravel doesn’t catch submit
+        if (platform === "linkedin") {
+            document.querySelector('.linkedin-field').style.display = "block";
         }
     });
-});
 </script>
+
 @endpush
-
-
