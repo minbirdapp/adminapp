@@ -18,23 +18,38 @@ use App\Models\BrandSocialMediaAccount;
 class PostController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
-        // Fetch posts for logged-in user or tenant
-        $posts = Post::with(['postType', 'profile'])
-            ->where('tenant_id', $user->id)
-            ->orWhere('user_id', $user->id)
-            ->latest()
-            ->paginate(10);
+        $query = Post::with(['postType', 'profile'])
+            ->where(function ($q) use ($user) {
+                $q->where('tenant_id', $user->id)
+                    ->orWhere('user_id', $user->id);
+            });
 
-        // Fetch channels (brand social accounts)
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('channel_id')) {
+            $query->where('profile_id', $request->channel_id);
+        }
+
+        if ($request->filled('brand_id')) {
+            $query->where('brand_id', $request->brand_id);
+        }
+
+        if ($request->filled('year')) {
+            $query->whereYear('schedule_date', $request->year);
+        }
+
+        $posts = $query->latest()->paginate(10);
+
         $channels = BrandSocialMediaAccount::where('user_id', $user->id)
             ->orWhere('tenant_id', $user->id)
             ->get();
 
-        // Fetch brands for the same tenant/user
         $brands = Brand::where('user_id', $user->id)
             ->orWhere('tenant_id', $user->id)
             ->get();
@@ -44,22 +59,24 @@ class PostController extends Controller
 
 
 
+
     // Step 1: show create form
     public function createStep1()
     {
-        $user = auth()->user();
+        $userId = auth()->id();
+        $tenantId = auth()->user()->tenant_id;
 
-        // Get campaigns
-        $campaigns = \App\Models\Campaign::where('user_id', $user->id)->get();
+        $campaigns = Campaign::where('tenant_id', $tenantId)
+            ->orWhere('user_id', $userId)
+            ->get();
 
-        // Get post types
-        $postTypes = \App\Models\PostType::all();
+        $profiles = BrandSocialMediaAccount::where('tenant_id', $tenantId)
+            ->orWhere('user_id', $userId)
+            ->get();
 
-        // Get connected social media accounts (channels)
-        $profiles = \App\Models\BrandSocialMediaAccount::where('user_id', $user->id)->get();
-
-        return view('posts.create-step1', compact('campaigns', 'postTypes', 'profiles'));
+        return view('posts.create-step1', compact('campaigns', 'profiles'));
     }
+
 
 
 
@@ -116,10 +133,17 @@ class PostController extends Controller
     // Step 2: Show step 2 form
     public function createStep2($id)
     {
-        $post = Post::findOrFail($id);
-        $postTypes = \App\Models\PostType::all(); // fetch from DB
-        return view('posts.create-step2', compact('post', 'postTypes'));
+        $post = Post::with('profile')->findOrFail($id);
+        $postTypes = PostType::all();
+        $approvers = \App\Models\User::all();
+        $contentData = [];
+
+        $platform = $post->profile->platform;  // <-- IMPORTANT
+        $profile = \App\Models\BrandSocialMediaAccount::find($post->profile_id);
+        $selectedPlatform = strtolower($profile->account_type ?? '');
+        return view('posts.create-step2', compact('post', 'postTypes', 'contentData', 'approvers', 'selectedPlatform'));
     }
+
 
 
     // Step 2: Store Post Contents, Media, etc.
@@ -178,5 +202,145 @@ class PostController extends Controller
         }
 
         return redirect()->route('posts.index')->with('success', 'Post created successfully!');
+    }
+
+    public function editStep1($id)
+    {
+        $post = Post::findOrFail($id);
+
+        $userId = auth()->id();
+        $tenantId = auth()->user()->tenant_id;
+
+        $campaigns = Campaign::where('tenant_id', $tenantId)
+            ->orWhere('user_id', $userId)
+            ->get();
+
+        $profiles = BrandSocialMediaAccount::where('tenant_id', $tenantId)
+            ->orWhere('user_id', $userId)
+            ->get();
+
+        return view('posts.create-step1', compact('post', 'campaigns', 'profiles'));
+    }
+
+
+    public function updateStep1(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'campaign_id' => 'required|integer',
+            'profile_id' => 'required|integer',
+            'content_type' => 'required|in:text,media',
+        ]);
+
+        $post = Post::findOrFail($id);
+
+        $post->update([
+            'title' => $validated['title'],
+            'campaign_id' => $validated['campaign_id'],
+            'profile_id' => $validated['profile_id'],
+            'content_type' => $validated['content_type'],
+        ]);
+
+        return redirect()->route('posts.edit.step2', $post->id)
+            ->with('success', 'Step 1 updated successfully!');
+    }
+    public function editStep2($id)
+    {
+        $post = Post::with(['contents', 'profile'])->findOrFail($id);
+
+        $postTypes = PostType::all();
+        $approvers = \App\Models\User::all();
+
+        // Map existing contents
+        $contentData = $post->contents->pluck('content', 'platform');
+
+        // Map general → all platforms
+        if (isset($contentData['general'])) {
+            $general = $contentData['general'];
+
+            $contentData = [
+                'twitter'   => $contentData['twitter']   ?? $general,
+                'instagram' => $contentData['instagram'] ?? $general,
+                'facebook'  => $contentData['facebook']  ?? $general,
+                'linkedin'  => $contentData['linkedin']  ?? $general,
+                'reel'      => $contentData['reel']      ?? '',
+                'story'     => $contentData['story']     ?? '',
+                'shorts'    => $contentData['shorts']    ?? '',
+            ];
+        }
+
+        //  THIS WAS MISSING
+        $platform = strtolower($post->profile->platform);
+        $profile = \App\Models\BrandSocialMediaAccount::find($post->profile_id);
+        $selectedPlatform = strtolower($profile->account_type ?? '');
+        return view('posts.create-step2', compact(
+            'post',
+            'postTypes',
+            'contentData',
+            'approvers',
+            'platform',
+            'selectedPlatform'
+        ));
+    }
+
+
+    public function updateStep2(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'post_type_id' => 'required|exists:post_types,id',
+            'status' => 'required|in:draft,scheduled,published',
+            'schedule_date' => 'nullable|date',
+            'schedule_time' => 'nullable',
+            'approver_id' => 'nullable|exists:users,id',
+        ]);
+
+        $post = Post::findOrFail($id);
+
+        // Update 
+        $post->update([
+            'title' => $request->title,
+            'campaign_id' => $request->campaign_id,
+            'profile_id' => $request->profile_id,
+            'content_type' => $request->content_type,
+            'post_type_id' => $request->post_type_id,
+            'status' => $request->status,
+            'schedule_date' => $request->schedule_date,
+            'schedule_time' => $request->schedule_time,
+            'approver_id' => $request->approver_id,
+        ]);
+
+        // Delete old contents
+        PostContent::where('post_id', $post->id)->delete();
+
+        // Save new contents
+        $contents = [
+            'twitter'   => $request->twitter_content,
+            'instagram' => $request->instagram_content,
+            'facebook'  => $request->facebook_content,
+            'linkedin'  => $request->linkedin_content,
+            'reel'      => $request->reel_caption,
+            'story'     => $request->story_description,
+            'shorts'    => $request->shorts_title,
+        ];
+
+        foreach ($contents as $platform => $content) {
+            if ($content) {
+                PostContent::create([
+                    'post_id' => $post->id,
+                    'platform' => $platform,
+                    'content' => $content,
+                ]);
+            }
+        }
+
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully');
     }
 }

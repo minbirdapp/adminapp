@@ -99,11 +99,26 @@ Route::get('/app-settings', function () {
 })->middleware('auth')->name('app.settings');
 
 Route::prefix('posts')->group(function () {
-    Route::get('/', [PostController::class, 'index'])->name('posts.index');
-    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
+    Route::get('/', [PostController::class, 'index'])->name('posts.index');
+
+    // Create Steps
     Route::get('/create-step1', [PostController::class, 'createStep1'])->name('posts.create.step1');
     Route::post('/store-step1', [PostController::class, 'storeStep1'])->name('posts.store.step1');
+
     Route::get('/create-step2/{id}', [PostController::class, 'createStep2'])->name('posts.create.step2');
     Route::post('/store-step2/{id}', [PostController::class, 'storeStep2'])->name('posts.store.step2');
+
+    // EDIT
+    Route::get('/{id}/edit/step1', [PostController::class, 'editStep1'])->name('posts.edit.step1');
+    Route::get('/{id}/edit/step2', [PostController::class, 'editStep2'])->name('posts.edit.step2');
+
+    // UPDATE
+Route::post('/{id}/update/step1', [PostController::class, 'updateStep1'])
+    ->name('posts.update.step1');
+
+    Route::post('/{id}/update/step2', [PostController::class, 'updateStep2'])->name('posts.update.step2');
+Route::delete('/delete/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+
 });
+
